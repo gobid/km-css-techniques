@@ -14,32 +14,91 @@
         <script src="js/FileSaver.js"></script>
     </head>
     <body>
-        <div>
-        <div class="slidecontainer">
-                <input type="range" min="300" max="1000" value="300" class="slider" id="myRange">
-        </div>
-        <div id="pageAttrs">
-            <div class="attr">
-                <p>Page width is: </p>
-                <p id="pageWidth"></p>
-            </div>
-        </div>
-        <iframe id="articles_page" src="../approach2/example1/index.html">
-        </iframe>
-		<iframe id="icons_page" src="../approach2/example2/index.html">
-        </iframe>
-          </div>
-          <div>
-			  <form action="/visualOutcomes" method="POST" id="visual_outcomes">
-				  	<p>List the changes you notice as you resize the page on the left</p>
-				  	<div class="new btn btn-success" onclick="addVisualOutcome()">New</div>
-				  <div id="outcomes">
-				  </div>
-                    <div class="form-group">
-                        <button class="btn btn-lg btn-primary btn-block">Submit!</button>
-                    </div>
-                  </form> 
-          </div>
+		<div>
+			<div>
+				<div class="slidecontainer">
+						<input type="range" min="300" max="1000" value="300" class="slider" id="myRange">
+				</div>
+				<div id="pageAttrs">
+					<div class="attr">
+						<p>Page width is: </p>
+						<p id="pageWidth"></p>
+					</div>
+				</div>
+				<div class = "iframeContainer">
+					<iframe id="articles_page" src="example1/index.html">
+					</iframe>
+					<iframe id="icons_page" src="example2/index.html">
+					</iframe>
+				</div>
+			</div>
+			<div class = "code_container">
+			  <div class = "code_panel">
+				<div>
+				  <button class="btn btn-large btn-secondary" type="button" data-toggle="collapse" data-target="#collapseCode" aria-expanded="false" aria-controls="collapseCode">
+					Show Code
+				  </button>
+					<div class="collapse" id="collapseCode">
+					<div id="code_editor">
+					  .blog-feed__wrap {
+						<section style="margin-left:20px;">
+						  <p>
+							  display: grid;
+							</p>
+						  <p style="background-color:yellow">grid-template-columns:
+									<select onchange="updateGridTemplate(this.value);">
+										<option value="1fr" selected>1fr</option>
+										<option value="1fr 1fr">1fr 1fr</option>
+									</select>
+							  ;</p>
+						  <p>grid-template-rows: auto;</p>
+						  <p>grid-gap: 20px; }</p>
+						  <p>@media (min-width: 40em) {</p>
+							<section style="margin-left:20px;">
+							<p>.blog-feed__wrap {</p>
+								<section style="margin-left:10px;">
+									<p style="background-color:yellow">grid-template-columns:
+									<select onchange="updateGridTemplate(this.value);">
+										<option value="1fr 1fr" selected>1fr 1fr</option>
+										<option value="1fr 1fr 1fr">1fr 1fr 1fr</option>
+									</select>
+										; } }</p>
+						 		</section>
+							</section>
+						  <p>@media (min-width: 60em) {</p>
+							<section style="margin-left:20px;">
+								<p>.blog-feed__wrap {</p>
+								<section style="margin-left:10px;">
+									<p style="background-color:yellow">grid-template-columns:
+									<select onchange="updateGridTemplate(this.value);">
+										<option value="1fr 1fr 1fr" selected>1fr 1fr 1fr</option>
+										<option value="1fr 1fr 1fr 1fr">1fr 1fr 1fr 1fr</option>
+									</select>
+										;</p>
+								</section>
+								<p>} }</p>
+							</section>
+						</section>
+					  </div>
+					</div>
+			  	</div>
+			</div>
+			<div class = "code_panel">
+				
+			</div>
+			  <div class = "code_panel">
+				  <form action="/visualOutcomes" method="POST" id="visual_outcomes">
+						<p>How does the highlighted code across the two examples produce a different visual outcome for each example</p>
+						<textarea name="paragraph_text" cols="50" rows="10"></textarea>
+					  <div id="outcomes">
+					  </div>
+						<div class="form-group">
+							<button class="btn btn-lg btn-primary btn-block">Submit!</button>
+						</div>
+				  </form> 
+			  </div>
+		  	</div>
+		</div>
     </body>
-    <script src="/approach2/local.js"></script>
+    <script src="local.js"></script>
 </html>

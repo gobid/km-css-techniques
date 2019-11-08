@@ -4,8 +4,8 @@ var express = require("express"),
 	bodyParser = require("body-parser"),
 	fs = require('fs');
 
+/* this is problematic, have to find out a way to get around this . . . */
 app.use(express.static("approach1"));
-//app.use(express.static("approach2"));
 app.use(express.static(__dirname + 'views'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -89,6 +89,6 @@ app.get("/OutcomesApproach2Example1", (req, res) => {
 	res.render('./second');
 });
 
-app.listen(4000, process.env.IP, function(){
+app.listen(3000, process.env.IP, function(){
    console.log("The egs v2 Started!");
 });

@@ -5,9 +5,9 @@ var num_visual_outcomes = 0;
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
-	console.log('first one');
     pageWidth.innerHTML = slider.value/ parseFloat(getComputedStyle(document.querySelector('#articles_page'))['font-size'])+" em";
     document.getElementById("articles_page").style.width = slider.value + "px";
+	document.getElementById("icons_page").style.width = slider.value + "px";
 }
 
 function updateGridTemplate(selectedValue){

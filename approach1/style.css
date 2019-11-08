@@ -1,11 +1,40 @@
 #articles_page{
     margin-top: 130px;
-    width: 300px;
-    height: 500px;
+    width: 400px;
+    height: 600px;
+	margin-left: 50px;
+	float: left; 
 }
+
+#iframe_container{
+	display: flex;
+}
+
+.code_container {
+	float:left;
+	clear:both; 
+	margin-left: 50px;
+}
+
+#icons_page{
+    margin-top: 130px;
+    width: 400px;
+    height: 600px;
+	margin-left: 50px;
+	float: left;
+}
+
+.code_panel {
+	margin-top: 100px;
+	float: left;
+	margin-left: 40px;
+	width: 200px;
+	text-align: center;
+}
+
 body{
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 4fr;
     width: 100%;
     height: 100%;
     background-color: #1f2833 !important;
