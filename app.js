@@ -1,94 +1,118 @@
-var express = require("express"),
-    app = express(),
+var express = require('express'),
+	app = express(),
 	path = require('path'),
-	bodyParser = require("body-parser"),
-	fs = require('fs');
+	bodyParser = require('body-parser'),
+	fs = require('fs'),
+	mongoose = require('mongoose'),
+    passport = require("passport"),
+    LocalStrategy = require("passport-local"),
+    passportLocalMongoose = require("passport-local-mongoose"),
+    expressSession = require("express-session"),
+	Question = require('./models/question'),
+	User = require('./models/user'),
+	Response = require('./models/response');
 
-/* this is problematic, have to find out a way to get around this . . . */
-app.use(express.static("approach1"));
-app.use(express.static(__dirname + 'views'));
-app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get("/", function(req,res)
+/* connect to mongoDB Atlas */
+mongoose
+	.connect(
+		'mongodb+srv://KM:KnowledgeMaps@knowledgemaps-ehp5x.mongodb.net/test?retryWrites=true&w=majority',
+		{
+			useCreateIndex: true,
+			useNewUrlParser: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true
+		}
+	)
+	.then(() => {
+		console.log('connected to db');
+	})
+	.catch(err => {
+		console.log(err.message);
+	});
+
+
+//PASSPORT CONFIGURE
+app.use(expressSession({
+    secret: "Knowledge Maps",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
+app.get('/', function(req, res) {
+	res.send('Landing page');
+});
+
+
+/* Question routes*/
+app.get('/questions', function(req, res) {
+	Question.find({}, function(err, allQuestions) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true, data: allQuestions});
+		}
+	});
+});
+
+// Not accessed by Client.
+app.post('/questions', (req, res) => {
+	var newQuestion = {prompt: req.body.prompt};
+	Question.create(newQuestion, function(err, newlyCreated) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true });
+		}
+	});
+});
+
+/* User routes*/
+app.get('/users', function(req, res) {
+	User.find({}, function(err, allUsers) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true, data: allUsers});
+		}
+	});
+});
+app.post("/register", function(req,res)
 {
-    res.send("Landing page");
+    var userObj = {
+        username: req.body.username
+    };
+    User.register(new User(userObj), req.body.password, function(err, user)
+    {
+        if (err)
+        {
+            return res.json({ success: false, error: err});
+        }
+        passport.authenticate("local")(req, res, function(){
+			return res.json({ success: true });
+        });
+    });
 });
 
-app.get("/visualOutcomesApproach1Example1", function(req,res)
-{
-    res.render('./visual_outcomes_approach1_example1');
+//logout route
+app.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/");
 });
 
-app.post("/visualOutcomesApproach1Example1",function(req, res){
-	fs.writeFile('visual_outcomes_approach1_example1.csv', req.body.visual_outcome, (err) => {
-  	if (err) throw err;
-	  console.log('The file has been saved!');
-	});
-	res.redirect("/codeOutcomesApproach1Example1");
-});
-
-app.get("/codeOutcomesApproach1Example1", function(req,res)
-{
-	var dataArray = [];
-	fs.readFile('visual_outcomes_approach1_example1.csv', 'utf8', function (err, data) {
-  		dataArray = data.split(",");
-	  	console.log(dataArray);
-		res.render('./code_outcomes_approach1_example1', {visualOutcomes: dataArray});
-	});
-});
-
-app.post("/codeOutcomesApproach1Example1",function(req, res){
-	fs.writeFile('code_outcomes_approach1_example1.csv', req.body.codelines, (err) => {
-  	if (err) throw err;
-	  console.log('saved code lines!');
-	});
-	fs.writeFile('code_outcomes_approach1_example1.csv', req.body.rationale, (err) => {
-  	if (err) throw err;
-	  console.log('saved code lines!');
-	});
-	res.redirect("/");
-});
-
-app.get("/visualOutcomesApproach1Example2", function(req,res)
-{
-    res.render('./visual_outcomes_approach1_example2');
-});
-
-app.post("/visualOutcomesApproach1Example2",function(req, res){
-	fs.writeFile('visual_outcomes_approach1_example2.csv', req.body.visual_outcome, (err) => {
-  	if (err) throw err;
-	  console.log('The file has been saved!');
-	});
-	res.redirect("/codeOutcomesApproach1Example2");
-});
-
-app.get("/codeOutcomesApproach1Example2", function(req,res)
-{
-	var dataArray = [];
-	fs.readFile('visual_outcomes_approach1_example2.csv', 'utf8', function (err, data) {
-  		dataArray = data.split(",");
-	  	console.log(dataArray);
-		res.render('./code_outcomes_approach1_example2', {visualOutcomes: dataArray});
-	});
-});
-
-app.post("/codeOutcomesApproach1Example2",function(req, res){
-	fs.writeFile('code_outcomes_approach1_example2.csv', req.body.codelines, (err) => {
-  	if (err) throw err;
-	  console.log('saved code lines!');
-	});
-	fs.writeFile('code_outcomes_approach1_example2.csv', req.body.rationale, (err) => {
-  	if (err) throw err;
-	  console.log('saved code lines!');
-	});
-	res.redirect("/");
-});
-
-app.get("/OutcomesApproach2Example1", (req, res) => {
-	res.render('./second');
-});
-
-app.listen(3000, process.env.IP, function(){
-   console.log("The egs v2 Started!");
+app.listen(3000, process.env.IP, function() {
+	console.log('KM has Started!');
 });
