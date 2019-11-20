@@ -1,15 +1,15 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 
 var responseSchema = new mongoose.Schema({
-	user_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "User"
+	question: {
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Question'
+		},
+		position: Number,
+		prompt: String
 	},
-    question_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Question"
-	},
-    body: String
+	body: String
 });
 
-module.exports = mongoose.model("Response", responseSchema);
+module.exports = mongoose.model('Response', responseSchema);
