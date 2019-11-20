@@ -33,10 +33,6 @@ mongoose
 		console.log(err.message);
 	});
 
-app.get('/', function(req, res) {
-	res.send('Landing page');
-});
-
 /* Question routes*/
 app.get('/questions', function(req, res) {
 	Question.find({})
@@ -147,7 +143,7 @@ app.post('/register', function(req, res) {
 //logout route
 app.get('/logout', function(req, res) {
 	req.logout();
-	res.redirect('/');
+	res.redirect('/users');
 });
 
 app.listen(3000, process.env.IP, function() {
