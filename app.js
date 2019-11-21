@@ -15,6 +15,14 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
+
 /* connect to mongoDB Atlas */
 mongoose
 	.connect(
@@ -64,7 +72,8 @@ app.post('/questions', (req, res) => {
 
 /* Response routes*/
 app.get('/responses', function(req, res) {
-	Response.find({}, function(err, allResponses) {
+	Response.find({})
+		.sort('question.position').exec(function(err, allResponses) {
 		if (err) {
 			return res.json({ success: false, error: err });
 		} else {
@@ -73,8 +82,8 @@ app.get('/responses', function(req, res) {
 	});
 });
 app.post('/responses', function(req, res) {
-	console.log(req.query.id);
-	Question.findById(req.query.id, function(err, foundQuestion) {
+	// console.log(req.query.id);
+	Question.findById(req.body.question_id, function(err, foundQuestion) {
 		if (err) {
 			return res.json({ success: false, error: err });
 		} else {
@@ -96,6 +105,16 @@ app.post('/responses', function(req, res) {
 		}
 	});
 });
+
+app.delete('/responses', function(req, res, next) {
+    Response.remove({}, function(err) {
+            if (err) {
+                return res.json({ success: false, error: err });
+            } else {
+                return res.json({ success: true });
+            }
+        }
+    )});
 
 //PASSPORT CONFIGURE
 app.use(
