@@ -40,7 +40,11 @@ mongoose
 	.catch(err => {
 		console.log(err.message);
 	});
+/* User routes */
 
+app.post('/users', function(req,res){
+	
+});
 /* Question routes*/
 app.get('/questions', function(req, res) {
 	Question.find({})
