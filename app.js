@@ -15,12 +15,11 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  next();
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+	next();
 });
 
 /* connect to mongoDB Atlas */
@@ -42,8 +41,27 @@ mongoose
 	});
 /* User routes */
 
-app.post('/users', function(req,res){
-	
+app.get('/users', function(req, res) {
+	User.find({}, function(err, allUsers) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true, data: allUsers });
+		}
+	});
+});
+
+app.post('/users', function(req, res) {
+	var newUser = {
+		username: req.body.username
+	};
+	User.create(newUser, function(err, newlyCreated) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true, data: newlyCreated._id });
+		}
+	});
 });
 /* Question routes*/
 app.get('/questions', function(req, res) {
@@ -75,15 +93,16 @@ app.post('/questions', (req, res) => {
 });
 
 /* Response routes*/
-app.get('/responses', function(req, res) {
-	Response.find({})
-		.sort('question.position').exec(function(err, allResponses) {
-		if (err) {
-			return res.json({ success: false, error: err });
-		} else {
-			return res.json({ success: true, data: allResponses });
-		}
-	});
+app.get('/responses/:user_id', function(req, res) {
+	Response.find({"author.id":req.params.user_id})
+		.sort('question.position')
+		.exec(function(err, allResponses) {
+			if (err) {
+				return res.json({ success: false, error: err });
+			} else {
+				return res.json({ success: true, data: allResponses });
+			}
+		});
 });
 app.post('/responses', function(req, res) {
 	// console.log(req.query.id);
@@ -92,18 +111,30 @@ app.post('/responses', function(req, res) {
 			return res.json({ success: false, error: err });
 		} else {
 			console.log(foundQuestion);
-			var question = {
-				id: foundQuestion._id,
-				position: foundQuestion.position,
-				prompt: foundQuestion.prompt
-			};
-			var newResponse = { question: question, body: req.body.body };
-			// Create a new response and save to DB
-			Response.create(newResponse, function(err, newlyCreated) {
+			User.findById(req.body.user_id, function(err, foundUser) {
 				if (err) {
 					return res.json({ success: false, error: err });
 				} else {
-					return res.json({ success: true });
+					var question = {
+						id: foundQuestion._id,
+						position: foundQuestion.position,
+						prompt: foundQuestion.prompt
+					};
+					var user = {
+						id: foundUser._id,
+						username: foundUser.username
+					}
+					var newResponse = { author: user, question: question, body: req.body.body };
+					// Create a new response and save to DB
+					Response.create(newResponse, function(err, newlyCreated) {
+						if (err) {
+							return res.json({ success: false, error: err });
+						} else {
+							foundUser.responses.push(newlyCreated);
+							foundUser.save();
+							return res.json({ success: true });
+						}
+					});
 				}
 			});
 		}
@@ -111,62 +142,13 @@ app.post('/responses', function(req, res) {
 });
 
 app.delete('/responses', function(req, res, next) {
-    Response.remove({}, function(err) {
-            if (err) {
-                return res.json({ success: false, error: err });
-            } else {
-                return res.json({ success: true });
-            }
-        }
-    )});
-
-//PASSPORT CONFIGURE
-app.use(
-	expressSession({
-		secret: 'Knowledge Maps',
-		resave: false,
-		saveUninitialized: false
-	})
-);
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-app.use(function(req, res, next) {
-	res.locals.currentUser = req.user;
-	next();
-});
-
-/* User routes*/
-app.get('/users', function(req, res) {
-	User.find({}, function(err, allUsers) {
+	Response.remove({}, function(err) {
 		if (err) {
 			return res.json({ success: false, error: err });
 		} else {
-			return res.json({ success: true, data: allUsers });
-		}
-	});
-});
-app.post('/register', function(req, res) {
-	var userObj = {
-		username: req.body.username
-	};
-	User.register(new User(userObj), req.body.password, function(err, user) {
-		if (err) {
-			return res.json({ success: false, error: err });
-		}
-		passport.authenticate('local')(req, res, function() {
 			return res.json({ success: true });
-		});
+		}
 	});
-});
-
-//logout route
-app.get('/logout', function(req, res) {
-	req.logout();
-	res.redirect('/users');
 });
 
 app.listen(3000, process.env.IP, function() {

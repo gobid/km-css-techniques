@@ -9,6 +9,13 @@ var responseSchema = new mongoose.Schema({
 		position: Number,
 		prompt: String
 	},
+	author: {
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User'
+		},
+		username: String
+	},
 	body: String
 });
 
