@@ -1,0 +1,58 @@
+question.prompt,body
+"Based on your responses on the previous prompt, what do you notice is happening to the web page's layout as you resize the page on the left?","We increase columns until we hit 3, then we just get more whitespace"
+"Based on your responses on the previous prompt, what do you notice is happening to the web page's layout as you resize the page on the right?",We keep getting more columns until we get to the max sizeR
+"In reference to response 1a and 1b, how do you think the pages respond differently as you resize the page?",left: limit to how many columns we have. right: unlimited columns
+"For the visual outcomes that you identified previously, what properties (lines of code) below do you think contribute to EACH visual outcome for the page on the left?","Each green line controls the number of columns we have at different screen widths (<40, 40<60, >60)em"
+"For the visual outcomes that you identified previously, what properties (lines of code) below do you think contribute to EACH visual outcome for the page on the right?","grid-template-columns: repeat( : controls how many columns we have (if not using autofill)
+
+minmax(: controls minimum and maximum bounds of a column"
+How is the code for the example on the left different from code of the example on the right,Both using grid. 
+How is the code for the example on the left different from code of the example on the right,"Left specifically covers different ranges of widths. Right is controlled by autofill, autofill is controlled by the minmax for each element
+
+Grid gaps for right seem to be relative to root html font size, gaps for left are constant"
+"Based on your understanding of the visual outcomes and code for the example on the left, what do you think was the author's rationale behind their code style?","Handles specifically 3 different width ranges. Such as desktop, tablet, mobile"
+"Based on your understanding of the visual outcomes and code for the example on the right, what do you think was the author's rationale behind their code style?",Less control but more autonomy. 
+"Do you think it's possible to implement the page on the left using the code from the page on the right (below)? If so, write some pseudocode. If not, explain why/what constraints you have.","If we don't have access to @media, I would say no. We don't have a way of controlling the attribute based on screen width"
+"Do you think it's possible to implement the page on the right using the code from the page on the left (below)? If so, write some pseudocode. If not, explain why/what constraints you have.","@media (min-width: 20em) {
+
+.blog-feed__wrap {
+
+grid-template-columns: 1fr; } }
+
+@media (min-width: 40em) {
+
+.blog-feed__wrap {
+
+grid-template-columns: 2fr; } }
+
+@media (min-width: 60em) {
+
+.blog-feed__wrap {
+
+grid-template-columns: 3fr;
+
+} }
+
+@media (min-width: 80em) {
+
+.blog-feed__wrap {
+
+grid-template-columns: 4fr; } }
+
+@media (min-width: 100em) {
+
+.blog-feed__wrap {
+
+grid-template-columns: 5fr; } }"
+Describe the web page's layout at different page widths as you resize the page on the left? Start your responses this way 'At xyz pixels: ...',"At 300 px, there is one column on the page 
+At 500px, there is still one column on the page
+At 700px, there are 2 columns on the page
+At 1000px, there are 3 columns on the page
+At 1300px, there are still 3 columns on the page
+At 1400px, there are still 3 columns on the page"
+Describe the web page's layout at different page widths as you resize the page on the right? Start your responses this way 'At xyz pixels: ...',"At 300 px, there is one column on the page 
+At 500px, there are 2 columns on the page
+At 700px, there are 4 columns on the page
+At 1000px, there are 5 columns on the page
+At 1300px, there are still 7 columns on the page
+At 1400px, there are still 8 columns on the page"

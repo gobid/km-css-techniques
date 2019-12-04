@@ -1,42 +1,156 @@
-var express = require("express"),
-    app = express(),
+var express = require('express'),
+	app = express(),
 	path = require('path'),
-	bodyParser = require("body-parser"),
-	fs = require('fs');
+	bodyParser = require('body-parser'),
+	fs = require('fs'),
+	mongoose = require('mongoose'),
+	passport = require('passport'),
+	LocalStrategy = require('passport-local'),
+	passportLocalMongoose = require('passport-local-mongoose'),
+	expressSession = require('express-session'),
+	Question = require('./models/question'),
+	User = require('./models/user'),
+	Response = require('./models/response');
 
-app.use(express.static("approach1"));
-app.use(express.static(__dirname + 'views'));
-app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get("/", function(req,res)
-{
-    res.send("Landing page");
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+	next();
 });
 
-app.get("/fPart1", function(req,res)
-{
-    res.render('./index');
-});
-
-app.post("/visualOutcomes",function(req, res){
-	fs.writeFile('message.csv', req.body.visual_outcome, (err) => {
-  	if (err) throw err;
-	  console.log('The file has been saved!');
+/* connect to mongoDB Atlas */
+mongoose
+	.connect(
+		'mongodb+srv://KM:KnowledgeMaps@knowledgemaps-ehp5x.mongodb.net/test?retryWrites=true&w=majority',
+		{
+			useCreateIndex: true,
+			useNewUrlParser: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true
+		}
+	)
+	.then(() => {
+		console.log('connected to db');
+	})
+	.catch(err => {
+		console.log(err.message);
 	});
-	res.redirect("/fPart2");
-});
+/* User routes */
 
-app.get("/fPart2", function(req,res)
-{
-	var dataArray = [];
-	fs.readFile('message.csv', 'utf8', function (err, data) {
-  		dataArray = data.split(/\r?\n/);
-	  	console.log(dataArray);
-		res.render('./code', {visualOutcomes: dataArray});
+app.get('/users', function(req, res) {
+	User.find({}, function(err, allUsers) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true, data: allUsers });
+		}
 	});
 });
 
-app.listen(4000, process.env.IP, function(){
-   console.log("The egs v2 Started!");
+app.post('/users', function(req, res) {
+	var newUser = {
+		username: req.body.username
+	};
+	User.create(newUser, function(err, newlyCreated) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true, data: newlyCreated._id });
+		}
+	});
+});
+/* Question routes*/
+app.get('/questions', function(req, res) {
+	Question.find({})
+		.sort('position')
+		.exec(function(err, allQuestions) {
+			if (err) {
+				return res.json({ success: false, error: err });
+			} else {
+				return res.json({ success: true, data: allQuestions });
+			}
+		});
+});
+
+// Not accessed by Client.
+app.post('/questions', (req, res) => {
+	var newQuestion = {
+		example_id: req.body.example_id,
+		position: req.body.position,
+		prompt: req.body.prompt
+	};
+	Question.create(newQuestion, function(err, newlyCreated) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true });
+		}
+	});
+});
+
+/* Response routes*/
+app.get('/responses/:user_id', function(req, res) {
+	Response.find({"author.id":req.params.user_id})
+		.sort('question.position')
+		.exec(function(err, allResponses) {
+			if (err) {
+				return res.json({ success: false, error: err });
+			} else {
+				return res.json({ success: true, data: allResponses });
+			}
+		});
+});
+app.post('/responses', function(req, res) {
+	// console.log(req.query.id);
+	Question.findById(req.body.question_id, function(err, foundQuestion) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			console.log(foundQuestion);
+			User.findById(req.body.user_id, function(err, foundUser) {
+				if (err) {
+					return res.json({ success: false, error: err });
+				} else {
+					var question = {
+						id: foundQuestion._id,
+						position: foundQuestion.position,
+						prompt: foundQuestion.prompt
+					};
+					var user = {
+						id: foundUser._id,
+						username: foundUser.username
+					}
+					var newResponse = { author: user, question: question, body: req.body.body };
+					// Create a new response and save to DB
+					Response.create(newResponse, function(err, newlyCreated) {
+						if (err) {
+							return res.json({ success: false, error: err });
+						} else {
+							foundUser.responses.push(newlyCreated);
+							foundUser.save();
+							return res.json({ success: true });
+						}
+					});
+				}
+			});
+		}
+	});
+});
+
+app.delete('/responses', function(req, res, next) {
+	Response.remove({}, function(err) {
+		if (err) {
+			return res.json({ success: false, error: err });
+		} else {
+			return res.json({ success: true });
+		}
+	});
+});
+
+app.listen(3000, process.env.IP, function() {
+	console.log('KM has Started!');
 });

@@ -1,4 +1,3 @@
-// import { saveAs } from 'file-saver';
 var slider = document.getElementById("myRange");
 var pageWidth = document.getElementById("pageWidth");
 pageWidth.innerHTML = slider.value/ parseFloat(getComputedStyle(document.querySelector('#articles_page'))['font-size']) +" em"; // Display the default slider value
@@ -8,13 +7,14 @@ var num_visual_outcomes = 0;
 slider.oninput = function() {
     pageWidth.innerHTML = slider.value/ parseFloat(getComputedStyle(document.querySelector('#articles_page'))['font-size'])+" em";
     document.getElementById("articles_page").style.width = slider.value + "px";
-	var iframe = document.getElementById('articles_page');
-	// console.log(iframe.contentWindow);
-	var feed_wrap = iframe.contentDocument.getElementsByClassName("blog-feed__wrap")[0]
-	console.log(feed_wrap);
-	console.log(window.getComputedStyle(feed_wrap).getPropertyValue('grid-template-columns'));
+	document.getElementById("icons_page").style.width = slider.value + "px";
 }
 
+function updateGridTemplate(selectedValue){
+	var iframe = document.getElementById('articles_page');
+	var feed_wrap = iframe.contentDocument.getElementsByClassName("blog-feed__wrap")[0]
+	feed_wrap.style.setProperty('grid-template-columns', selectedValue);
+}
 function addVisualOutcome(){
     var input = document.createElement("input");
     input.classList.add("form-control");
@@ -25,15 +25,17 @@ function addVisualOutcome(){
     num_visual_outcomes += 1;
 }
 
-function updateDropdown() { 
-	selectElement =  
-			document.querySelector('#outcome_dropdown'); 
-
-	output = selectElement.value;
-	console.log(output);
-
-	document.querySelector('#outcome_description').innerHTML = "<%= visualOutcomes["+selectElement.value + "] %>";
-	// 		= output; 
+function updateResponseEditor(selectedvalue){ 
+	var editors = document.getElementsByClassName('code-response-editor');
+	console.log(editors);
+	for (var i = 0; i < editors.length; i++){
+		if (editors[i].getAttribute('id') == selectedvalue){
+			editors[i].style.setProperty('display', 'block');
+		}
+		else{
+			editors[i].style.setProperty('display', 'none');
+		}
+	}
 }
 
 function populateEditor(){
