@@ -151,6 +151,6 @@ app.delete('/responses', function(req, res, next) {
 	});
 });
 
-app.listen(3000, process.env.IP, function() {
+app.listen(process.env.PORT || 5000, process.env.IP, function() {
 	console.log('KM has Started!');
 });
