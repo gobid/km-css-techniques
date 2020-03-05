@@ -141,6 +141,7 @@ app.post('/responses', function(req, res) {
 	});
 });
 
+
 app.delete('/responses', function(req, res, next) {
 	Response.remove({}, function(err) {
 		if (err) {
@@ -149,6 +150,20 @@ app.delete('/responses', function(req, res, next) {
 			return res.json({ success: true });
 		}
 	});
+});
+
+app.get('/blogger',function(req,res) {
+  res.sendFile(path.join(__dirname+'/blogger.html'));
+});
+app.get('/icon',function(req,res) {
+  res.sendFile(path.join(__dirname+'/icon.html'));
+});
+
+app.get('/zendesk',function(req,res) {
+  res.sendFile(path.join(__dirname+'/zendesk.html'));
+});
+app.get('/slack',function(req,res) {
+  res.sendFile(path.join(__dirname+'/slack.html'));
 });
 
 app.listen(process.env.PORT || 5000, process.env.IP, function() {
