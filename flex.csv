@@ -1,0 +1,128 @@
+author.username,question.prompt,body
+David,Describe the layout of the website on the left at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"at 300 px there's one column of info that is stacked
+
+at around 780 pixels the one columns snap to 4 columns
+
+at around 1200 pixels it becomes almost too wide to see"
+Cooper Barth,Describe the layout of the website on the left at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"At <912 pixels, there are 2 columns
+At >912 pixels, there is 1 column
+"
+Zev S.,Describe the layout of the website on the left at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"At 772px there are four columns for the pricing
+At < 772px, they switch to single columns stacked on top of one another"
+Abizar Bagasrawala,Describe the layout of the website on the left at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"At 772 pixels: number of columns change to 4
+
+"
+Abizar Bagasrawala,Describe the layout the website on the right at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"Before 574 px: 3 columns
+After 574 px: 4 columns
+At 712 px: 5 columns
+... goes to 7 eventually.
+At 1129 px: Another column with options to download appears on the right, and number of other columns shrinks to 5.
+... eventually number of columns goes to 10+."
+Amy,Describe the layout of the website on the left at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"At fewer pixels, the content is stacked in one column. At more pixels, the content goes into 4 columns"
+Amy,Describe the layout the website on the right at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"At 437 pixels , there are 3 dinosaurs in each column. 
+At 1177 pixels, there are 5 dinosaurs in each column, and there is a download sidebar to the right. "
+Zev S.,Describe the layout the website on the right at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"> ~720 there are 5 columns
+from 720~ to ~570, there are 4 columns
+from 570 to 372 there are 3
+from less than 372 there are 2 columns"
+Cooper Barth,Describe the layout of the website on the left at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"- At <764ish pixels, expanding just changes text wrapping
+- At >770ish pixels, the subscription plans become 1 row instead of 1 column"
+Amy,What do you notice is happening to the web page's layout as you resize the website on the left?,The content is rearranging itself. The plan options are becoming side by side as the page widens. 
+Amy,What do you notice is happening to the web page's layout as you resize the website on the right?,"The content is rearranging itself. A sidebar appears,a nd more icons are shown on screen at the same time. "
+David,"In reference to your responses on the previous prompts, how do you think the websites respond differently as you resize the page?","since there are so many more tiles in the second site, the page has more frequent column count changes than the first site. The tiles in the first site change width to fit the page, whereas in the in the second site the tiles are fixed width and fill the page. I think the  first site probably has flex layout and the second site probably has grid layout."
+Cooper Barth,Describe the layout the website on the right at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"- At <460 pixels, the subscription plans are a card in the center
+- At >460 pixels, the card vertically fills the screen"
+Abizar Bagasrawala,What do you notice is happening to the web page's layout as you resize the website on the left?,"Divides into 4 columns when there is enough space, and then, as you increase width, it keeps increasing surrounding width while keeping column size constant."
+Abizar Bagasrawala,What do you notice is happening to the web page's layout as you resize the website on the right?,Keeps dividing into more columns as there is more space (with column size fixed at different breakpoints).
+Leesha,What do you notice is happening to the web page's layout as you resize the website on the left?,"the column sizes are changing as I change the page width
+when i go beyond 1000px the spacing between the description and the buttons also change"
+Leesha,What do you notice is happening to the web page's layout as you resize the website on the right?,"the columns continue to grow in number, and the sizes of the pictures actually fluctuate a little bit"
+Amy,"In reference to your responses on the previous prompts, how do you think the websites respond differently as you resize the page?","On the slack webpage, there is a maximum of 4 columns even when the page is much wider. In the icon page, the number of icons grows in relation to the width of the window"
+Cooper Barth,What do you notice is happening to the web page's layout as you resize the website on the left?,"Text is adjusting its wrapping until a certain width, at which point all of the subscription plans become the same row"
+Cooper Barth,What do you notice is happening to the web page's layout as you resize the website on the right?,"Nothing happens for a while until at a certain point, the card fills the screen vertically"
+Zev S.,"In reference to your responses on the previous prompts, how do you think the websites respond differently as you resize the page?","The one on the left will increase the size and wrap the columns in flex, but the one of the right doesn't wrap, but it resizes the columns to have a specific number under the parents element."
+David,List all the code properties you think are responsible for the behavior of the website on the left as you resize it? ,"min-width
+flex-wrap
+align-items
+display
+"
+David,List all the code properties you think are responsible for the behavior of the website on the right as you resize it? ,"align-items
+flex-wrap
+display 
+flex-direction
+width (icons)
+align-content"
+Garrett,Describe the layout of the website on the left at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',"At 600px the Slack icon snaps to the left
+
+From 1-700px Learn more is centered, Slack icon is aligned left and menu is aligned right. The text fills the full screen.
+
+From 1-770. It seems like there are four cells with information stacked vertically.
+
+At 770px+. The cells are stacked horizontally with all the information.
+
+At 1090. The Menu titles are displayed at the top.
+
+At 1029px they add a feature comparison between the different plans and push the commonly asked questions down."
+Leesha,"In reference to your responses on the previous prompts, how do you think the websites respond differently as you resize the page?",The slack page maintains the same 4 cols and widths and just centers that over the page width after a certain point -- but the dino pack page continues to expand the number of columns to fit the changing page width
+Abizar Bagasrawala,"In reference to your responses on the previous prompts, how do you think the websites respond differently as you resize the page?","The left website sets a maximum width on the group of columns, and restricts column number to 4, whereas the right website lets the width of group of columns change. In the right website, because column width is constant, the number of columns keeps increasing."
+Cooper Barth,"In reference to your responses on the previous prompts, how do you think the websites respond differently as you resize the page?","The website on the left adjusts its text wrapping incrementally and then adjusts its layout based on a media query at ~765 pixels.
+
+I can't go back and edit my responses now, but I got an ad on my second website for the previous pages and didn't realize that I could interact with the site to get rid of the ad and see the dinosaurs.
+
+Given the dinosaurs, it looks like it changes its column count over time based on some width-based media query."
+Garrett,Describe the layout the website on the right at different page widths as you resize the page? Start your responses this way 'At xyz pixels: ...',As the pixel size increases there is more text displayed horizontally and there is more text displayed in total.
+David,How are the highlighted CSS code properties for the blogger website similar to those from the icon website?,"display
+flex-direction
+justify-content
+align-content
+align-items"
+David,How are the highlighted CSS code properties for the blogger website different from those from the icon website?,"no min width
+flex-wrap"
+Garrett,What do you notice is happening to the web page's layout as you resize the website on the left?,As the pixel size increases there is more text displayed horizontally and there is more text displayed in total.
+Zev S.,List all the code properties you think are responsible for the behavior of the website on the left as you resize it? ,"""@media min-width:"" corresponded to the breakpoints of when it would break into flexed columns.
+
+The wrap, nowrap, or wrap-reverse decided whether the columns would wrap and in what order."
+Garrett,What do you notice is happening to the web page's layout as you resize the website on the right?,As the pixel size increases there is more text displayed horizontally and there is more text displayed in total.
+Amy,List all the code properties you think are responsible for the behavior of the website on the right as you resize it? ,"the flex-wrap property controls whether the columns wrap to the row below if it is wider than the screen. 
+If there is no wrap, it's just one long row. "
+Amy,List all the code properties you think are responsible for the behavior of the website on the left as you resize it? ,"the @media min-width specifies the minimum width in which the content starts wrapping. If the width is large, most things just stay in one column until that width. 
+
+the flex-wrap property controls whether the columns wrap to the row below if it is wider than the screen. 
+
+"
+Zev S.,List all the code properties you think are responsible for the behavior of the website on the right as you resize it? ,"The flex-wrap property doesn't change how many columns you have, but it does change how those columns are oriented and in what order."
+Amy,How are the highlighted CSS code properties for the blogger website similar to those from the icon website?,they both use the flex-wrap property to make things wrap. 
+Cooper Barth,List all the code properties you think are responsible for the behavior of the website on the left as you resize it? ,"The flex-wrap property is controlling how the columns are arranged with different widths - nowrap means that the cards should not wrap (i.e. they should stay on one line and fit the width of the screen). Setting it to wrap makes it wrap like normal, forcing cards onto subsequent rows instead of fitting to the page width.
+
+Because the parent container is a flex container, elements will inherently resize equally to fit rows."
+Amy,How are the highlighted CSS code properties for the blogger website different from those from the icon website?,"There is a min-width setting on the left, which means that the wrapping only happens above a certain width. The wrapping happens all the time on the right, no matter what width the screen is. "
+Cooper Barth,List all the code properties you think are responsible for the behavior of the website on the right as you resize it? ,"There are no media queries involved here - the # of columns is purely controlled by how many columns widths can fit on the current screen size - if the sum of the column widths and margins is greater than the current screen width, it will wrap depending on the policy specified."
+Zev S.,How are the highlighted CSS code properties for the blogger website similar to those from the icon website?,They both use flex grids. The both rely on columns to display their information
+Zev S.,How are the highlighted CSS code properties for the blogger website different from those from the icon website?,"There is a set breakpoint that defines when the columns will resize to fit the width of the page for the SLACK website, but for the icon website, that is done automatically by wrapping the columns when the page resizes."
+Garrett,"In reference to your responses on the previous prompts, how do you think the websites respond differently as you resize the page?","I'm not sure how to summarize at a high level. It seems that each have some fixed cell properties (like the top and bottom). The body changes to incorporate more text in both to make sure there is relevant content across the whole screen. Also, I didn't do the px for the second screen (got confused on questions), but it does seem that both example change at the same pixels counts."
+Leesha,List all the code properties you think are responsible for the behavior of the website on the left as you resize it? ,"It seemed like the most influential was the flexwrap property when it was set to no wrap for the slack website -- it maintains the same 4 cols and changes their own sizes as you resize.  similarly the media min-width property seemed to set the minimum width for the cols -- so if I was under a certain size, then it would maintain the min and only be one col, and once I went beyond that size, it collapsed to 4 cols"
+Leesha,List all the code properties you think are responsible for the behavior of the website on the right as you resize it? ,"For this section, it definitely seemed critical that the flex-wrap property was set to wrap, else the dinosaurs would just spill over beyond the width of the page"
+Cooper Barth,How are the highlighted CSS code properties for the blogger website similar to those from the icon website?,They are both using wrapping to determine how to display columns of containers (i.e. choosing when to wrap or not).
+Cooper Barth,How are the highlighted CSS code properties for the blogger website different from those from the icon website?,"The right website (dinosaurs) always uses wrapping, taking advantage of fixed child element width to determine when to wrap. The left website (Slack) uses a container with the flex property, which lets its children resize based on screen dimensions - because of this, a media query that checks for a specific screen width is used to tell the page whether or not to wrap."
+Abizar Bagasrawala,List all the code properties you think are responsible for the behavior of the website on the left as you resize it? ,"Min-width sets the width of each column (which determines when there is enough pixel space for all 4 columns to fit in one row), and nowrap forces all columns to be in the same row and not expand to take up more space."
+Abizar Bagasrawala,List all the code properties you think are responsible for the behavior of the website on the right as you resize it? ,"flex-wrap ""wrap"" makes the columns move to next row when required, whereas otherwise it is just all in one row. With icons at width 100%, it expands to take as much as it needs unless there is a ""wrap"" set to it."
+Cooper Barth,"Based on your understanding of the visual outcomes and code for the icon website, what do you think was the author's rationale behind their code style?","Because the icons will always have a fixed size in this website, it's intuitive to just wrap them normally."
+Cooper Barth,"Based on your understanding of the visual outcomes and code for the blogger website, what do you think was the author's rationale behind their code style?","The author of the site wanted to have a non-fixed width for its subscription plan containers in order to implement dynamic text wrapping within the containers based on the screen width. Because of this, they decided to use flex and switched over to a single row only once a certain width is hit to make the content look nice."
+Garrett,List all the code properties you think are responsible for the behavior of the website on the left as you resize it? ,"I'm going to try and answer this without playing.
+
+There's a thing called grid container and it responds to rem that can be set and different values.
+
+There's also a grid of containers that can be wrapped, wrapped in reverse and have no wrap.
+
+
+"
+Garrett,List all the code properties you think are responsible for the behavior of the website on the right as you resize it? ,"There's also a grid of containers that can be wrapped, wrapped in reverse and have no wrap.
+"
+Garrett,How are the highlighted CSS code properties for the blogger website similar to those from the icon website?,"I didn't really look at how the highlighted code properties were the same or different. I was just trying to figure out how the toggled variable was changing things differently or similar.
+
+But now that I look at it they have a lot of similarities: direction display, align-items, and content. And each can be assigned certain values."
+Garrett,How are the highlighted CSS code properties for the blogger website different from those from the icon website?,"I didn't really look at how the highlighted code properties were the same or different. I was just trying to figure out how the toggled variable was changing things differently or similar.
+
+But now that I look at it they have a lot of similarities: direction display, align-items, and content. And each can be assigned certain values."
+Garrett,"Based on your understanding of the visual outcomes and code for the blogger website, what do you think was the author's rationale behind their code style?",It seems like they change the pattern based on the rem (not confident in this yet). Or at least changed the wrapping based on on pixel size. Or pixel size doesn't really matter.
+Garrett,"Based on your understanding of the visual outcomes and code for the icon website, what do you think was the author's rationale behind their code style?",It seems like they change the pattern based on the rem (not confident in this yet). Or at least changed the wrapping based on on pixel size. Or pixel size doesn't really matter.
