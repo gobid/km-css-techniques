@@ -8,11 +8,14 @@ This repo houses the server for Knowledge Maps platform and has the km-client li
 ### `git clone --recursive https://github.com/NUDelta/km-server.git`
 The recursive flag is important because it downloads the km-client as a submodule
 
-2. Install node modules using:
+2. Install node modules in km-server directory using:
 ### `npm install`
 
-3. Install nodemon node module using:
+3. Install nodemon node module in km-server directory using:
 ### `sudo npm install -g --force nodemon`
+
+4. Install node modules in km-client directory using:
+### `npm install`
 
 ## Start the Knowledge Maps tool
 cd to the main directory then run
