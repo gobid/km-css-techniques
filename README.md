@@ -1,13 +1,22 @@
 # km-server
 Knowledge Maps Server 
 
-This repo houses the server for Knowledge Maps platform and has the km-client linked. 
+This repo houses the server for Knowledge Maps platform and has the km-client linked as a submodule. 
 
-## Available Scripts
+## Setup instructions
+1. Clone the repository using: 
+### `git clone --recursive https://github.com/NUDelta/km-server.git`
+The recursive flag is important because it downloads the km-client as a submodule
 
-To start the Knowledge Maps tool, simply run in the main directory: 
+2. Install node modules using:
+### `npm install`
 
+3. Install nodemon node module using:
+### `sudo npm install -g --force nodemon`
+
+## Start the Knowledge Maps tool
+cd to the main directory then run
 ### `npm run dev`
 
-Runs the server in the development mode.<br />
+Runs the server in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
