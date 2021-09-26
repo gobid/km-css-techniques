@@ -1,21 +1,14 @@
-import React from 'react';
-
 import axios from 'axios';
-import './KMContainer.css';
-import 'rc-slider/assets/index.css';
-import Slider from 'rc-slider';
-import Iframe from 'react-iframe';
-import FreeResponseQuestion from './FreeResponseQuestion';
-import InteractiveCodeSnippet from './InteractiveCodeSnippet';
-import PreviousResponses from './PreviousResponses';
-import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ref_code from './css_snippet_images/ref_code.png';
-import masterclass_code from './css_snippet_images/masterclass_code.png';
-import icons_code from './css_snippet_images/icons_code.png';
-import refvicons from './css_snippet_images/refvicons.png';
-import masterclassvref from './css_snippet_images/masterclassvref.png';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import React from 'react';
+import Iframe from 'react-iframe';
 import articlesvmasterclass from './css_snippet_images/articlesvmasterclass.png';
+import masterclassvref from './css_snippet_images/masterclassvref.png';
+import refvicons from './css_snippet_images/refvicons.png';
+import './KMContainer.css';
+
 
 class KMContainer extends React.Component {
 	constructor(props) {
