@@ -1,24 +1,13 @@
 # km-server
 Knowledge Maps Server 
 
-This repo houses the server for Knowledge Maps platform and has the km-client linked as a submodule. 
+This repo houses the server for Knowledge Maps platform and stores the client in the `client` directory in a monorepo setup. 
 
 ## Setup instructions
-1. Clone the repository using: 
+1. Clone the repository 
 
-```
-git clone --recursive https://github.com/NUDelta/km-server.git
-```
 
-The recursive flag is important because it downloads the km-client as a submodule
-
-2. Install node modules in km-server directory using:
-
-```
-npm install
-```
-
-3. Install node modules in km-client directory using:
+2. Install node modules:
 
 ```
 npm install
