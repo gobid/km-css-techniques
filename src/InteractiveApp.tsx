@@ -3,10 +3,13 @@ import { useState, useRef } from "react";
 import "./InteractiveApp.css";
 
 const INITIAL_STYLES = `
-.grid {
+.collections-grid {
   display: grid;
-  grid: repeat(2, 200px) / auto-flow;
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1.5rem;
+  padding-bottom: 4rem;
+  -moz-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 `;
 
@@ -29,8 +32,8 @@ export default function InteractiveApp(): JSX.Element {
     <div>
       <iframe
         title="grid-1"
-        src="/examples/grid-1.html"
-        width={500}
+        src="/examples/italic.com"
+        width={1000}
         height={500}
         frameBorder="0"
         ref={myIframeRef}
