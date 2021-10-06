@@ -223,7 +223,6 @@ _handlePairChoiceChange = async event =>{
 					/>
 					</div>): this.state.pair === "masterclass v. reformation 2" ?(
 					<div className="iframeContainer">
-						// masterclass
 						<Iframe
 							allowtransparency="true"
 						url="http://grid-masterclass-original.s3-website.us-east-2.amazonaws.com"
@@ -231,7 +230,6 @@ _handlePairChoiceChange = async event =>{
 						height="800px"
 						id="frame1"
 					/>
-						// ref
 						<Iframe
 							allowtransparency="true"
 						url="http://reformation-example.s3-website.us-east-2.amazonaws.com"
@@ -241,7 +239,6 @@ _handlePairChoiceChange = async event =>{
 					/>
 					</div>):this.state.pair === "articles v. masterclass" ?(
 					<div className="iframeContainer">
-						// articles
 						<Iframe
 							allowtransparency="true"
 						url="http://julian-articles-base.s3-website.us-east-2.amazonaws.com/"
@@ -249,7 +246,6 @@ _handlePairChoiceChange = async event =>{
 						height="800px"
 						id="frame1"
 					/>
-						// masterclass
 						<Iframe
 							allowtransparency="true"
 						url="http://grid-masterclass-original.s3-website.us-east-2.amazonaws.com"
@@ -301,147 +297,7 @@ _handlePairChoiceChange = async event =>{
 								<img src={masterclassvref} alt="masterclass_v_reformation" />):
 							null}
 						</div>
-						{this.state.currentQuestionIndex === 3 ||
-						this.state.currentQuestionIndex === 4 ||
-						this.state.currentQuestionIndex === 5 ||
-						this.state.currentQuestionIndex === 6 ||
-						this.state.currentQuestionIndex === 7 ? (
-							// <div className="helpful_questions">
-							// 	<h5 style={{ marginBottom: '50px' }}>
-							// 		Unsure about specific code snippets? Check out some
-							// 		documentation here:{' '}
-							// 	</h5>
-							// 	<table style={{ width: '100%' }}>
-							// 		<tr>
-							// 			<th style={{ width: '50%' }}>Question</th>
-							// 			<th style={{ width: '50%' }}>Resource</th>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>How does grid-template-columns work?</td>
-							// 			<td>
-							// 				<a
-							// 					href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns"
-							// 					target="_blank"
-							// 				>
-							// 					grid-template-columns
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>How does CSS repeat() work? </td>
-							// 			<td>
-							// 				<a
-							// 					href="https://developer.mozilla.org/en-US/docs/Web/CSS/repeat"
-							// 					target="_blank"
-							// 				>
-							// 					repeat
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>What is a unit fr?</td>
-							// 			<td>
-							// 				<a
-							// 					href="https://alligator.io/css/css-grid-layout-fr-unit/"
-							// 					target="_blank"
-							// 				>
-							// 					fr
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>How does minmax() work? </td>
-							// 			<td>
-							// 				<a
-							// 					href="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax"
-							// 					target="_blank"
-							// 				>
-							// 					minmax()
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>How does CSS position work? </td>
-							// 			<td>
-							// 				<a
-							// 					href="https://medium.freecodecamp.org/how-to-use-the-position-property-in-css-to-align-elements-d8f49c403a26"
-							// 					target="_blank"
-							// 				>
-							// 					position
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>What does @media do? </td>
-							// 			<td>
-							// 				<a
-							// 					href="https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries"
-							// 					target="_blank"
-							// 				>
-							// 					@media
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>What does rem mean?</td>
-							// 			<td>
-							// 				<a
-							// 					href="https://medium.com/code-better/css-units-for-font-size-px-em-rem-79f7e592bb97"
-							// 					target="_blank"
-							// 				>
-							// 					rem
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>What does flex property do?</td>
-							// 			<td>
-							// 				<a
-							// 					href="https://www.w3schools.com/cssref/css3_pr_flex.asp"
-							// 					target="_blank"
-							// 				>
-							// 					flex
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>What does justify-content do?</td>
-							// 			<td>
-							// 				<a
-							// 					href="https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content"
-							// 					target="_blank"
-							// 				>
-							// 					justify-content
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>What does autofill do?</td>
-							// 			<td>
-							// 				<a
-							// 					href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Auto-placement_in_CSS_Grid_Layout"
-							// 					target="_blank"
-							// 				>
-							// 					autofill
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 		<tr>
-							// 			<td>What does min-content do?</td>
-							// 			<td>
-							// 				<a
-							// 					href="https://developer.mozilla.org/en-US/docs/Web/CSS/width"
-							// 					target="_blank"
-							// 				>
-							// 					min-content
-							// 				</a>
-							// 			</td>
-							// 		</tr>
-							// 	</table>
-							// </div>
-							<div>
-							</div>
-						) : null}
+
 					</div>
 				</div>
 			</div>
