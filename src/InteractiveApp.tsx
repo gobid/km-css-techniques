@@ -1,8 +1,10 @@
 import * as React from "react";
-import { useState, useRef } from "react";
+import SplitEditor from "./components/SplitEditor";
+import { Example } from "./components/types";
 import "./InteractiveApp.css";
 
-const INITIAL_STYLES = `
+const italicExample: Example = {
+  defaultParentCSS: `
 .collections-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -11,35 +13,30 @@ const INITIAL_STYLES = `
   -moz-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
 }
-`;
+  `,
+  iframeUrl: "/examples/italic.com",
+};
+
+const gridMasterclassExample: Example = {
+  defaultParentCSS: `
+.grid {
+  -webkit-align-content: start;
+  -ms-flex-line-pack: start;
+  align-content: start;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-columns: 1fr 1fr 1fr 25%;
+  grid-template-rows: 1fr 1fr 1fr 0.5fr;
+}
+  `,
+  iframeUrl: "/examples/grid-masterclass",
+};
 
 export default function InteractiveApp(): JSX.Element {
-  const [cssStyles, setCssStyles] = useState(INITIAL_STYLES);
-
-  const myIframeRef = useRef<HTMLIFrameElement>(null);
-
-  const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    const nextValue = e.target.value;
-
-    setCssStyles(nextValue);
-
-    if (myIframeRef) {
-      myIframeRef.current?.contentWindow.postMessage(nextValue);
-    }
-  };
-
   return (
-    <div>
-      <iframe
-        title="grid-1"
-        src="/examples/italic.com"
-        width={1000}
-        height={500}
-        frameBorder="0"
-        ref={myIframeRef}
-      ></iframe>
-
-      <textarea className="input" onChange={handleChange} value={cssStyles} />
-    </div>
+    <SplitEditor
+      exampleOne={italicExample}
+      exampleTwo={gridMasterclassExample}
+    />
   );
 }

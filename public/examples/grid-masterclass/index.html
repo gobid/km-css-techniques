@@ -195,5 +195,33 @@
     <!--[if lte IE 9
       ]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script
     ><![endif]-->
+
+    <style id="change-css-container">
+      .grid {
+        -webkit-align-content: start;
+        -ms-flex-line-pack: start;
+        align-content: start;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        grid-template-columns: 1fr 1fr 1fr 25%;
+        grid-template-rows: 1fr 1fr 1fr 0.5fr;
+      }
+    </style>
+
+    <script>
+      window.addEventListener(
+        "message",
+        (event) => {
+          const data = event.data;
+
+          if (typeof data !== "string") return;
+
+          const cssContainer = document.querySelector("#change-css-container");
+
+          cssContainer.innerHTML = event.data;
+        },
+        false
+      );
+    </script>
   </body>
 </html>
