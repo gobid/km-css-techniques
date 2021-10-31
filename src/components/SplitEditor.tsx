@@ -42,7 +42,7 @@ export default function SplitEditor({
 
   return (
     <div>
-      <section className="flex">
+      <section className="flex gap-4">
         <iframe
           title="example-1"
           src={exampleOne.iframeUrl}
@@ -62,7 +62,7 @@ export default function SplitEditor({
         ></iframe>
       </section>
 
-      <section className="flex text-black border-t mt-10">
+      <section className="flex text-black border-t mt-3">
         <DiffEditor
           value={[exampleOneParentCSS, exampleTwoParentCSS]}
           height="1000px"

@@ -4,4 +4,4 @@ import App from "./App";
 import "./index.css";
 import InteractiveApp from "./InteractiveApp";
 
-ReactDOM.render(<InteractiveApp />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
