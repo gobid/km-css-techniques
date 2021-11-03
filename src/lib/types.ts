@@ -1,4 +1,5 @@
 export type Example = {
+  name: string;
   iframeUrl: string;
   defaultParentClassname: string;
   declarations: Declaration[];

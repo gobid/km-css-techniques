@@ -52,6 +52,7 @@ export function declarationsToCSSString(
 }
 
 const italic: Example = {
+  name: "Italic",
   iframeUrl: "/examples/italic.com",
   defaultParentClassname: "collections-grid",
   declarations: getDeclarationFromString(`
@@ -65,6 +66,7 @@ const italic: Example = {
 };
 
 const gridMasterclass: Example = {
+  name: "Grid Masterclass",
   iframeUrl: "/examples/grid-masterclass",
   declarations: getDeclarationFromString(`
     -webkit-align-content: start;

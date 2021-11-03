@@ -12,3 +12,11 @@
   background-color: #f0f0f0;
   color: #333;
 }
+
+.select {
+  padding: 4px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+}

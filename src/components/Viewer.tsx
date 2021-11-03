@@ -27,6 +27,7 @@ export default function Viewer({ example, size }: ViewerProps): JSX.Element {
       width={`${size}%`}
       height={800}
       frameBorder="0"
+      className="border border-gray-200 rounded"
       ref={viewerRef}
     ></iframe>
   );
