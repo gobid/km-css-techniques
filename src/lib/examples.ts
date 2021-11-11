@@ -94,4 +94,20 @@ const flatIcons: Example = {
   defaultParentClassname: "grid",
 };
 
-export const examples: Example[] = [italic, gridMasterclass, flatIcons];
+const smashingMagazineGuide: Example = {
+  name: "Smashing Magazine Guide",
+  iframeUrl: "/examples/smashingmagazineguide",
+  declarations: getDeclarationFromString(`
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px, 1fr));
+    grid-gap: 0 1.5em;
+  `),
+  defaultParentClassname: "cards__grid",
+};
+
+export const examples: Example[] = [
+  italic,
+  gridMasterclass,
+  flatIcons,
+  smashingMagazineGuide,
+];
