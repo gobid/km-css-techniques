@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Explore from "./components/Explore";
 import { examples } from "./lib/examples";
 
+// @ts-ignore
 export default function NewApp(): JSX.Element {
   const [firstSelectedIdx, setFirstSelectedIdx] = useState(0);
   const [secondSelectedIdx, setSecondSelectedIdx] = useState(1);
