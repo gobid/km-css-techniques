@@ -80,4 +80,18 @@ const gridMasterclass: Example = {
   defaultParentClassname: "grid",
 };
 
-export const examples: Example[] = [italic, gridMasterclass];
+const flatIcons: Example = {
+  name: "Flat Icons",
+  iframeUrl: "/examples/flat-icons",
+  declarations: getDeclarationFromString(`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    grid-auto-rows: min-content;
+    grid-column-gap: 0.375rem;
+    grid-row-gap: 0.375rem;
+    grid-auto-flow: dense;
+  `),
+  defaultParentClassname: "grid",
+};
+
+export const examples: Example[] = [italic, gridMasterclass, flatIcons];
