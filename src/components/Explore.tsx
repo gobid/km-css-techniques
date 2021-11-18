@@ -63,6 +63,30 @@ export default function Explore({
           onChange={(declarations) => setSecondSetOfDeclarations(declarations)}
         />
       </div>
+
+      <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+        {[firstExample, secondExample].map((example, i) => (
+          <div className="p-4" key={i}>
+            {example.htmlOutput && (
+              <div>
+                <h1>HTML Structure:</h1>
+                <pre>{example.htmlOutput}</pre>
+              </div>
+            )}
+
+            {example.children && (
+              <div>
+                <h1>Child CSS</h1>
+                {example.children.map((child, i) => (
+                  <div key={i}>
+                    <pre>{child}</pre>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

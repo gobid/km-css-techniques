@@ -78,6 +78,94 @@ const gridMasterclass: Example = {
     grid-template-rows: 1fr 1fr 1fr 0.5fr;
   `),
   defaultParentClassname: "grid",
+  htmlOutput: `
+  <div class="grid">
+    <div class="div-block-7"></div>
+    <div class="div-block-4"></div>
+    <div class="div-block-3"></div>
+    <div class="div-block-5"></div>
+    <div class="div-block-6"></div>
+    <div class="div-block"></div>
+    <div class="div-block-8"></div>
+    <div class="div-block-4"></div>
+    <div class="div-block-10"></div>
+    <div class="div-block-2"></div>
+  </div>
+  `,
+  children: [
+    `
+    .div-block-4 {
+      grid-column-start: 3;
+      grid-column-end: 5;
+      grid-row-start: 4;
+      grid-row-end: 5;
+    }
+    `,
+    `
+    .div-block-4 {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 4;
+      grid-row-end: 5;
+    }
+    `,
+    `
+    .div-block-3 {
+      grid-column-start: 4;
+      grid-column-end: 5;
+      grid-row-start: 2;
+      grid-row-end: 4;
+    }
+    `,
+    `
+    .div-block-5 {
+      grid-column-start: 2;
+      grid-column-end: 4;
+      grid-row-start: 3;
+      grid-row-end: 4;
+    }
+    `,
+    `
+    .div-block-6 {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 3;
+      grid-row-end: 4;
+    }
+    `,
+    `
+    .div-block {
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 4;
+      grid-row-end: 5;
+    }
+    `,
+    `
+    .div-block-8 {
+      grid-column-start: 3;
+      grid-column-end: 5;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+    `,
+    `
+    .div-block-4 {
+      grid-column-start: 4;
+      grid-column-end: 5;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+    `,
+    `
+    .div-block-10 {
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+    `,
+  ],
 };
 
 const flatIcons: Example = {

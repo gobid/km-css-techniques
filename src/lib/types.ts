@@ -3,6 +3,8 @@ export type Example = {
   iframeUrl: string;
   defaultParentClassname: string;
   declarations: Declaration[];
+  htmlOutput?: string;
+  children?: string[];
 };
 
 export type Declaration = {
