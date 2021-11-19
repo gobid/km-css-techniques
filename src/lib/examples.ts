@@ -194,7 +194,7 @@ const smashingMagazineGuide: Example = {
 };
 
 const magazineLayout: Example = {
-  name: "Smashing Magazine",
+  name: "Melon",
   iframeUrl: "/examples/magazine-layout",
   declarations: getDeclarationFromString(`
     display: grid;
@@ -258,10 +258,11 @@ const orange: Example = {
   name: "Orange",
   iframeUrl: "/examples/orange",
   declarations: getDeclarationFromString(`
-    max-width: 940px;
-    margin: 0 20px;
-    display: grid;
-    grid-gap: 10px;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: minmax(150px, auto);
+  grid-gap: 10px;
   `),
   defaultParentClassname: "wrapper",
   htmlOutput: `
@@ -318,4 +319,5 @@ export const examples: Example[] = [
   flatIcons,
   smashingMagazineGuide,
   magazineLayout,
+  orange,
 ];
