@@ -195,12 +195,13 @@ const smashingMagazineGuide: Example = {
 
 const magazineLayout: Example = {
   name: "Melon",
-  iframeUrl: "/examples/magazine-layout",
+  iframeUrl: "/examples/melon",
   declarations: getDeclarationFromString(`
-    display: grid;
-    margin: 0 auto;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-auto-rows: minmax(150px, auto);
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: minmax(150px, auto);
+  grid-gap: 20px;
   `),
   defaultParentClassname: "wrapper",
   htmlOutput: `
