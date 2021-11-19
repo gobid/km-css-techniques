@@ -254,6 +254,64 @@ const magazineLayout: Example = {
   ],
 };
 
+const orange: Example = {
+  name: "Orange",
+  iframeUrl: "/examples/orange",
+  declarations: getDeclarationFromString(`
+    max-width: 940px;
+    margin: 0 20px;
+    display: grid;
+    grid-gap: 10px;
+  `),
+  defaultParentClassname: "wrapper",
+  htmlOutput: `
+  <div class="wrapper">
+    <header class="header">My header</header>
+
+    <div class="panel">Panel A</div>
+    <div class="panel">Panel B</div>
+    <div class="panel">Panel C</div>
+    <div class="panel">Panel D</div>
+    <div class="panel">Panel E</div>
+    <div class="panel">Panel F</div>
+    <div class="panel">Panel G</div>
+    <div class="panel">Panel H</div>
+    <div class="panel">Panel I</div>
+    <div class="panel">Panel J</div>
+
+    <footer class="footer">My footer</footer>
+  </div>
+  `,
+  children: [
+    `
+.panel {
+  /* needed for the flex layout*/
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 1 1 200px;
+}
+
+.header,
+.footer {
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 0 1 100%;
+  grid-column: 1 / -1;
+}
+
+.wrapper > * {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+  margin-bottom: 10px;
+}
+
+`,
+  ],
+};
+
 export const examples: Example[] = [
   italic,
   gridMasterclass,
