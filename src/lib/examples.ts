@@ -193,9 +193,71 @@ const smashingMagazineGuide: Example = {
   defaultParentClassname: "cards__grid",
 };
 
+const magazineLayout: Example = {
+  name: "Smashing Magazine",
+  iframeUrl: "/examples/magazine-layout",
+  declarations: getDeclarationFromString(`
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: minmax(150px, auto);
+  `),
+  defaultParentClassname: "wrapper",
+  htmlOutput: `
+  <div class="wrapper">
+    <header class="header">My header</header>
+    
+    <div class="panel">Panel A</div>
+    <div class="panel">Panel B</div>
+    <div class="panel tall-panel">Panel C</div>
+    <div class="panel">Panel D</div>
+    <div class="panel">Panel E</div>
+    <div class="panel">Panel F</div>
+    <div class="panel tall-panel">Panel G</div>
+    <div class="panel tall-panel">Panel H</div>
+    <div class="panel">Panel I</div>
+    <div class="panel">Panel J</div>
+    
+    <footer class="footer">My footer</footer>
+  </div>
+  `,
+  children: [
+    `
+.panel {
+  /* needed for the flex layout*/
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 1 1 200px;
+}
+
+.tall-panel {
+  grid-row-end: span 2;
+}
+
+.header,
+.footer {
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 0 1 100%;
+  grid-column: 1 / -1;
+}
+
+.wrapper > * {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+  margin-bottom: 10px;
+}
+    `,
+  ],
+};
+
 export const examples: Example[] = [
   italic,
   gridMasterclass,
   flatIcons,
   smashingMagazineGuide,
+  magazineLayout,
 ];
