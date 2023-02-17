@@ -1,4 +1,4 @@
-import { Declaration, Example } from "./types";
+import { Declaration, Example, Media } from "./types";
 
 function getDeclarationFromString(css: string): Declaration[] {
   return css
@@ -34,6 +34,9 @@ function getDeclarationFromString(css: string): Declaration[] {
       };
     });
 }
+function getMediaFromArray(css_list): Media {
+  return {rule: css_list[0],declarations: css_list[1],override: false}
+}
 
 export function declarationsToCSSString(
   declarations: Declaration[],
@@ -60,18 +63,19 @@ const italic: Example = {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1.5rem;
     padding-bottom: 4rem;
-    -moz-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
   `),
+  media: getMediaFromArray([
+    '(max-width: 767px)', 
+    getDeclarationFromString(`
+      padding-bottom: 1.9rem; 
+      grid-template-columns: 1fr 1fr;`)
+    ]),
 };
 
-const gridMasterclass: Example = {
-  name: "Grid Masterclass",
+const gridMasterclass: Example = {  
+  name: "Masterclass",
   iframeUrl: "/examples/grid-masterclass",
   declarations: getDeclarationFromString(`
-    -webkit-align-content: start;
-    -ms-flex-line-pack: start;
-    align-content: start;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     grid-template-columns: 1fr 1fr 1fr 25%;
@@ -183,7 +187,7 @@ const flatIcons: Example = {
 };
 
 const smashingMagazineGuide: Example = {
-  name: "Smashing Magazine Guide",
+  name: "Smashing Magazine",
   iframeUrl: "/examples/smashingmagazineguide",
   declarations: getDeclarationFromString(`
     display: grid;
@@ -193,132 +197,19 @@ const smashingMagazineGuide: Example = {
   defaultParentClassname: "cards__grid",
 };
 
-const magazineLayout: Example = {
-  name: "Melon",
-  iframeUrl: "/examples/melon",
+const heroIcons: Example = {
+  name: "Hero Icons",
+  iframeUrl: "/examples/hero-icons",
   declarations: getDeclarationFromString(`
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: minmax(150px, auto);
-  grid-gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(8rem,1fr));
   `),
-  defaultParentClassname: "wrapper",
-  htmlOutput: `
-  <div class="wrapper">
-    <header class="header">My header</header>
-    
-    <div class="panel">Panel A</div>
-    <div class="panel">Panel B</div>
-    <div class="panel tall-panel">Panel C</div>
-    <div class="panel">Panel D</div>
-    <div class="panel">Panel E</div>
-    <div class="panel">Panel F</div>
-    <div class="panel tall-panel">Panel G</div>
-    <div class="panel tall-panel">Panel H</div>
-    <div class="panel">Panel I</div>
-    <div class="panel">Panel J</div>
-    
-    <footer class="footer">My footer</footer>
-  </div>
-  `,
-  children: [
-    `
-.panel {
-  /* needed for the flex layout*/
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 1 1 200px;
-}
-
-.tall-panel {
-  grid-row-end: span 2;
-}
-
-.header,
-.footer {
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 0 1 100%;
-  grid-column: 1 / -1;
-}
-
-.wrapper > * {
-  background-color: #444;
-  color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 150%;
-  margin-bottom: 10px;
-}
-    `,
-  ],
+  defaultParentClassname: "grid",
 };
-
-const orange: Example = {
-  name: "Orange",
-  iframeUrl: "/examples/orange",
-  declarations: getDeclarationFromString(`
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: minmax(150px, auto);
-  grid-gap: 10px;
-  `),
-  defaultParentClassname: "wrapper",
-  htmlOutput: `
-  <div class="wrapper">
-    <header class="header">My header</header>
-
-    <div class="panel">Panel A</div>
-    <div class="panel">Panel B</div>
-    <div class="panel">Panel C</div>
-    <div class="panel">Panel D</div>
-    <div class="panel">Panel E</div>
-    <div class="panel">Panel F</div>
-    <div class="panel">Panel G</div>
-    <div class="panel">Panel H</div>
-    <div class="panel">Panel I</div>
-    <div class="panel">Panel J</div>
-
-    <footer class="footer">My footer</footer>
-  </div>
-  `,
-  children: [
-    `
-.panel {
-  /* needed for the flex layout*/
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 1 1 200px;
-}
-
-.header,
-.footer {
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 0 1 100%;
-  grid-column: 1 / -1;
-}
-
-.wrapper > * {
-  background-color: #444;
-  color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 150%;
-  margin-bottom: 10px;
-}
-
-`,
-  ],
-};
-
 export const examples: Example[] = [
   italic,
   gridMasterclass,
   flatIcons,
   smashingMagazineGuide,
-  magazineLayout,
-  orange,
+  heroIcons,
 ];

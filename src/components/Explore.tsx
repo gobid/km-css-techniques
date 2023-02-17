@@ -15,19 +15,29 @@ export default function Explore({
   const [firstSetOfDeclarations, setFirstSetOfDeclarations] = useState(
     firstExample.declarations
   );
+  const [firstSetOfMediaDeclarations, setFirstSetOfMediaDeclarations] = useState(
+    firstExample.media
+  );
   const [secondSetOfDeclarations, setSecondSetOfDeclarations] = useState(
     secondExample.declarations
   );
+  const [secondSetOfMediaDeclarations, setSecondSetOfMediaDeclarations] = useState(
+    secondExample.media
+  );
 
-  const [viewerSize, setViewerSize] = useState(40);
+  const [viewerSize, setViewerSize] = useState(30);
 
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
+    setFirstSetOfMediaDeclarations(firstExample.media)
     setSecondSetOfDeclarations(secondExample.declarations);
-  }, [firstExample.declarations, secondExample.declarations]);
+    setFirstSetOfMediaDeclarations(secondExample.media)
+  }, [firstExample.declarations, firstExample.media, secondExample.declarations, secondExample.media]);
 
   return (
+    
     <div className="">
+      {/* THIS IS THE SLIDER BAR */}
       <div className="w-full px-8 py-4 bg-gray-100 mb-8">
         <input
           type="range"
@@ -38,8 +48,9 @@ export default function Explore({
           className="w-full"
         />
       </div>
-
-      <div className="flex flex-wrap w-full justify-between gap-y-4 mb-8">
+      {/* ADD THE SHOW HIDE BUTTONS HERE */}
+      <div className="flex flex-wrap w-full justify-between gap-y-4 mb-8"> 
+        {/* THESE ARE THE TWO WEBSITE VIEWS */}
         <Viewer
           example={{ ...firstExample, declarations: firstSetOfDeclarations }}
           size={viewerSize}
@@ -52,19 +63,28 @@ export default function Explore({
       </div>
 
       <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+        {/* THESE ARE THE TWO CSS EDITORS */}
+        {/* {<div>
+          {firstExample.media.rule}
+          <div>{firstExample.media.declarations[0].name}: {firstExample.media.declarations[0].value}</div>
+          <div>{firstExample.media.declarations[1].name}: {firstExample.media.declarations[1].value}</div>
+        </div>} */}
         <CSSEditor
           declarations={firstSetOfDeclarations}
           diffAgainstDeclarations={secondSetOfDeclarations}
+          media = {firstSetOfMediaDeclarations} //why not firstExample.media.rule
           onChange={(declarations) => setFirstSetOfDeclarations(declarations)}
         />
         <CSSEditor
           declarations={secondSetOfDeclarations}
           diffAgainstDeclarations={firstSetOfDeclarations}
+          media = {secondExample.media}
           onChange={(declarations) => setSecondSetOfDeclarations(declarations)}
         />
       </div>
 
       <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+        {/* THIS IS ANY HTML OR CHILD CSS */}
         {[firstExample, secondExample].map((example, i) => (
           <div className="p-4" key={i}>
             {example.htmlOutput && (
