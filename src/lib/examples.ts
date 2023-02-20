@@ -65,7 +65,7 @@ const italic: Example = {
     padding-bottom: 4rem;
   `),
   media: getMediaFromArray([
-    '(max-width: 767px)', 
+    '@media (max-width: 767px)', 
     getDeclarationFromString(`
       padding-bottom: 1.9rem; 
       grid-template-columns: 1fr 1fr;`)
@@ -82,6 +82,12 @@ const gridMasterclass: Example = {
     grid-template-rows: 1fr 1fr 1fr 0.5fr;
   `),
   defaultParentClassname: "grid",
+  media: getMediaFromArray([
+    '@media (max-width: 991px)',
+    getDeclarationFromString(`
+    grid-template-columns: 1fr 1fr 1fr 25%;
+    grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`)
+  ]),
   htmlOutput: `
   <div class="grid">
     <div class="div-block-7"></div>
@@ -184,6 +190,7 @@ const flatIcons: Example = {
     grid-auto-flow: dense;
   `),
   defaultParentClassname: "grid",
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
 
 const smashingMagazineGuide: Example = {
@@ -195,6 +202,7 @@ const smashingMagazineGuide: Example = {
     grid-gap: 0 1.5em;
   `),
   defaultParentClassname: "cards__grid",
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
 
 const heroIcons: Example = {
@@ -205,6 +213,7 @@ const heroIcons: Example = {
     grid-template-columns: repeat(auto-fill,minmax(8rem,1fr));
   `),
   defaultParentClassname: "grid",
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
 export const examples: Example[] = [
   italic,

@@ -72,7 +72,7 @@ export default function Explore({
         <CSSEditor
           declarations={firstSetOfDeclarations}
           diffAgainstDeclarations={secondSetOfDeclarations}
-          media = {firstSetOfMediaDeclarations} //why not firstExample.media.rule
+          media = {firstExample.media} //why not firstSetOfMediaDeclarations
           onChange={(declarations) => setFirstSetOfDeclarations(declarations)}
         />
         <CSSEditor

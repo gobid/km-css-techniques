@@ -68,7 +68,12 @@ export default function CSSEditor({
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
                 <div>
-                  {/* {media.rule} */}
+                  {media.rule}
+                  {media.declarations.map((declaration, index) => (
+                    <div>
+                      {declaration.name}: {declaration.value}
+                    </div>
+                  ))}
                   {values.declarations.map((declaration, index) => (
                     <div
                       className={`flex gap-2 items-center transition-opacity px-2 py-2 mb-4 rounded ${
