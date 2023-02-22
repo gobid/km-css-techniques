@@ -12,7 +12,7 @@ export default function NewApp(): JSX.Element {
       <div className="mb-8 mt-4">
         <h1 className="text-center mb-4">Compare</h1>
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center relative">
           <label>
             <select
               className="select"

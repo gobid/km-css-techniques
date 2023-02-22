@@ -27,12 +27,25 @@ export default function Explore({
 
   const [viewerSize, setViewerSize] = useState(30);
 
+  const [firstHidden, setFirstHidden] = useState(false);
+  const [secondHidden, setSecondHidden] = useState(false);
+
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
     setFirstSetOfMediaDeclarations(firstExample.media)
     setSecondSetOfDeclarations(secondExample.declarations);
     setFirstSetOfMediaDeclarations(secondExample.media)
   }, [firstExample.declarations, firstExample.media, secondExample.declarations, secondExample.media]);
+
+  const htmlExamplesToShow = [];
+
+  if (!firstHidden) {
+    htmlExamplesToShow.push(firstExample);
+  }
+
+  if (!secondHidden) {
+    htmlExamplesToShow.push(secondExample);
+  }
 
   return (
     
@@ -47,45 +60,63 @@ export default function Explore({
           value={viewerSize}
           className="w-full"
         />
-      </div>
-      {/* ADD THE SHOW HIDE BUTTONS HERE */}
-      <div className="flex flex-wrap w-full justify-between gap-y-4 mb-8"> 
-        {/* THESE ARE THE TWO WEBSITE VIEWS */}
-        <Viewer
-          example={{ ...firstExample, declarations: firstSetOfDeclarations }}
-          size={viewerSize}
-        />
 
-        <Viewer
-          example={{ ...secondExample, declarations: secondSetOfDeclarations }}
-          size={viewerSize}
-        />
+        <div className="flex gap-2">
+          <button className="btn" onClick={() => setFirstHidden(!firstHidden)}>
+            {firstHidden ? "Show" : "Hide"} Example 1{" "}
+          </button>
+          <button
+            className="btn"
+            onClick={() => setSecondHidden(!secondHidden)}
+          >
+            {secondHidden ? "Show" : "Hide"} Example 2{" "}
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {/* THESE ARE THE TWO CSS EDITORS */}
-        {/* {<div>
-          {firstExample.media.rule}
-          <div>{firstExample.media.declarations[0].name}: {firstExample.media.declarations[0].value}</div>
-          <div>{firstExample.media.declarations[1].name}: {firstExample.media.declarations[1].value}</div>
-        </div>} */}
-        <CSSEditor
-          declarations={firstSetOfDeclarations}
-          diffAgainstDeclarations={secondSetOfDeclarations}
-          media = {firstExample.media} //why not firstSetOfMediaDeclarations
-          onChange={(declarations) => setFirstSetOfDeclarations(declarations)}
-        />
-        <CSSEditor
-          declarations={secondSetOfDeclarations}
-          diffAgainstDeclarations={firstSetOfDeclarations}
-          media = {secondExample.media}
-          onChange={(declarations) => setSecondSetOfDeclarations(declarations)}
-        />
+      <div className="flex flex-wrap w-full justify-between gap-y-4 mb-8">
+        {!firstHidden && (
+          <Viewer
+            example={{ ...firstExample, declarations: firstSetOfDeclarations }}
+            size={viewerSize}
+          />
+        )}
+
+        {!secondHidden && (
+          <Viewer
+            example={{
+              ...secondExample,
+              declarations: secondSetOfDeclarations,
+            }}
+            size={viewerSize}
+          />
+        )}
       </div>
 
       <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {/* THIS IS ANY HTML OR CHILD CSS */}
-        {[firstExample, secondExample].map((example, i) => (
+        {!firstHidden && (
+          <CSSEditor
+            declarations={firstSetOfDeclarations}
+            diffAgainstDeclarations={secondSetOfDeclarations}
+            media = {firstExample.media} //why not firstSetOfMediaDeclarations
+            onChange={(declarations) => setFirstSetOfDeclarations(declarations)}
+          />
+        )}
+
+        {!secondHidden && (
+          <CSSEditor
+            declarations={secondSetOfDeclarations}
+            diffAgainstDeclarations={firstSetOfDeclarations}
+            media = {secondExample.media}
+            onChange={(declarations) =>
+              setSecondSetOfDeclarations(declarations)
+            }
+          />
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+        {htmlExamplesToShow.map((example, i) => (
           <div className="p-4" key={i}>
             {example.htmlOutput && (
               <div>

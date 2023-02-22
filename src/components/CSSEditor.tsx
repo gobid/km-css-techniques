@@ -36,6 +36,30 @@ function diffDeclarations(
   });
 }
 
+const suggestedValues = {
+  "justify-content": [
+    "center",
+    "start",
+    "end",
+    "flex-start",
+    "flex-end",
+    "left",
+    "right",
+  ],
+  "flex-wrap": ["nowrap", "wrap", "wrap-reverse"],
+  display: ["flex", "grid", "block", "inline-block"],
+  "align-content": [
+    "start",
+    "end",
+    "center",
+    "flex-start",
+    "flex-end",
+    "space-between",
+    "space-around",
+  ],
+  "align-items": ["stretch", "center", "start", "end"],
+};
+
 interface CSSEditorProps {
   declarations: Declaration[];
   media: Media;
@@ -99,12 +123,28 @@ export default function CSSEditor({
                       </div>
 
                       <div className="flex-1">
-                        <Field
-                          name={`declarations.${index}.value`}
-                          placeholder="blue"
-                          type=""
-                          className="input"
-                        />
+                        {suggestedValues[declaration.name] ? (
+                          <Field
+                            name={`declarations.${index}.value`}
+                            as="select"
+                            className="input"
+                          >
+                            {suggestedValues[declaration.name].map(
+                              (value: string) => (
+                                <option key={value} value={value}>
+                                  {value}
+                                </option>
+                              )
+                            )}
+                          </Field>
+                        ) : (
+                          <Field
+                            name={`declarations.${index}.value`}
+                            placeholder="blue"
+                            type=""
+                            className="input"
+                          />
+                        )}
                       </div>
                     </div>
                   ))}
