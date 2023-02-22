@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { Formik, Form, FieldArray, Field, useFormikContext } from "formik";
-import { Declaration } from "../lib/types";
+import { Declaration, Media } from "../lib/types";
 
 enum DeclarationDiffType {
   SamePropertyAndValue = "SamePropertyAndValue",
@@ -62,6 +62,7 @@ const suggestedValues = {
 
 interface CSSEditorProps {
   declarations: Declaration[];
+  media: Media;
   diffAgainstDeclarations: Declaration[];
   onChange: (declarations: Declaration[]) => void;
 }
@@ -69,10 +70,12 @@ interface CSSEditorProps {
 export default function CSSEditor({
   declarations,
   diffAgainstDeclarations,
+  media,
   onChange,
 }: CSSEditorProps): JSX.Element {
   const initialValues = {
     declarations: diffDeclarations(declarations, diffAgainstDeclarations),
+    media: media, //sorta confused here
   };
 
   return (
@@ -89,6 +92,12 @@ export default function CSSEditor({
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
                 <div>
+                  {media.rule}
+                  {media.declarations.map((declaration, index) => (
+                    <div>
+                      {declaration.name}: {declaration.value}
+                    </div>
+                  ))}
                   {values.declarations.map((declaration, index) => (
                     <div
                       className={`flex gap-2 items-center transition-opacity px-2 py-2 mb-4 rounded ${

@@ -15,19 +15,27 @@ export default function Explore({
   const [firstSetOfDeclarations, setFirstSetOfDeclarations] = useState(
     firstExample.declarations
   );
+  const [firstSetOfMediaDeclarations, setFirstSetOfMediaDeclarations] = useState(
+    firstExample.media
+  );
   const [secondSetOfDeclarations, setSecondSetOfDeclarations] = useState(
     secondExample.declarations
   );
+  const [secondSetOfMediaDeclarations, setSecondSetOfMediaDeclarations] = useState(
+    secondExample.media
+  );
 
-  const [viewerSize, setViewerSize] = useState(40);
+  const [viewerSize, setViewerSize] = useState(30);
 
   const [firstHidden, setFirstHidden] = useState(false);
   const [secondHidden, setSecondHidden] = useState(false);
 
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
+    setFirstSetOfMediaDeclarations(firstExample.media)
     setSecondSetOfDeclarations(secondExample.declarations);
-  }, [firstExample.declarations, secondExample.declarations]);
+    setFirstSetOfMediaDeclarations(secondExample.media)
+  }, [firstExample.declarations, firstExample.media, secondExample.declarations, secondExample.media]);
 
   const htmlExamplesToShow = [];
 
@@ -40,7 +48,9 @@ export default function Explore({
   }
 
   return (
+    
     <div className="">
+      {/* THIS IS THE SLIDER BAR */}
       <div className="w-full px-8 py-4 bg-gray-100 mb-8">
         <input
           type="range"
@@ -88,6 +98,7 @@ export default function Explore({
           <CSSEditor
             declarations={firstSetOfDeclarations}
             diffAgainstDeclarations={secondSetOfDeclarations}
+            media = {firstExample.media} //why not firstSetOfMediaDeclarations
             onChange={(declarations) => setFirstSetOfDeclarations(declarations)}
           />
         )}
@@ -96,6 +107,7 @@ export default function Explore({
           <CSSEditor
             declarations={secondSetOfDeclarations}
             diffAgainstDeclarations={firstSetOfDeclarations}
+            media = {secondExample.media}
             onChange={(declarations) =>
               setSecondSetOfDeclarations(declarations)
             }
