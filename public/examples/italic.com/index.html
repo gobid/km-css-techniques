@@ -118,12 +118,10 @@
             "message",
             (event) => {
               const data = event.data;
-
-              if (typeof data !== "string") return;
-
               const cssContainer = document.querySelector("#change-css-container");
+              if (typeof data !== "string" || cssContainer.innerHTML.substring(0,20) != "          .collecti") return;
 
-              cssContainer.innerHTML = event.data;
+              cssContainer.innerHTML = data;
             },
             false
           );
