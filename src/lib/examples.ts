@@ -215,10 +215,20 @@ const heroIcons: Example = {
   defaultParentClassname: "grid",
   media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
+const CSSTricks: Example = {
+  name: "CSS Tricks",
+  iframeUrl: "/examples/CSS-Tricks",
+  declarations: getDeclarationFromString(`
+    display: flex;
+  `),
+  defaultParentClassname: "flex",
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+};
 export const examples: Example[] = [
   italic,
   gridMasterclass,
   flatIcons,
   smashingMagazineGuide,
   heroIcons,
+  CSSTricks,
 ];
