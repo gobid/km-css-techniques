@@ -67,6 +67,59 @@ interface CSSEditorProps {
   onChange: (declarations: Declaration[]) => void;
 }
 
+function toggler(declaration, index, declaration_type) {
+  return (
+      <div
+        className={`flex gap-2 items-center transition-opacity px-2 py-2 mb-4 rounded ${
+          !declaration.enabled ? "opacity-60" : ""
+        } ${getColorForDiffType(declaration.diffType)} `}
+        key={index}
+      >
+        <div>
+          <Field
+            name={`${declaration_type}.[${index}].enabled`}
+            type="checkbox"
+            checked={declaration.enabled}
+          />
+        </div>
+
+        <div className="flex-1">
+          <Field
+            name={`${declaration_type}.${index}.name`}
+            placeholder="background-color"
+            type="text"
+            className="input"
+          />
+        </div>
+
+        <div className="flex-1">
+          {suggestedValues[declaration.name] ? (
+            <Field
+              name={`${declaration_type}.${index}.value`}
+              as="select"
+              className="input"
+            >
+              {suggestedValues[declaration.name].map(
+                (value: string) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                )
+              )}
+            </Field>
+          ) : (
+            <Field
+              name={`${declaration_type}.${index}.value`}
+              placeholder="blue"
+              type=""
+              className="input"
+            />
+          )}
+        </div>
+      </div>
+      );
+}
+
 export default function CSSEditor({
   declarations,
   diffAgainstDeclarations,
@@ -75,7 +128,7 @@ export default function CSSEditor({
 }: CSSEditorProps): JSX.Element {
   const initialValues = {
     declarations: diffDeclarations(declarations, diffAgainstDeclarations),
-    media: media, //sorta confused here
+    media: media, 
   };
 
   return (
@@ -91,81 +144,41 @@ export default function CSSEditor({
           <Form>
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
-                <div>
-                  {media.rule}
-                  {media.declarations.map((declaration, index) => (
-                    <div>
-                      {declaration.name}: {declaration.value}
-                    </div>
-                  ))}
-                  {values.declarations.map((declaration, index) => (
-                    <div
-                      className={`flex gap-2 items-center transition-opacity px-2 py-2 mb-4 rounded ${
-                        !declaration.enabled ? "opacity-60" : ""
-                      } ${getColorForDiffType(declaration.diffType)} `}
-                      key={index}
-                    >
-                      <div>
-                        <Field
-                          name={`declarations[${index}].enabled`}
-                          type="checkbox"
-                          checked={declaration.enabled}
-                        />
-                      </div>
-
-                      <div className="flex-1">
-                        <Field
-                          name={`declarations.${index}.name`}
-                          placeholder="background-color"
-                          type="text"
-                          className="input"
-                        />
-                      </div>
-
-                      <div className="flex-1">
-                        {suggestedValues[declaration.name] ? (
-                          <Field
-                            name={`declarations.${index}.value`}
-                            as="select"
-                            className="input"
-                          >
-                            {suggestedValues[declaration.name].map(
-                              (value: string) => (
-                                <option key={value} value={value}>
-                                  {value}
-                                </option>
-                              )
-                            )}
-                          </Field>
-                        ) : (
-                          <Field
-                            name={`declarations.${index}.value`}
-                            placeholder="blue"
-                            type=""
-                            className="input"
-                          />
-                        )}
-                      </div>
-                    </div>
-                  ))}
-
+                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                  <div>
+                    {values.declarations.map((declaration, index) => (
+                      toggler(declaration, index, "declarations")
+                    ))}
+                  </div>
                   <button
                     type="button"
                     className="btn mt-8"
                     onClick={() =>
-                      push({
-                        name: "",
-                        value: "",
-                        enabled: true,
+                    push({
+                      name: "",
+                      value: "",
+                      enabled: true,
                       } as Declaration)
                     }
                   >
-                    Add Declaration
+                  Add Declaration
                   </button>
                 </div>
               )}
             </FieldArray>
-
+            _______________________________________________________________{"\n"}
+            <FieldArray name="media">
+              {({ insert, remove, push }) => (
+                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                  <h1>
+                    {media.rule}
+                  </h1>
+                  {media.declarations.map((med_declaration, index) => (
+                    toggler(med_declaration, index, "media.declarations")
+                  ))}
+                </div>
+              )}
+            </FieldArray>
             <AutoSave />
           </Form>
         )}
