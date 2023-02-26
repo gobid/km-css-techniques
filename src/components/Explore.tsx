@@ -8,6 +8,8 @@ interface ExploreProps {
   secondExample: Example;
 }
 
+//function handleChange(func1,func2, arg1, arg2){func1(arg1)}
+
 export default function Explore({
   firstExample,
   secondExample,
@@ -26,7 +28,6 @@ export default function Explore({
   );
 
   const [viewerSize, setViewerSize] = useState(30);
-
   const [firstHidden, setFirstHidden] = useState(false);
   const [secondHidden, setSecondHidden] = useState(false);
 
@@ -34,7 +35,7 @@ export default function Explore({
     setFirstSetOfDeclarations(firstExample.declarations);
     setFirstSetOfMediaDeclarations(firstExample.media)
     setSecondSetOfDeclarations(secondExample.declarations);
-    setFirstSetOfMediaDeclarations(secondExample.media)
+    setSecondSetOfMediaDeclarations(secondExample.media)
   }, [firstExample.declarations, firstExample.media, secondExample.declarations, secondExample.media]);
 
   const htmlExamplesToShow = [];
@@ -42,13 +43,11 @@ export default function Explore({
   if (!firstHidden) {
     htmlExamplesToShow.push(firstExample);
   }
-
   if (!secondHidden) {
     htmlExamplesToShow.push(secondExample);
   }
 
   return (
-    
     <div className="">
       {/* THIS IS THE SLIDER BAR */}
       <div className="w-full px-8 py-4 bg-gray-100 mb-8">
@@ -98,19 +97,16 @@ export default function Explore({
           <CSSEditor
             declarations={firstSetOfDeclarations}
             diffAgainstDeclarations={secondSetOfDeclarations}
-            media = {firstExample.media} //why not firstSetOfMediaDeclarations
-            onChange={(declarations) => setFirstSetOfDeclarations(declarations)}
+            media = {firstSetOfMediaDeclarations}
+            onChange={(declarations, media) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media))}
           />
         )}
-
         {!secondHidden && (
           <CSSEditor
             declarations={secondSetOfDeclarations}
             diffAgainstDeclarations={firstSetOfDeclarations}
-            media = {secondExample.media}
-            onChange={(declarations) =>
-              setSecondSetOfDeclarations(declarations)
-            }
+            media = {secondSetOfMediaDeclarations}
+            onChange={(declarations) => setSecondSetOfDeclarations(declarations)}
           />
         )}
       </div>
