@@ -64,7 +64,7 @@ interface CSSEditorProps {
   declarations: Declaration[];
   media: Media;
   diffAgainstDeclarations: Declaration[];
-  onChange: (declarations: Declaration[]) => void;
+  onChange: (declarations: Declaration[], media: Media) => void;
 }
 
 function toggler(declaration, index, declaration_type) {
@@ -137,7 +137,7 @@ export default function CSSEditor({
         initialValues={initialValues}
         enableReinitialize
         onSubmit={async (values) => {
-          onChange(values.declarations);
+          onChange(values.declarations, values.media);
         }}
       >
         {({ values }) => (
@@ -173,7 +173,7 @@ export default function CSSEditor({
                   <h1>
                     {media.rule}
                   </h1>
-                  {media.declarations.map((med_declaration, index) => (
+                  {values.media.declarations.map((med_declaration, index) => (
                     toggler(med_declaration, index, "media.declarations")
                   ))}
                 </div>
