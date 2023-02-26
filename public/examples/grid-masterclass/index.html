@@ -212,13 +212,14 @@
       window.addEventListener(
         "message",
         (event) => {
-          const data = event.data;
-
-          if (typeof data !== "string") return;
-
           const cssContainer = document.querySelector("#change-css-container");
+              if (!event.data.type || event.data.type !== "NEW_CSS_VALUE" ){
+                console.log('didnt replace css')
+                return;
+              }
 
-          cssContainer.innerHTML = event.data;
+              cssContainer.innerHTML = event.data.data;
+              console.log("after edting ", event.data.data)
         },
         false
       );

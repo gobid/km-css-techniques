@@ -16,7 +16,7 @@ export default function Viewer({ example, size }: ViewerProps): JSX.Element {
         example.declarations,
         example.defaultParentClassname
       );
-      viewerRef.current?.contentWindow.postMessage(newCSSValue);
+      viewerRef.current?.contentWindow.postMessage({type: "NEW_CSS_VALUE", data: newCSSValue});
     }
   }, [example.declarations, example.defaultParentClassname]);
 
