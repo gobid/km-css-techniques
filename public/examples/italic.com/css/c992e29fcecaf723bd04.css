@@ -2830,12 +2830,12 @@ body.search-open .header-wrapper.transparent-header .cart-icon {
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 } */
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .collections-grid {
     padding-bottom: 1.9rem;
     grid-template-columns: 1fr 1fr;
   }
-}
+} */
 body.four-layout .collections-grid {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }

@@ -40,16 +40,26 @@ function getMediaFromArray(css_list): Media {
 
 export function declarationsToCSSString(
   declarations: Declaration[],
+  media: Media,
   parentClass: string
 ): string {
-  const allDeclarations = declarations
+  const stdDeclarations = declarations
+    .filter((declaration) => declaration.enabled)
+    .map((declaration) => `${declaration.name}: ${declaration.value};`)
+    .join("\n");
+  const mediaDeclarations = media.declarations
     .filter((declaration) => declaration.enabled)
     .map((declaration) => `${declaration.name}: ${declaration.value};`)
     .join("\n");
 
   return `
     .${parentClass} {
-      ${allDeclarations}
+      ${stdDeclarations}
+    }
+    ${media.rule} {
+      .${parentClass} {
+        ${mediaDeclarations}
+      }
     }
   `;
 }

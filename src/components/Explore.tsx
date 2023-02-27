@@ -76,7 +76,7 @@ export default function Explore({
       <div className="flex flex-wrap w-full justify-between gap-y-4 mb-8">
         {!firstHidden && (
           <Viewer
-            example={{ ...firstExample, declarations: firstSetOfDeclarations }}
+            example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations }}
             size={viewerSize}
           />
         )}
@@ -85,7 +85,7 @@ export default function Explore({
           <Viewer
             example={{
               ...secondExample,
-              declarations: secondSetOfDeclarations,
+              declarations: secondSetOfDeclarations, media: secondSetOfMediaDeclarations
             }}
             size={viewerSize}
           />

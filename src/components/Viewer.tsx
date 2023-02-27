@@ -14,11 +14,12 @@ export default function Viewer({ example, size }: ViewerProps): JSX.Element {
     if (viewerRef.current) {
       const newCSSValue = declarationsToCSSString(
         example.declarations,
+        example.media,
         example.defaultParentClassname
       );
       viewerRef.current?.contentWindow.postMessage({type: "NEW_CSS_VALUE", data: newCSSValue});
     }
-  }, [example.declarations, example.defaultParentClassname]);
+  }, [example.declarations, example.media, example.defaultParentClassname]);
 
   return (
     <iframe
