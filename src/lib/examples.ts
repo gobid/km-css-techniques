@@ -35,33 +35,36 @@ function getDeclarationFromString(css: string): Declaration[] {
     });
 }
 function getMediaFromArray(css_list): Media {
-  return {rule: css_list[0],declarations: css_list[1],override: false}
+  return {rule: css_list[0],declarations: css_list[1]};
 }
 
 export function declarationsToCSSString(
   declarations: Declaration[],
-  media: Media,
+  media: Media[],
   parentClass: string
 ): string {
   const stdDeclarations = declarations
     .filter((declaration) => declaration.enabled)
     .map((declaration) => `${declaration.name}: ${declaration.value};`)
     .join("\n");
-  const mediaDeclarations = media.declarations
-    .filter((declaration) => declaration.enabled)
-    .map((declaration) => `${declaration.name}: ${declaration.value};`)
-    .join("\n");
-
+  let mediaListString = media.map((media_query) => {
+      return `
+        ${media_query.rule} {
+          .${parentClass} {
+            ${media_query.declarations
+            .filter((declaration) => declaration.enabled)
+            .map((declaration) => `${declaration.name}: ${declaration.value};`)
+            .join("\n")}
+          }
+        }`
+      });
+  const mediaFull = mediaListString.join("\n")
   return `
     .${parentClass} {
       ${stdDeclarations}
     }
-    ${media.rule} {
-      .${parentClass} {
-        ${mediaDeclarations}
-      }
-    }
-  `;
+    ${mediaFull}
+    `;
 }
 
 const italic: Example = {
@@ -74,30 +77,37 @@ const italic: Example = {
     grid-gap: 1.5rem;
     padding-bottom: 4rem;
   `),
-  media: getMediaFromArray([
+  media: [getMediaFromArray([
     '@media (max-width: 767px)', 
     getDeclarationFromString(`
-      padding-bottom: 1.9rem; 
+      padding-bottom: 1.9rem;
       grid-template-columns: 1fr 1fr;`)
-    ]),
+    ])],
 };
 
 const gridMasterclass: Example = {  
   name: "Masterclass",
   iframeUrl: "/examples/grid-masterclass",
   declarations: getDeclarationFromString(`
+    display: grid;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     grid-template-columns: 1fr 1fr 1fr 25%;
     grid-template-rows: 1fr 1fr 1fr 0.5fr;
   `),
   defaultParentClassname: "grid",
-  media: getMediaFromArray([
+  media: [getMediaFromArray([
     '@media (max-width: 991px)',
     getDeclarationFromString(`
     grid-template-columns: 1fr 1fr 1fr 25%;
     grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`)
   ]),
+    getMediaFromArray([
+    '@media (max-width: 479px)',
+    getDeclarationFromString(`
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;`)
+    ])
+  ],
   htmlOutput: `
   <div class="grid">
     <div class="div-block-7"></div>
@@ -200,7 +210,7 @@ const flatIcons: Example = {
     grid-auto-flow: dense;
   `),
   defaultParentClassname: "grid",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 
 const smashingMagazineGuide: Example = {
@@ -212,7 +222,7 @@ const smashingMagazineGuide: Example = {
     grid-gap: 0 1.5em;
   `),
   defaultParentClassname: "cards__grid",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 
 const heroIcons: Example = {
@@ -223,7 +233,7 @@ const heroIcons: Example = {
     grid-template-columns: repeat(auto-fill,minmax(8rem,1fr));
   `),
   defaultParentClassname: "grid",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 const CSSTricks: Example = {
   name: "CSS Tricks",
@@ -232,7 +242,7 @@ const CSSTricks: Example = {
     display: flex;
   `),
   defaultParentClassname: "flex",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 export const examples: Example[] = [
   italic,

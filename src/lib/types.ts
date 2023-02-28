@@ -5,7 +5,7 @@ export type Example = {
   declarations: Declaration[];
   htmlOutput?: string;
   children?: string[];
-  media?: Media;
+  media?: Media[];
 
   // we should add smth about media queries here! 
   // maybe a dictionary like media = {"max-width: 768px": Declaration[]}
@@ -23,5 +23,4 @@ export type Declaration = {
 export type Media = {
   rule?: string;
   declarations?: Declaration[];
-  override?: boolean;
 }

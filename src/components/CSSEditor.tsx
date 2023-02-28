@@ -62,9 +62,9 @@ const suggestedValues = {
 
 interface CSSEditorProps {
   declarations: Declaration[];
-  media: Media;
+  media: Media[];
   diffAgainstDeclarations: Declaration[];
-  onChange: (declarations: Declaration[], media: Media) => void;
+  onChange: (declarations: Declaration[], media: Media[]) => void;
 }
 
 function toggler(declaration, index, declaration_type) {
@@ -170,12 +170,16 @@ export default function CSSEditor({
             <FieldArray name="media">
               {({ insert, remove, push }) => (
                 <div style={{fontSize: 18, fontFamily: "monospace"}}>
-                  <h1>
-                    {media.rule}
-                  </h1>
-                  {values.media.declarations.map((med_declaration, index) => (
-                    toggler(med_declaration, index, "media.declarations")
-                  ))}
+                  {values.media.map((media_query, m_index) => (
+                    <div>
+                      <h1>
+                        {media_query.rule}
+                      </h1>
+                        {media_query.declarations.map((med_declaration, d_index) => (
+                          toggler(med_declaration, d_index, `media.${m_index}.declarations`)
+                      ))}
+                    </div>
+                  ))} 
                 </div>
               )}
             </FieldArray>

@@ -8,8 +8,6 @@ interface ExploreProps {
   secondExample: Example;
 }
 
-//function handleChange(func1,func2, arg1, arg2){func1(arg1)}
-
 export default function Explore({
   firstExample,
   secondExample,
@@ -106,7 +104,7 @@ export default function Explore({
             declarations={secondSetOfDeclarations}
             diffAgainstDeclarations={firstSetOfDeclarations}
             media = {secondSetOfMediaDeclarations}
-            onChange={(declarations) => setSecondSetOfDeclarations(declarations)}
+            onChange={(declarations, media) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media))}
           />
         )}
       </div>
