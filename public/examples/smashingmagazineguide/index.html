@@ -2353,13 +2353,12 @@
           window.addEventListener(
             "message",
             (event) => {
-              const data = event.data;
-
-              if (typeof data !== "string") return;
-
               const cssContainer = document.querySelector("#change-css-container");
+              if (!event.data.type || event.data.type !== "NEW_CSS_VALUE" ){
+                return;
+              }
 
-              cssContainer.innerHTML = event.data;
+              cssContainer.innerHTML = event.data.data;
             },
             false
           );

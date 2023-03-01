@@ -89,11 +89,12 @@ const gridMasterclass: Example = {
   name: "Masterclass",
   iframeUrl: "/examples/grid-masterclass",
   declarations: getDeclarationFromString(`
-    display: grid;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    display:grid;
     grid-template-columns: 1fr 1fr 1fr 25%;
     grid-template-rows: 1fr 1fr 1fr 0.5fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    
   `),
   defaultParentClassname: "grid",
   media: [getMediaFromArray([
@@ -202,15 +203,14 @@ const flatIcons: Example = {
   name: "Flat Icons",
   iframeUrl: "/examples/flat-icons",
   declarations: getDeclarationFromString(`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
-    grid-auto-rows: min-content;
-    grid-column-gap: 0.375rem;
-    grid-row-gap: 0.375rem;
-    grid-auto-flow: dense;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: start;
+    width: 100%;
   `),
   defaultParentClassname: "grid",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
 
 const smashingMagazineGuide: Example = {
@@ -222,7 +222,7 @@ const smashingMagazineGuide: Example = {
     grid-gap: 0 1.5em;
   `),
   defaultParentClassname: "cards__grid",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
 
 const heroIcons: Example = {
@@ -231,9 +231,10 @@ const heroIcons: Example = {
   declarations: getDeclarationFromString(`
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(8rem,1fr));
+    gap: 4em;
   `),
   defaultParentClassname: "grid",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
 const CSSTricks: Example = {
   name: "CSS Tricks",
@@ -242,7 +243,7 @@ const CSSTricks: Example = {
     display: flex;
   `),
   defaultParentClassname: "flex",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: getMediaFromArray(["",getDeclarationFromString(``)]),
 };
 export const examples: Example[] = [
   italic,
