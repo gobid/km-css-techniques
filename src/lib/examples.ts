@@ -205,12 +205,9 @@ const flatIcons: Example = {
   declarations: getDeclarationFromString(`
     display: flex;
     flex-wrap: wrap;
-    align-items: stretch;
-    align-content: start;
-    width: 100%;
   `),
-  defaultParentClassname: "grid",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  defaultParentClassname: "icons",
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 
 const smashingMagazineGuide: Example = {
@@ -222,7 +219,7 @@ const smashingMagazineGuide: Example = {
     grid-gap: 0 1.5em;
   `),
   defaultParentClassname: "cards__grid",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 
 const heroIcons: Example = {
@@ -234,7 +231,7 @@ const heroIcons: Example = {
     gap: 4em;
   `),
   defaultParentClassname: "grid",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 const CSSTricks: Example = {
   name: "CSS Tricks",
@@ -243,7 +240,7 @@ const CSSTricks: Example = {
     display: flex;
   `),
   defaultParentClassname: "flex",
-  media: getMediaFromArray(["",getDeclarationFromString(``)]),
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 export const examples: Example[] = [
   italic,
