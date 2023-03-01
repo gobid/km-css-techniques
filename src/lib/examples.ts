@@ -214,11 +214,10 @@ const smashingMagazineGuide: Example = {
   name: "Smashing Magazine",
   iframeUrl: "/examples/smashingmagazineguide",
   declarations: getDeclarationFromString(`
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(300px, 1fr));
-    grid-gap: 0 1.5em;
+    display: flex;
+    flex-wrap: wrap;
   `),
-  defaultParentClassname: "cards__grid",
+  defaultParentClassname: "f-article-highlights",
   media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 
