@@ -58,6 +58,7 @@ const suggestedValues = {
     "space-around",
   ],
   "align-items": ["stretch", "center", "start", "end"],
+  "position": ["fixed", "relative", "static", "absolute", "sticky"],
 };
 
 interface CSSEditorProps {

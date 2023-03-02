@@ -237,8 +237,10 @@ const CSSTricks: Example = {
   iframeUrl: "/examples/CSS-Tricks",
   declarations: getDeclarationFromString(`
     display: flex;
+    margin: 0 0 var(--gap);
+    position: relative;
   `),
-  defaultParentClassname: "flex",
+  defaultParentClassname: "popular-articles",
   media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 export const examples: Example[] = [
