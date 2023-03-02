@@ -12,7 +12,7 @@
     <meta content="Webflow" name="generator" />
     <style>
       .w-layout-grid {
-        display: grid;
+        /* display: grid; */
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto;
         grid-row-gap: 16px;
@@ -198,13 +198,11 @@
 
     <style id="change-css-container">
       .grid {
-        -webkit-align-content: start;
-        -ms-flex-line-pack: start;
-        align-content: start;
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
+        display:grid;
         grid-template-columns: 1fr 1fr 1fr 25%;
         grid-template-rows: 1fr 1fr 1fr 0.5fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
       }
     </style>
 
@@ -212,13 +210,14 @@
       window.addEventListener(
         "message",
         (event) => {
-          const data = event.data;
-
-          if (typeof data !== "string") return;
-
           const cssContainer = document.querySelector("#change-css-container");
+              if (!event.data.type || event.data.type !== "NEW_CSS_VALUE" ){
+                console.log('didnt replace css')
+                return;
+              }
 
-          cssContainer.innerHTML = event.data;
+              cssContainer.innerHTML = event.data.data;
+              console.log("after edting ", event.data.data)
         },
         false
       );

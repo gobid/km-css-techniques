@@ -1,4 +1,4 @@
-import { Declaration, Example } from "./types";
+import { Declaration, Example, Media } from "./types";
 
 function getDeclarationFromString(css: string): Declaration[] {
   return css
@@ -34,21 +34,37 @@ function getDeclarationFromString(css: string): Declaration[] {
       };
     });
 }
+function getMediaFromArray(css_list): Media {
+  return {rule: css_list[0],declarations: css_list[1]};
+}
 
 export function declarationsToCSSString(
   declarations: Declaration[],
+  media: Media[],
   parentClass: string
 ): string {
-  const allDeclarations = declarations
+  const stdDeclarations = declarations
     .filter((declaration) => declaration.enabled)
     .map((declaration) => `${declaration.name}: ${declaration.value};`)
     .join("\n");
-
+  let mediaListString = media.map((media_query) => {
+      return `
+        ${media_query.rule} {
+          .${parentClass} {
+            ${media_query.declarations
+            .filter((declaration) => declaration.enabled)
+            .map((declaration) => `${declaration.name}: ${declaration.value};`)
+            .join("\n")}
+          }
+        }`
+      });
+  const mediaFull = mediaListString.join("\n")
   return `
     .${parentClass} {
-      ${allDeclarations}
+      ${stdDeclarations}
     }
-  `;
+    ${mediaFull}
+    `;
 }
 
 const italic: Example = {
@@ -60,25 +76,41 @@ const italic: Example = {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1.5rem;
     padding-bottom: 4rem;
-    -moz-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
   `),
+  media: [getMediaFromArray([
+    '@media (max-width: 767px)', 
+    getDeclarationFromString(`
+      padding-bottom: 1.9rem;
+      grid-template-columns: 1fr 1fr;`)
+    ])],
 };
 
-const gridMasterclass: Example = {
-  name: "Grid Masterclass",
+const gridMasterclass: Example = {  
+  name: "Masterclass",
   iframeUrl: "/examples/grid-masterclass",
   declarations: getDeclarationFromString(`
-    -webkit-align-content: start;
-    -ms-flex-line-pack: start;
-    align-content: start;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr 25%;
     grid-template-rows: 1fr 1fr 1fr 0.5fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    
   `),
   defaultParentClassname: "grid",
+  media: [getMediaFromArray([
+    '@media (max-width: 991px)',
+    getDeclarationFromString(`
+    grid-template-columns: 1fr 1fr 1fr 25%;
+    grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`)
+  ]),
+    getMediaFromArray([
+    '@media (max-width: 479px)',
+    getDeclarationFromString(`
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;`)
+    ])
+  ],
   htmlOutput: `
+  
   <div class="grid">
     <div class="div-block-7"></div>
     <div class="div-block-4"></div>
@@ -94,6 +126,7 @@ const gridMasterclass: Example = {
   `,
   children: [
     `
+    // values vary on window size
     .div-block-4 {
       grid-column-start: 3;
       grid-column-end: 5;
@@ -172,153 +205,51 @@ const flatIcons: Example = {
   name: "Flat Icons",
   iframeUrl: "/examples/flat-icons",
   declarations: getDeclarationFromString(`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
-    grid-auto-rows: min-content;
-    grid-column-gap: 0.375rem;
-    grid-row-gap: 0.375rem;
-    grid-auto-flow: dense;
+    display: flex;
+    flex-wrap: wrap;
   `),
-  defaultParentClassname: "grid",
+  defaultParentClassname: "icons",
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
 
 const smashingMagazineGuide: Example = {
-  name: "Smashing Magazine Guide",
+  name: "Smashing Magazine",
   iframeUrl: "/examples/smashingmagazineguide",
   declarations: getDeclarationFromString(`
+    display: flex;
+    flex-wrap: wrap;
+  `),
+  defaultParentClassname: "f-article-highlights",
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+};
+
+const heroIcons: Example = {
+  name: "Hero Icons",
+  iframeUrl: "/examples/hero-icons",
+  declarations: getDeclarationFromString(`
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(300px, 1fr));
-    grid-gap: 0 1.5em;
+    grid-template-columns: repeat(auto-fill,minmax(8rem,1fr));
+    gap: 4em;
   `),
-  defaultParentClassname: "cards__grid",
+  defaultParentClassname: "grid",
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
-
-const magazineLayout: Example = {
-  name: "Melon",
-  iframeUrl: "/examples/melon",
+const CSSTricks: Example = {
+  name: "CSS Tricks",
+  iframeUrl: "/examples/CSS-Tricks",
   declarations: getDeclarationFromString(`
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: minmax(150px, auto);
-  grid-gap: 20px;
+    display: flex;
+    margin: 0 0 var(--gap);
+    position: relative;
   `),
-  defaultParentClassname: "wrapper",
-  htmlOutput: `
-  <div class="wrapper">
-    <header class="header">My header</header>
-    
-    <div class="panel">Panel A</div>
-    <div class="panel">Panel B</div>
-    <div class="panel tall-panel">Panel C</div>
-    <div class="panel">Panel D</div>
-    <div class="panel">Panel E</div>
-    <div class="panel">Panel F</div>
-    <div class="panel tall-panel">Panel G</div>
-    <div class="panel tall-panel">Panel H</div>
-    <div class="panel">Panel I</div>
-    <div class="panel">Panel J</div>
-    
-    <footer class="footer">My footer</footer>
-  </div>
-  `,
-  children: [
-    `
-.panel {
-  /* needed for the flex layout*/
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 1 1 200px;
-}
-
-.tall-panel {
-  grid-row-end: span 2;
-}
-
-.header,
-.footer {
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 0 1 100%;
-  grid-column: 1 / -1;
-}
-
-.wrapper > * {
-  background-color: #444;
-  color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 150%;
-  margin-bottom: 10px;
-}
-    `,
-  ],
+  defaultParentClassname: "popular-articles",
+  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
 };
-
-const orange: Example = {
-  name: "Orange",
-  iframeUrl: "/examples/orange",
-  declarations: getDeclarationFromString(`
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: minmax(150px, auto);
-  grid-gap: 10px;
-  `),
-  defaultParentClassname: "wrapper",
-  htmlOutput: `
-  <div class="wrapper">
-    <header class="header">My header</header>
-
-    <div class="panel">Panel A</div>
-    <div class="panel">Panel B</div>
-    <div class="panel">Panel C</div>
-    <div class="panel">Panel D</div>
-    <div class="panel">Panel E</div>
-    <div class="panel">Panel F</div>
-    <div class="panel">Panel G</div>
-    <div class="panel">Panel H</div>
-    <div class="panel">Panel I</div>
-    <div class="panel">Panel J</div>
-
-    <footer class="footer">My footer</footer>
-  </div>
-  `,
-  children: [
-    `
-.panel {
-  /* needed for the flex layout*/
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 1 1 200px;
-}
-
-.header,
-.footer {
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 0 1 100%;
-  grid-column: 1 / -1;
-}
-
-.wrapper > * {
-  background-color: #444;
-  color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 150%;
-  margin-bottom: 10px;
-}
-
-`,
-  ],
-};
-
 export const examples: Example[] = [
   italic,
   gridMasterclass,
   flatIcons,
   smashingMagazineGuide,
-  magazineLayout,
-  orange,
+  heroIcons,
+  CSSTricks,
 ];

@@ -111,19 +111,26 @@
             -moz-transition: all .2s ease-in-out;
             transition: all .2s ease-in-out;
           }
+          @media (max-width: 767px) {
+            .collections-grid {
+              padding-bottom: 1.9rem;
+              grid-template-columns: 1fr 1fr;
+              }
+            }
         </style>
 
         <script>
           window.addEventListener(
             "message",
             (event) => {
-              const data = event.data;
-
-              if (typeof data !== "string") return;
-
               const cssContainer = document.querySelector("#change-css-container");
+              if (!event.data.type || event.data.type !== "NEW_CSS_VALUE" ){
+                console.log('didnt replace css')
+                return;
+              }
 
-              cssContainer.innerHTML = event.data;
+              cssContainer.innerHTML = event.data.data;
+              console.log("after edting ", event.data.data)
             },
             false
           );
