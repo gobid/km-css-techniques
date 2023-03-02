@@ -89,7 +89,7 @@ const gridMasterclass: Example = {
   name: "Masterclass",
   iframeUrl: "/examples/grid-masterclass",
   declarations: getDeclarationFromString(`
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr 25%;
     grid-template-rows: 1fr 1fr 1fr 0.5fr;
     grid-column-gap: 0px;
