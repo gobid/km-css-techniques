@@ -44,11 +44,14 @@ export default function Explore({
   if (!secondHidden) {
     htmlExamplesToShow.push(secondExample);
   }
-
+  let screenWidth = window.innerWidth;
   return (
     <div className="">
       {/* THIS IS THE SLIDER BAR */}
       <div className="w-full px-8 py-4 bg-gray-100 mb-8">
+        <div>
+          Window width: {(Math.round(screenWidth*viewerSize/100))}px
+        </div>
         <input
           type="range"
           min={0}
@@ -57,7 +60,6 @@ export default function Explore({
           value={viewerSize}
           className="w-full"
         />
-
         <div className="flex gap-2">
           <button className="btn" onClick={() => setFirstHidden(!firstHidden)}>
             {firstHidden ? "Show" : "Hide"} Example 1{" "}
