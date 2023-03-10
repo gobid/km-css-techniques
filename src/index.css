@@ -3,20 +3,49 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   width: 100%;
+  font-size: small;
+
 }
 
 .btn {
-  padding: 4px 10px;
+  padding: 3px 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   background-color: #f0f0f0;
   color: #333;
+  font-size: small;
 }
 
 .select {
-  padding: 4px 10px;
+  padding: 3px 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   background-color: #f0f0f0;
   color: #333;
+  font-size: small;
+}
+
+h1 {
+  font-size: medium;
+}
+
+.viewer {
+  position: relative;
+  overflow: hidden;
+  height: 50vh;
+  
+}
+.iframe {
+  transform: scale(0.5);
+
+}
+.iframe.left {
+  transform-origin: top left;
+  margin-right:-1000px;
+
+}
+.iframe.right {
+  transform-origin: top right;
+  margin-left:-1000px;
+
 }

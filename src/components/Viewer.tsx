@@ -5,9 +5,10 @@ import { Example } from "../lib/types";
 interface ViewerProps {
   example: Example;
   size: number;
+  view: string;
 }
 
-export default function Viewer({ example, size }: ViewerProps): JSX.Element {
+export default function Viewer({ example, size, view }: ViewerProps): JSX.Element {
   const viewerRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Viewer({ example, size }: ViewerProps): JSX.Element {
       width={`${size}%`}
       height={800}
       frameBorder="0"
-      className="border border-gray-200 rounded"
+      className={`iframe ${view} border border-gray-200 rounded`}
       ref={viewerRef}
     ></iframe>
   );

@@ -9,9 +9,8 @@ export default function NewApp(): JSX.Element {
 
   return (
     <div>
-      <div className="mb-8 mt-4">
-        <h1 className="text-center mb-4">Compare</h1>
-
+      <div className="mb-4 mt-2">
+        <h1 className="text-center mb-2">Compare</h1>
         <div className="flex items-center justify-center relative">
           <label>
             <select
