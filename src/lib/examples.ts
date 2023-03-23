@@ -69,8 +69,8 @@ export function declarationsToCSSString(
         ${scoped_declaration.declarations
         .filter((declaration) => declaration.enabled)
         .map((declaration) => `${declaration.name}: ${declaration.value};`)
-        .join("\n")
-    }`
+        .join("\n")}
+      }`
   }) ;
   const sdFull = scopedDeclarationsString.join("\n")
   return `
