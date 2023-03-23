@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { Formik, Form, FieldArray, Field, useFormikContext } from "formik";
-import { Declaration, Media } from "../lib/types";
+import { Declaration, Media, ScopedDeclaration } from "../lib/types";
 
 enum DeclarationDiffType {
   SamePropertyAndValue = "SamePropertyAndValue",
@@ -64,8 +64,9 @@ const suggestedValues = {
 interface CSSEditorProps {
   declarations: Declaration[];
   media: Media[];
+  scoped_declarations: ScopedDeclaration[];
   diffAgainstDeclarations: Declaration[];
-  onChange: (declarations: Declaration[], media: Media[]) => void;
+  onChange: (declarations: Declaration[], media: Media[], scoped_declarations: ScopedDeclaration[]) => void;
 }
 
 function toggler(declaration, index, declaration_type) {
@@ -125,11 +126,13 @@ export default function CSSEditor({
   declarations,
   diffAgainstDeclarations,
   media,
+  scoped_declarations,
   onChange,
 }: CSSEditorProps): JSX.Element {
   const initialValues = {
     declarations: diffDeclarations(declarations, diffAgainstDeclarations),
-    media: media, 
+    media: media,
+    scoped_declarations: scoped_declarations,
   };
 
   return (
@@ -138,7 +141,7 @@ export default function CSSEditor({
         initialValues={initialValues}
         enableReinitialize
         onSubmit={async (values) => {
-          onChange(values.declarations, values.media);
+          onChange(values.declarations, values.media, values.scoped_declarations);
         }}
       >
         {({ values }) => (
@@ -178,6 +181,23 @@ export default function CSSEditor({
                       </h1>
                         {media_query.declarations.map((med_declaration, d_index) => (
                           toggler(med_declaration, d_index, `media.${m_index}.declarations`)
+                      ))}
+                    </div>
+                  ))} 
+                </div>
+              )}
+            </FieldArray>
+            _______________________________________________________________{"\n"}
+            <FieldArray name="scoped_declarations">
+              {({ insert, remove, push }) => (
+                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                  {values.scoped_declarations.map((scoped_declaration, sd_index) => (
+                    <div>
+                      <h1>
+                        {scoped_declaration.parent}
+                      </h1>
+                        {scoped_declaration.declarations.map((sd_declaration, d_index) => (
+                          toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`)
                       ))}
                     </div>
                   ))} 

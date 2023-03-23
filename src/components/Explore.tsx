@@ -18,11 +18,17 @@ export default function Explore({
   const [firstSetOfMediaDeclarations, setFirstSetOfMediaDeclarations] = useState(
     firstExample.media
   );
+  const [firstSetOfScopedDeclarations, setFirstSetOfScopedDeclarations] = useState(
+    firstExample.scoped_declarations
+  );
   const [secondSetOfDeclarations, setSecondSetOfDeclarations] = useState(
     secondExample.declarations
   );
   const [secondSetOfMediaDeclarations, setSecondSetOfMediaDeclarations] = useState(
     secondExample.media
+  );
+  const [secondSetOfScopedDeclarations, setSecondSetOfScopedDeclarations] = useState(
+    secondExample.scoped_declarations
   );
 
   const [viewerSize, setViewerSize] = useState(30);
@@ -32,9 +38,12 @@ export default function Explore({
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
     setFirstSetOfMediaDeclarations(firstExample.media)
+    setFirstSetOfScopedDeclarations(firstExample.scoped_declarations)
     setSecondSetOfDeclarations(secondExample.declarations);
     setSecondSetOfMediaDeclarations(secondExample.media)
-  }, [firstExample.declarations, firstExample.media, secondExample.declarations, secondExample.media]);
+    setSecondSetOfScopedDeclarations(secondExample.scoped_declarations)
+  }, [firstExample.declarations, firstExample.media, firstExample.scoped_declarations, 
+    secondExample.declarations, secondExample.media, secondExample.scoped_declarations]);
 
   const htmlExamplesToShow = [];
 
@@ -76,7 +85,7 @@ export default function Explore({
       <div className="flex flex-wrap w-full justify-between gap-y-4 mb-8">
         {!firstHidden && (
           <Viewer
-            example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations }}
+            example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations, scoped_declarations: firstSetOfScopedDeclarations }}
             size={viewerSize}
           />
         )}
@@ -84,8 +93,7 @@ export default function Explore({
         {!secondHidden && (
           <Viewer
             example={{
-              ...secondExample,
-              declarations: secondSetOfDeclarations, media: secondSetOfMediaDeclarations
+              ...secondExample, declarations: secondSetOfDeclarations, media: secondSetOfMediaDeclarations, scoped_declarations: secondSetOfScopedDeclarations 
             }}
             size={viewerSize}
           />
@@ -98,7 +106,9 @@ export default function Explore({
             declarations={firstSetOfDeclarations}
             diffAgainstDeclarations={secondSetOfDeclarations}
             media = {firstSetOfMediaDeclarations}
-            onChange={(declarations, media) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media))}
+            scoped_declarations= {firstSetOfScopedDeclarations}
+            onChange={(declarations, media, scoped_declarations) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media), 
+              setFirstSetOfScopedDeclarations(scoped_declarations))}
           />
         )}
         {!secondHidden && (
@@ -106,7 +116,9 @@ export default function Explore({
             declarations={secondSetOfDeclarations}
             diffAgainstDeclarations={firstSetOfDeclarations}
             media = {secondSetOfMediaDeclarations}
-            onChange={(declarations, media) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media))}
+            scoped_declarations={secondSetOfScopedDeclarations}
+            onChange={(declarations, media, scoped_declarations) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media),
+              setSecondSetOfScopedDeclarations(scoped_declarations))}
           />
         )}
       </div>

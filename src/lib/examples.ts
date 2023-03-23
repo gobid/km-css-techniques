@@ -1,4 +1,4 @@
-import { Declaration, Example, Media } from "./types";
+import { Declaration, Example, Media, ScopedDeclaration } from "./types";
 
 function getDeclarationFromString(css: string): Declaration[] {
   return css
@@ -35,12 +35,16 @@ function getDeclarationFromString(css: string): Declaration[] {
     });
 }
 function getMediaFromArray(css_list): Media {
-  return {rule: css_list[0],declarations: css_list[1]};
+  return {rule: css_list[0], declarations: css_list[1]};
+}
+function getScopedDeclarationFromArray(css_list): ScopedDeclaration {
+  return {parent: css_list[0], declarations: css_list[1]};
 }
 
 export function declarationsToCSSString(
   declarations: Declaration[],
   media: Media[],
+  scoped_declarations: ScopedDeclaration[],
   parentClass: string
 ): string {
   const stdDeclarations = declarations
@@ -59,11 +63,23 @@ export function declarationsToCSSString(
         }`
       });
   const mediaFull = mediaListString.join("\n")
+  let scopedDeclarationsString = scoped_declarations.map((scoped_declaration) => {
+    return `
+      ${scoped_declaration.parent} {
+        ${scoped_declaration.declarations
+        .filter((declaration) => declaration.enabled)
+        .map((declaration) => `${declaration.name}: ${declaration.value};`)
+        .join("\n")
+    }`
+  }) ;
+  const sdFull = scopedDeclarationsString.join("\n")
   return `
     .${parentClass} {
       ${stdDeclarations}
     }
     ${mediaFull}
+    
+    ${sdFull}
     `;
 }
 
@@ -83,6 +99,7 @@ const italic: Example = {
       padding-bottom: 1.9rem;
       grid-template-columns: 1fr 1fr;`)
     ])],
+    scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 
 const gridMasterclass: Example = {  
@@ -93,20 +110,25 @@ const gridMasterclass: Example = {
     grid-template-columns: 1fr 1fr 1fr 25%;
     grid-template-rows: 1fr 1fr 1fr 0.5fr;
     grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    
-  `),
+    grid-row-gap: 0px;`),
   defaultParentClassname: "grid",
   media: [getMediaFromArray([
-    '@media (max-width: 991px)',
-    getDeclarationFromString(`
-    grid-template-columns: 1fr 1fr 1fr 25%;
-    grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`)
-  ]),
+      '@media (max-width: 991px)',
+      getDeclarationFromString(`
+      grid-template-columns: 1fr 1fr 1fr 25%;
+      grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`)
+    ]),
     getMediaFromArray([
-    '@media (max-width: 479px)',
-    getDeclarationFromString(`
-    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;`)
+      '@media (max-width: 479px)',
+      getDeclarationFromString(`
+      grid-template-rows: auto auto auto auto auto auto auto auto auto auto;`)
+    ])
+  ],
+  scoped_declarations: [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;`)
     ])
   ],
   htmlOutput: `
@@ -210,6 +232,7 @@ const flatIcons: Example = {
   `),
   defaultParentClassname: "icons",
   media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 
 const smashingMagazineGuide: Example = {
@@ -221,6 +244,7 @@ const smashingMagazineGuide: Example = {
   `),
   defaultParentClassname: "f-article-highlights",
   media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 
 const heroIcons: Example = {
@@ -233,6 +257,7 @@ const heroIcons: Example = {
   `),
   defaultParentClassname: "grid",
   media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 const CSSTricks: Example = {
   name: "CSS Tricks",
@@ -244,6 +269,7 @@ const CSSTricks: Example = {
   `),
   defaultParentClassname: "popular-articles",
   media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 export const examples: Example[] = [
   italic,
