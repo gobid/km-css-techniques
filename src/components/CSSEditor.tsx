@@ -179,9 +179,22 @@ export default function CSSEditor({
                       <h1>
                         {media_query.rule}
                       </h1>
-                        {media_query.declarations.map((med_declaration, d_index) => (
-                          toggler(med_declaration, d_index, `media.${m_index}.declarations`)
+
+                      {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
+                        <div>
+                          <h2>
+                            {scoped_declaration.parent}
+                          </h2>
+                            {scoped_declaration.declarations.map((sd_declaration, d_index) => (
+                              toggler(sd_declaration, d_index, `media.${m_index}.scoped_declarations.${sd_index}.declarations`)
+                          ))}
+                        </div>
                       ))}
+
+                      {media_query.declarations.map((med_declaration, d_index) => (
+                        toggler(med_declaration, d_index, `media.${m_index}.declarations`)
+                      ))}
+
                     </div>
                   ))} 
                 </div>

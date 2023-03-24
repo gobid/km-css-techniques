@@ -35,7 +35,7 @@ function getDeclarationFromString(css: string): Declaration[] {
     });
 }
 function getMediaFromArray(css_list): Media {
-  return {rule: css_list[0], declarations: css_list[1]};
+  return {rule: css_list[0], declarations: css_list[1], scoped_declarations: css_list[2]};
 }
 function getScopedDeclarationFromArray(css_list): ScopedDeclaration {
   return {parent: css_list[0], declarations: css_list[1]};
@@ -51,18 +51,7 @@ export function declarationsToCSSString(
     .filter((declaration) => declaration.enabled)
     .map((declaration) => `${declaration.name}: ${declaration.value};`)
     .join("\n");
-  let mediaListString = media.map((media_query) => {
-      return `
-        ${media_query.rule} {
-          .${parentClass} {
-            ${media_query.declarations
-            .filter((declaration) => declaration.enabled)
-            .map((declaration) => `${declaration.name}: ${declaration.value};`)
-            .join("\n")}
-          }
-        }`
-      });
-  const mediaFull = mediaListString.join("\n")
+  
   let scopedDeclarationsString = scoped_declarations.map((scoped_declaration) => {
     return `
       ${scoped_declaration.parent} {
@@ -73,6 +62,31 @@ export function declarationsToCSSString(
       }`
   }) ;
   const sdFull = scopedDeclarationsString.join("\n")
+  
+  let mediaListString = media.map((media_query) => {
+      return `
+        ${media_query.rule} {
+          .${parentClass} {
+
+            ${media_query.declarations
+            .filter((declaration) => declaration.enabled)
+            .map((declaration) => `${declaration.name}: ${declaration.value};`)
+            .join("\n")}
+          }
+          
+          ${media_query.scoped_declarations
+            .map((scoped_declaration) => `${scoped_declaration.parent} {
+              ${scoped_declaration.declarations
+                .filter((declaration) => declaration.enabled)
+                .map((declaration) => `${declaration.name}: ${declaration.value};`)
+                .join("\n")}
+            }`)
+            .join("\n")}
+          
+        }`
+    });
+  const mediaFull = mediaListString.join("\n")
+  
   return `
     .${parentClass} {
       ${stdDeclarations}
@@ -97,7 +111,8 @@ const italic: Example = {
     '@media (max-width: 767px)', 
     getDeclarationFromString(`
       padding-bottom: 1.9rem;
-      grid-template-columns: 1fr 1fr;`)
+      grid-template-columns: 1fr 1fr;`),
+    []
     ])],
     scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
@@ -116,12 +131,24 @@ const gridMasterclass: Example = {
       '@media (max-width: 991px)',
       getDeclarationFromString(`
       grid-template-columns: 1fr 1fr 1fr 25%;
-      grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`)
+      grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`),
+      []
     ]),
     getMediaFromArray([
       '@media (max-width: 479px)',
       getDeclarationFromString(`
-      grid-template-rows: auto auto auto auto auto auto auto auto auto auto;`)
+      grid-template-rows: auto auto auto auto auto auto auto auto auto auto;`),
+      []
+    ]),
+    getMediaFromArray([
+      '@media screen and (max-width: 991px)',
+      [],
+      [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;`)
+      ])]
     ])
   ],
   scoped_declarations: [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
@@ -231,7 +258,7 @@ const flatIcons: Example = {
     flex-wrap: wrap;
   `),
   defaultParentClassname: "icons",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
   scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 
@@ -243,7 +270,7 @@ const smashingMagazineGuide: Example = {
     flex-wrap: wrap;
   `),
   defaultParentClassname: "f-article-highlights",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
   scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 
@@ -256,7 +283,7 @@ const heroIcons: Example = {
     gap: 4em;
   `),
   defaultParentClassname: "grid",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
   scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 const CSSTricks: Example = {
@@ -268,7 +295,7 @@ const CSSTricks: Example = {
     position: relative;
   `),
   defaultParentClassname: "popular-articles",
-  media: [getMediaFromArray(["",getDeclarationFromString(``)])],
+  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
   scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 export const examples: Example[] = [
