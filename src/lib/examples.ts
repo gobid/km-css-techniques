@@ -64,16 +64,18 @@ export function declarationsToCSSString(
   const sdFull = scopedDeclarationsString.join("\n")
   
   let mediaListString = media.map((media_query) => {
+    let to_prepend = ``  
+    if (media_query.declarations.length > 0) {
+        to_prepend = `.${parentClass} {
+          ${media_query.declarations
+          .filter((declaration) => declaration.enabled)
+          .map((declaration) => `${declaration.name}: ${declaration.value};`)
+          .join("\n")}
+        }`
+      }
       return `
         ${media_query.rule} {
-          .${parentClass} {
-
-            ${media_query.declarations
-            .filter((declaration) => declaration.enabled)
-            .map((declaration) => `${declaration.name}: ${declaration.value};`)
-            .join("\n")}
-          }
-          
+          ` + to_prepend + `
           ${media_query.scoped_declarations
             .map((scoped_declaration) => `${scoped_declaration.parent} {
               ${scoped_declaration.declarations
@@ -91,9 +93,9 @@ export function declarationsToCSSString(
     .${parentClass} {
       ${stdDeclarations}
     }
-    ${mediaFull}
-    
     ${sdFull}
+
+    ${mediaFull}    
     `;
 }
 
@@ -127,27 +129,15 @@ const gridMasterclass: Example = {
     grid-column-gap: 0px;
     grid-row-gap: 0px;`),
   defaultParentClassname: "grid",
-  media: [getMediaFromArray([
-      '@media (max-width: 991px)',
-      getDeclarationFromString(`
-      grid-template-columns: 1fr 1fr 1fr 25%;
-      grid-template-rows: auto 1fr 1fr 1fr auto auto auto auto;`),
-      []
-    ]),
-    getMediaFromArray([
-      '@media (max-width: 479px)',
-      getDeclarationFromString(`
-      grid-template-rows: auto auto auto auto auto auto auto auto auto auto;`),
-      []
-    ]),
+  media: [
     getMediaFromArray([
       '@media screen and (max-width: 991px)',
       [],
       [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
         grid-column-start: 1;
-        grid-column-end: 3;
-        grid-row-start: 1;
-        grid-row-end: 2;`)
+        grid-column-end: 5;
+        grid-row-start: 2;
+        grid-row-end: 3;`)
       ])]
     ])
   ],
