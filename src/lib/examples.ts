@@ -248,7 +248,14 @@ const flatIcons: Example = {
     flex-wrap: wrap;
   `),
   defaultParentClassname: "icons",
-  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
+  media: [getMediaFromArray(["@media (max-width: 480px)",getDeclarationFromString(``), [
+      getScopedDeclarationFromArray([".icons .icon--item", getDeclarationFromString(`
+        min-width: 33%;
+      `)
+      ])
+    ]
+  ])
+  ],
   scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
 };
 
@@ -260,21 +267,56 @@ const smashingMagazineGuide: Example = {
     flex-wrap: wrap;
   `),
   defaultParentClassname: "f-article-highlights",
-  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
-  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  media: [getMediaFromArray(["@media screen and (min-width: 48em)",       
+    getDeclarationFromString(``), [
+      getScopedDeclarationFromArray([".col-12", getDeclarationFromString(`
+        flex-basis: 100%;
+        max-width: 100%;`)
+      ])
+    ]
+  ]),
+  getMediaFromArray(["@media screen and (min-width: 64em)",       
+    getDeclarationFromString(``), [
+      getScopedDeclarationFromArray([".f-article-item", getDeclarationFromString(`
+        flex-basis: 50%;`)
+      ])
+    ]
+  ]),
+  getMediaFromArray(["@media (max-width: 1025px)",       
+    getDeclarationFromString(``), [
+      getScopedDeclarationFromArray([".vertical--white", getDeclarationFromString(`
+        transform: none;
+        margin: 2.5em 0 2.5em calc(1.3em - 2px);`)
+      ])
+    ]
+  ])
+  ],
+  scoped_declarations: [getScopedDeclarationFromArray([".article--grid__sponsors",getDeclarationFromString(`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+  `)]),
+  getScopedDeclarationFromArray([".vertical--white",getDeclarationFromString(`
+    transform-origin: left center;
+    transform: rotateZ(90deg) translateX(-5em) translateY(1em);
+  `)])],
 };
 
 const heroIcons: Example = {
   name: "Hero Icons",
   iframeUrl: "/examples/hero-icons",
-  declarations: getDeclarationFromString(`
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(8rem,1fr));
-    gap: 4em;
-  `),
+  declarations: getDeclarationFromString(``),
   defaultParentClassname: "grid",
   media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
-  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  scoped_declarations: [getScopedDeclarationFromArray([".icon-grid",getDeclarationFromString(`
+    display: grid;
+    gap: 4rem;
+    text-align: center;
+    font-size: 0.8rem;
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  `)])],
 };
 const CSSTricks: Example = {
   name: "CSS Tricks",
@@ -285,8 +327,49 @@ const CSSTricks: Example = {
     position: relative;
   `),
   defaultParentClassname: "popular-articles",
-  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
-  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  media: [getMediaFromArray(["@media (max-width: 1200px)",getDeclarationFromString(``), [
+    getScopedDeclarationFromArray(["body.home .mini-card", getDeclarationFromString(`
+      min-width: 220px;`)
+    ]),
+    getScopedDeclarationFromArray(["body.home .mini-card:not(:first-child)", getDeclarationFromString(`
+      margin-left: -30px;`)
+    ]),
+    getScopedDeclarationFromArray([".popular-articles", getDeclarationFromString(`
+      padding-bottom: var(--gap);
+      padding-left: 5px;
+      overflow-x: scroll;`)
+    ]),
+    getScopedDeclarationFromArray(["body.home .mini-card-grid", getDeclarationFromString(`
+      padding-bottom: var(--gap);
+      padding-left: 5px;
+      overflow-x: visible;`)
+    ])
+  ]])],
+  scoped_declarations: [getScopedDeclarationFromArray(["body.home .mini-card",getDeclarationFromString(`
+      min-width: 300px;
+      min-height: 350px;
+      box-shadow: -2rem 0 3rem -2rem #000;
+    `)]),
+    getScopedDeclarationFromArray([".mini-card",getDeclarationFromString(`
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: linear-gradient(85deg, #434343, #262626);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      transition: 0.2s;
+      margin: 0;
+    `)]),
+    getScopedDeclarationFromArray(["html",getDeclarationFromString(`
+      max-width: 1600px;
+    `)]),
+    getScopedDeclarationFromArray(["body.home .mini-card-grid",getDeclarationFromString(`
+      padding: 3rem 0 3rem 2rem;
+      margin: 0;
+      display: flex;
+      overflow-x: scroll;
+    `)]),
+  ],
 };
 export const examples: Example[] = [
   italic,
