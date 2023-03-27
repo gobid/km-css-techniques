@@ -34,7 +34,9 @@ export default function Explore({
   const [viewerSize, setViewerSize] = useState(30);
   const [firstHidden, setFirstHidden] = useState(false);
   const [secondHidden, setSecondHidden] = useState(false);
-
+  const [firstCodeHidden, setFirstCodeHidden] = useState(false);
+  const [secondCodeHidden, setSecondCodeHidden] = useState(false);
+  
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
     setFirstSetOfMediaDeclarations(firstExample.media)
@@ -73,11 +75,14 @@ export default function Explore({
           <button className="btn" onClick={() => setFirstHidden(!firstHidden)}>
             {firstHidden ? "Show" : "Hide"} Example 1{" "}
           </button>
-          <button
-            className="btn"
-            onClick={() => setSecondHidden(!secondHidden)}
-          >
+          <button className="btn" onClick={() => setSecondHidden(!secondHidden)}>
             {secondHidden ? "Show" : "Hide"} Example 2{" "}
+          </button>
+          <button className="btn" onClick={() => setFirstCodeHidden(!firstCodeHidden)}>
+            {firstCodeHidden ? "Show Code" : "Hide Code"} Example 1{" "}
+          </button>
+          <button className="btn" onClick={() => setSecondCodeHidden(!secondCodeHidden)}>
+            {secondCodeHidden ? "Show Code" : "Hide Code"} Example 2{" "}
           </button>
         </div>
       </div>
@@ -100,8 +105,8 @@ export default function Explore({
         )}
       </div>
 
-      <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {!firstHidden && (
+      <div className="grid grid-cols-4 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+        {!firstHidden && !firstCodeHidden && (
           <CSSEditor
             declarations={firstSetOfDeclarations}
             diffAgainstDeclarations={secondSetOfDeclarations}
@@ -109,9 +114,30 @@ export default function Explore({
             scoped_declarations= {firstSetOfScopedDeclarations}
             onChange={(declarations, media, scoped_declarations) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media), 
               setFirstSetOfScopedDeclarations(scoped_declarations))}
-          />
+          /> 
         )}
-        {!secondHidden && (
+        {!firstHidden && !firstCodeHidden && (
+          <div className="p-4" key="1">
+            {firstExample.htmlOutput && (
+              <div>
+                <h1>HTML Structure:</h1>
+                <pre>{firstExample.htmlOutput}</pre>
+              </div>
+            )}
+
+            {firstExample.children && (
+              <div>
+                <h1>Child CSS</h1>
+                {firstExample.children.map((child, i) => (
+                  <div key={i}>
+                    <pre>{child}</pre>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+        {!secondHidden && !secondCodeHidden && (
           <CSSEditor
             declarations={secondSetOfDeclarations}
             diffAgainstDeclarations={firstSetOfDeclarations}
@@ -121,22 +147,19 @@ export default function Explore({
               setSecondSetOfScopedDeclarations(scoped_declarations))}
           />
         )}
-      </div>
-
-      <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {htmlExamplesToShow.map((example, i) => (
-          <div className="p-4" key={i}>
-            {example.htmlOutput && (
+        {!secondHidden && !secondCodeHidden && (
+          <div className="p-4" key="1">
+            {secondExample.htmlOutput && (
               <div>
                 <h1>HTML Structure:</h1>
-                <pre>{example.htmlOutput}</pre>
+                <pre>{secondExample.htmlOutput}</pre>
               </div>
             )}
 
-            {example.children && (
+            {secondExample.children && (
               <div>
                 <h1>Child CSS</h1>
-                {example.children.map((child, i) => (
+                {secondExample.children.map((child, i) => (
                   <div key={i}>
                     <pre>{child}</pre>
                   </div>
@@ -144,7 +167,7 @@ export default function Explore({
               </div>
             )}
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

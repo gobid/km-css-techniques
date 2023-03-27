@@ -170,6 +170,8 @@ export default function CSSEditor({
                 </div>
               )}
             </FieldArray>
+            <br/><p style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</p>
+            <br/><p style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</p>
             _______________________________________________________________{"\n"}
             <FieldArray name="media">
               {({ insert, remove, push }) => (
