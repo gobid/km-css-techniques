@@ -63,6 +63,7 @@ const suggestedValues = {
 
 interface CSSEditorProps {
   declarations: Declaration[];
+  defaultParent: string;
   media: Media[];
   scoped_declarations: ScopedDeclaration[];
   diffAgainstDeclarations: Declaration[];
@@ -124,6 +125,7 @@ function toggler(declaration, index, declaration_type) {
 
 export default function CSSEditor({
   declarations,
+  defaultParent,
   diffAgainstDeclarations,
   media,
   scoped_declarations,
@@ -149,6 +151,9 @@ export default function CSSEditor({
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
                 <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                  <h1>
+                    .{defaultParent}
+                  </h1>
                   <div>
                     {values.declarations.map((declaration, index) => (
                       toggler(declaration, index, "declarations")

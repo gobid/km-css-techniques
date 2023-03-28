@@ -116,7 +116,26 @@ const italic: Example = {
       grid-template-columns: 1fr 1fr;`),
     []
     ])],
-    scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  htmlOutput: `
+  <html>
+    ...
+    <div class="pcp-featured-grid">
+      ...
+    </div>
+    <div class="department-section ae cm">
+      ...
+      <div class="collections-grid ae cx">
+        <a href="/products/1...>
+        <a href="/products/2...>
+        <a href="/products/3...>
+        ...
+        <div class="ae">Shop All Apparel ...</div>
+        ...
+      </div>
+    </div>
+    ...
+  </html>`
 };
 
 const gridMasterclass: Example = {  
@@ -149,24 +168,27 @@ const gridMasterclass: Example = {
     ])
   ],
   htmlOutput: `
-  
-  <div class="grid">
-    <div class="div-block-7"></div>
-    <div class="div-block-4"></div>
-    <div class="div-block-3"></div>
-    <div class="div-block-5"></div>
-    <div class="div-block-6"></div>
-    <div class="div-block"></div>
-    <div class="div-block-8"></div>
-    <div class="div-block-4"></div>
-    <div class="div-block-10"></div>
-    <div class="div-block-2"></div>
-  </div>
+  <html>
+    ...
+    <div class="w-layout-grid grid">
+      <div id="w-node-..." class="div-block-7">
+      <div id="w-node-..." class="div-block-4"></div>
+      <div id="w-node-..." class="div-block-3"></div>
+      <div id="w-node-..." class="div-block-5"></div>
+      <div id="w-node-..." class="div-block-6"></div>
+      <div id="w-node-..." class="div-block"></div>
+      <div id="w-node-..." class="div-block-8"></div>
+      <div id="w-node-..." class="div-block-4"></div>
+      <div id="w-node-..." class="div-block-10"></div>
+      <div id="w-node-..." class="div-block-2"></div>
+    </div>
+    ...
+  </html>
   `,
   children: [
     `
     // values vary on window size
-    .div-block-4 {
+    .div-block-7 {
       grid-column-start: 3;
       grid-column-end: 5;
       grid-row-start: 4;
@@ -199,14 +221,6 @@ const gridMasterclass: Example = {
     `,
     `
     .div-block-6 {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 3;
-      grid-row-end: 4;
-    }
-    `,
-    `
-    .div-block {
       grid-column-start: 1;
       grid-column-end: 2;
       grid-row-start: 4;
@@ -214,27 +228,41 @@ const gridMasterclass: Example = {
     }
     `,
     `
-    .div-block-8 {
+    .div-block {
       grid-column-start: 3;
       grid-column-end: 5;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+    `,
+    `
+    .div-block-8 {
+      grid-column-start: 1;
+      grid-column-end: 3;
       grid-row-start: 1;
       grid-row-end: 2;
     }
     `,
     `
     .div-block-4 {
-      grid-column-start: 4;
-      grid-column-end: 5;
-      grid-row-start: 1;
-      grid-row-end: 2;
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 3;
+      grid-row-end: 4;
     }
     `,
     `
     .div-block-10 {
-      grid-column-start: 3;
+      grid-column-start: 2;
       grid-column-end: 4;
-      grid-row-start: 1;
-      grid-row-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+    }
+    .div-block-2 {
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
     }
     `,
   ],
@@ -257,6 +285,18 @@ const flatIcons: Example = {
   ])
   ],
   scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  htmlOutput:`
+    <html>
+      ...
+      <ul class="icons">
+        <li class="icon--item icon" data-id="..." data-name="..." ... data-png="....png">
+        <li class="icon--item icon" data-id="..." data-name="..." ... data-png="....png">
+        <li class="icon--item icon" data-id="..." data-name="..." ... data-png="....png">
+        ...
+      </ul>
+      ...
+    </html>
+  `,
 };
 
 const smashingMagazineGuide: Example = {
@@ -302,6 +342,42 @@ const smashingMagazineGuide: Example = {
     transform-origin: left center;
     transform: rotateZ(90deg) translateX(-5em) translateY(1em);
   `)])],
+  htmlOutput:`
+  <html>
+    ...
+    <section class="curated-articles-container">
+      ...
+      <h4 class="vertical--white...">
+        <span>Latest Posts</span>
+      </h4>
+      <div class="f-article-highlights col-12 ...">
+        <div class="f-article-item">
+          ...Testing Pipeline 101...
+        </div>
+        <div class="f-article-item">...</div>
+        <div class="f-article-item">...</div>
+        ...
+      </div>
+    </section>
+    <section class="curated-articles-container">
+      <div class="f-article-highlights__person">
+        ...Person of the Week...
+      </div>
+      <div class="f-article-highlights col-12 ...">
+        <div class="f-article-item">...A11y Myths...</div>
+        <div class="f-article-item">...</div>
+        <div class="f-article-item">...</div>
+        ...
+        <div class="article--grid__sponsors">
+          ...
+          Join 1916 Smashing Members
+          ...
+        </div>
+      </div>
+    </section>
+    ...
+  </html>
+  `
 };
 
 const heroIcons: Example = {
@@ -317,6 +393,24 @@ const heroIcons: Example = {
     font-size: 0.8rem;
     grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
   `)])],
+  htmlOutput:`
+  <html>
+    ...
+    <div class="icon-grid">
+      ...
+      <li class="relative..."></li>
+        ...
+        <button id="academic-cap-md-btn" ...>  
+          <svg width="24" height="24" ...>...</svg>
+        </button>
+        ...
+      <li class="relative..."></li>
+      <li class="relative..."></li>
+      ...
+    </div>
+    ...
+  </html>
+  `
 };
 const CSSTricks: Example = {
   name: "CSS Tricks",
@@ -370,6 +464,23 @@ const CSSTricks: Example = {
       overflow-x: scroll;
     `)]),
   ],
+  htmlOutput:`
+  <html>
+    ...
+    <div class="popular-articles">
+      <div class="popular-header header-card">
+        <h2>...Popular this month...</h2>
+      </div>
+      <div class="mini-card-grid">
+        <article class="mini-card ...">...CSS Based Fingerprinting</div>
+        <article class="mini-card ...">...</div>
+        <article class="mini-card ...">...</div>
+        ...
+      </div>
+    </div>
+    ...
+  </html>
+  `
 };
 export const examples: Example[] = [
   italic,

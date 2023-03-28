@@ -109,6 +109,7 @@ export default function Explore({
         {!firstHidden && !firstCodeHidden && (
           <CSSEditor
             declarations={firstSetOfDeclarations}
+            defaultParent={firstExample.defaultParentClassname}
             diffAgainstDeclarations={secondSetOfDeclarations}
             media = {firstSetOfMediaDeclarations}
             scoped_declarations= {firstSetOfScopedDeclarations}
@@ -140,6 +141,7 @@ export default function Explore({
         {!secondHidden && !secondCodeHidden && (
           <CSSEditor
             declarations={secondSetOfDeclarations}
+            defaultParent={secondExample.defaultParentClassname}
             diffAgainstDeclarations={firstSetOfDeclarations}
             media = {secondSetOfMediaDeclarations}
             scoped_declarations={secondSetOfScopedDeclarations}
