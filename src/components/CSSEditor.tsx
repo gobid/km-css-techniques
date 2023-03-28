@@ -70,6 +70,50 @@ interface CSSEditorProps {
   onChange: (declarations: Declaration[], media: Media[], scoped_declarations: ScopedDeclaration[]) => void;
 }
 
+function propertyDefinition(property) {
+  if (property.includes("display")) {
+    return `Specifies display behavior of an element / container. 
+- Values can be grid (2D grid container of blocks), flex (1D container, that can wrap into 2D), block (new line, whole width), inline-block (inline, you can apply height width).
+- Src: W3Schools
+- Sites Using: ALL`;
+  }
+  else if (property.includes("grid-template-columns")) {
+    return `Specifies the number (and the widths) of columns in a grid layout. The values are a space separated list, where each value specifies the size of the respective column. 
+- Values can specify pixels, percentages, fractions (i.e. 1fr), or auto-fill.
+- Src: W3 Schools
+- Sites Using: Italic, Masterclass, Hero Icons
+- Implicit Dependencies: must use display:grid`;
+  }
+  else if (property.includes("gap")) {
+    return `Defines the size of the gap between the rows and columns in a grid layout, and is a shorthand property for grid-row-gap and grid-column-gap. 
+- Values can specify pixels, em, rem.
+- Src: W3 Schools
+- Sites Using: Masterclass
+- Implicit Dependencies: must use display:grid`;
+  }
+  else if (property.includes("padding")){
+    return `Generates space around an element's content, inside of any defined borders. padding-top, padding-right, padding-bottom, padding-left are variants.
+- Values can specify length in px, pt, cm, etc. or % of the width of the containing element, or inherit if padding should be inherited from the parent element.
+- Src: W3 Schools
+- Sites Using: Italic, CSS Tricks`;
+  }
+  else if (property.includes("start") || property.includes("end")){
+    return `Defines on which column-line the item will start/end, i.e. grid-column-start/end: auto|span n|column-line;
+- Values can specify:
+- - auto (placed following the flow of elements)
+- - span n (specifies # of cols the item will span)
+- - OR a column line (which column to start/end the display of the item). 
+- Examples: grid-column-start: auto; grid-column-start: span 3; grid-column-start: 2; grid-column-end: 2;
+- Src: W3 Schools
+- Sites Using: Masterclass
+- Implicit Dependencies: must use display:grid`
+  }
+  else {
+    return `Feel free to look up this property online.`
+  }
+  // add ~10 more important properties - rest leave the else case
+}
+
 function toggler(declaration, index, declaration_type) {
   return (
       <div
@@ -88,6 +132,7 @@ function toggler(declaration, index, declaration_type) {
 
         <div className="flex-1">
           <Field
+            title={propertyDefinition(declaration.name)}
             name={`${declaration_type}.${index}.name`}
             placeholder="background-color"
             type="text"
