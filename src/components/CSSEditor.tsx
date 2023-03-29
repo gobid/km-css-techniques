@@ -88,7 +88,7 @@ function propertyDefinition(property) {
     return `Defines the size of the gap between the rows and columns in a grid layout, and is a shorthand property for grid-row-gap and grid-column-gap. 
 - Values can specify pixels, em, rem.
 - Src: W3 Schools
-- Sites Using: Masterclass
+- Sites Using: Masterclass, Hero Icons
 - Implicit Dependencies: must use display:grid`;
   }
   else if (property.includes("padding")){
@@ -107,6 +107,52 @@ function propertyDefinition(property) {
 - Src: W3 Schools
 - Sites Using: Masterclass
 - Implicit Dependencies: must use display:grid`
+  }
+  else if (property.includes("wrap")) {
+    return `Specifies whether the flexible items should wrap or not.
+- Values include nowrap, wrap, wrap-reverse (wrap but in reverse order), inherit (inherit parent's value)
+- Src: W3 Schools
+- Sites Using: Flat Icons, Smashing Magazine
+- Implicit Dependencies: must use display:flex`
+  }
+  else if (property.includes("-width")) {
+    return `min-width / max-width property defines the minimum / maximum width of an element. If the content is smaller than the minimum width or larger than the maximumum width, the minimum / maximum width will be applied. If content is inside a larger container, % will refer to the % of the larger container.
+- Values can be in px, cm, em, etc. or % or initial or inherit
+- Src: W3 Schools
+- Sites Using: Flat Icons, Smashing Magazine, CSS Tricks`
+  }
+  else if (property.includes("basis")) {
+    return `Specifies the initial length of a flexible item.
+- Values: A length unit, or percentage, specifying the initial length of the flexible item(s), or inherit.
+- Src: W3 Schools
+- Sites Using: Smashing Magazine
+`
+  }
+  else if (property.includes("transform-origin")) {
+    return `transform-origin allows you to change the position of transformed elements, by changing its "origin" or rather the position of its X, Y, and even Z axes of rotation. 
+- Values: left, center, right (these refer to the left, center, right of the object being rotated), or a % into the object with the top left being 0% 0% 
+- Src: W3 Schools
+- Sites Using: Smashing Magazine, CSS Tricks
+- Implicit Dependencies: must use the transform property too`
+  }
+  else if (property.includes("transform")) {
+    return `Applies a 2D or 3D transformation to an element. This property allows you to rotate, scale, move, skew, etc., elements.
+- Values: translate(x,y) for a 2D transform (also supports 1D / 3D), scale, rotate (2D, 3D), skew, perspective
+- Src: W3 Schools
+- Sites Using: Smashing Magazine, CSS Tricks`
+  }
+  else if (property.includes("margin")) {
+    return `Create space around elements, outside of any defined borders.
+- Note: a margin is the space around an element's border, while padding is the space between an element's border and the element's content. margin-top, margin-right, margin-bottom, margin-left are variants.
+- Values can specify length in px, pt, cm, etc. or % of the width of the containing element, or inherit if padding should be inherited from the parent element.
+- Src: W3 Schools
+- Sites Using: Smashing Magazine, CSS Tricks`
+  }
+  else if (property.includes("overflow")) {
+    return `Specifies whether to clip the content or to add scrollbars when the content of an element is too big to fit in the specified area. overflow-x and overflow-y are variants.
+- Values: visible, hidden (overflow clipped), scroll (overflow clipped but scrollable), auto
+- Src: W3 Schools
+- Sites Using: CSS Tricks`
   }
   else {
     return `Feel free to look up this property online.`
