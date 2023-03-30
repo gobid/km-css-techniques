@@ -47,7 +47,7 @@ const suggestedValues = {
     "right",
   ],
   "flex-wrap": ["nowrap", "wrap", "wrap-reverse"],
-  display: ["flex", "grid", "block", "inline-block"],
+  display: ["flex", "grid", "block", "inline-block", "none"],
   "align-content": [
     "start",
     "end",
@@ -79,7 +79,7 @@ function propertyDefinition(property) {
   }
   else if (property.includes("grid-template-columns")) {
     return `Specifies the number (and the widths) of columns in a grid layout. The values are a space separated list, where each value specifies the size of the respective column. 
-- Values can specify pixels, percentages, fractions (i.e. 1fr), or auto-fill.
+- Values can specify pixels, percentages, fractions (i.e. 1fr), or auto-fill. With, auto-fill by default you go down to 1 column at the smallest widths.
 - Src: W3 Schools
 - Sites Using: Italic, Masterclass, Hero Icons
 - Implicit Dependencies: must use display:grid`;
@@ -144,6 +144,7 @@ function propertyDefinition(property) {
   else if (property.includes("margin")) {
     return `Create space around elements, outside of any defined borders.
 - Note: a margin is the space around an element's border, while padding is the space between an element's border and the element's content. margin-top, margin-right, margin-bottom, margin-left are variants.
+- Note: for sites with flex, margin is by default 0px.
 - Values can specify length in px, pt, cm, etc. or % of the width of the containing element, or inherit if padding should be inherited from the parent element.
 - Src: W3 Schools
 - Sites Using: Smashing Magazine, CSS Tricks`
