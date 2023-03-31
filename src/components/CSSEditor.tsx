@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Formik, Form, FieldArray, Field, useFormikContext } from "formik";
 import { Declaration, Media } from "../lib/types";
-
+import { getInfo } from "../lib/info";
 enum DeclarationDiffType {
   SamePropertyAndValue = "SamePropertyAndValue",
   SameProperty = "SameProperty",
@@ -68,7 +68,7 @@ interface CSSEditorProps {
   onChange: (declarations: Declaration[], media: Media[]) => void;
 }
 
-function toggler(declaration, index, declaration_type) {
+function toggler(declaration, index, declaration_type, info?) {
   return (
       <div
         className={`flex gap-2 items-center transition-opacity px-2 py-2 mb-4 rounded ${
@@ -117,6 +117,17 @@ function toggler(declaration, index, declaration_type) {
             />
           )}
         </div>
+        {info?
+          <div className="tooltip">?
+            <ul className="tooltiptext">
+              <li className="textspan">Definition: {info.definition}</li>
+              <li className="textspan">Values it takes: {info.values.join(', ')}</li>
+              <li className="textspan">Used By: {info.websites.join(', ')}</li>
+            </ul>
+          </div>
+      :<>No Info Available for Technique</>
+        }
+        
       </div>
       );
 }
@@ -148,7 +159,7 @@ export default function CSSEditor({
                 <div style={{fontSize: 18, fontFamily: "monospace"}}>
                   <div>
                     {values.declarations.map((declaration, index) => (
-                      toggler(declaration, index, "declarations")
+                      toggler(declaration, index, "declarations", getInfo(declaration))
                     ))}
                   </div>
                   <button
@@ -177,7 +188,7 @@ export default function CSSEditor({
                         {media_query.rule}
                       </h1>
                         {media_query.declarations.map((med_declaration, d_index) => (
-                          toggler(med_declaration, d_index, `media.${m_index}.declarations`)
+                          toggler(med_declaration, d_index, `media.${m_index}.declarations`, getInfo(med_declaration))
                       ))}
                     </div>
                   ))} 

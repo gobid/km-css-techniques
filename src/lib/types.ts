@@ -24,3 +24,10 @@ export type Media = {
   rule?: string;
   declarations?: Declaration[];
 }
+
+export type Info = {
+  name: string;
+  definition: string;
+  values: string[];
+  websites: string[];
+}
