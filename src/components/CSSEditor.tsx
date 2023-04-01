@@ -142,6 +142,13 @@ function propertyDefinition(property) {
 - Src: W3 Schools
 - Sites Using: Smashing Magazine, CSS Tricks`
   }
+  else if (property.includes("transition")) {
+    return `Allows you to change property values smoothly, over a given duration. Specify (1) the CSS property you want to add an effect to - if none is specified then it applies it to all properties of the CSS rule (2) the duration of the effect.
+- Note: you can change the value of the transition duration to see how the transition is working.
+- Src: W3 Schools
+- Sites Using: CSS Tricks
+- Implicit Dependencies: must used in conjunction with other properties whose values are being transitioned`
+  }
   else if (property.includes("margin")) {
     return `Create space around elements, outside of any defined borders.
 - Note: a margin is the space around an element's border, while padding is the space between an element's border and the element's content. margin-top, margin-right, margin-bottom, margin-left are variants.
