@@ -39,6 +39,30 @@ h1 {
   transform: scale(0.5);
 
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 30vw;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.textspan{
+  border-top: solid white 1px;
+  }
+
 .iframe.left {
   transform-origin: top left;
   margin-right:-1000px;
@@ -47,5 +71,4 @@ h1 {
 .iframe.right {
   transform-origin: top right;
   margin-left:-1000px;
-
 }
