@@ -74,12 +74,13 @@ function propertyDefinition(property) {
   if (property.includes("display")) {
     return `Specifies display behavior of an element / container. 
 - Values can be grid (2D grid container of blocks), flex (1D container, that can wrap into 2D), block (new line, whole width), inline-block (inline, you can apply height width).
+- Note: With both flex and grid, individual components within the container scale in size as your resize the overall flex/grid container.
 - Src: W3Schools
 - Sites Using: ALL`;
   }
   else if (property.includes("grid-template-columns")) {
     return `Specifies the number (and the widths) of columns in a grid layout. The values are a space separated list, where each value specifies the size of the respective column. 
-- Values can specify pixels, percentages, fractions (i.e. 1fr), or auto-fill. With, auto-fill by default you go down to 1 column at the smallest widths.
+- Values can specify pixels, percentages, fractions (i.e. 1fr), or auto-fill. With auto-fill by default you go down to 1 column at the smallest widths.
 - Src: W3 Schools
 - Sites Using: Italic, Masterclass, Hero Icons
 - Implicit Dependencies: must use display:grid`;
@@ -116,7 +117,7 @@ function propertyDefinition(property) {
 - Implicit Dependencies: must use display:flex`
   }
   else if (property.includes("-width")) {
-    return `min-width / max-width property defines the minimum / maximum width of an element. If the content is smaller than the minimum width or larger than the maximumum width, the minimum / maximum width will be applied. If content is inside a larger container, % will refer to the % of the larger container.
+    return `min-width / max-width property defines the minimum / maximum width of an element. If the content is smaller than the minimum width or larger than the maximum width, the minimum / maximum width will be applied. If content is inside a larger container, % will refer to the % of the larger container.
 - Values can be in px, cm, em, etc. or % or initial or inherit
 - Src: W3 Schools
 - Sites Using: Flat Icons, Smashing Magazine, CSS Tricks`
