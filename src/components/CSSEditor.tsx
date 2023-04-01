@@ -71,12 +71,12 @@ interface CSSEditorProps {
 function toggler(declaration, index, declaration_type, info?) {
   return (
       <div
-        className={`flex gap-2 items-center transition-opacity px-2 py-2 mb-4 rounded ${
+        className={`editor flex gap-2 items-center transition-opacity px-2 py-2 mb-1 rounded ${
           !declaration.enabled ? "opacity-60" : ""
         } ${getColorForDiffType(declaration.diffType)} `}
         key={index}
       >
-        <div>
+        <div className="editor flex">
           <Field
             name={`${declaration_type}.[${index}].enabled`}
             type="checkbox"
@@ -84,7 +84,7 @@ function toggler(declaration, index, declaration_type, info?) {
           />
         </div>
 
-        <div className="flex-1">
+        <div className="editor flex-1">
           <Field
             name={`${declaration_type}.${index}.name`}
             placeholder="background-color"
@@ -93,7 +93,7 @@ function toggler(declaration, index, declaration_type, info?) {
           />
         </div>
 
-        <div className="flex-1">
+        <div className="editor flex-1">
           {suggestedValues[declaration.name] ? (
             <Field
               name={`${declaration_type}.${index}.value`}
@@ -185,7 +185,7 @@ export default function CSSEditor({
                   {values.media.map((media_query, m_index) => (
                     <div>
                       <h1>
-                        {media_query.rule}
+                        {media_query.rule} {"{"}
                       </h1>
                         {media_query.declarations.map((med_declaration, d_index) => (
                           toggler(med_declaration, d_index, `media.${m_index}.declarations`, getInfo(med_declaration))
