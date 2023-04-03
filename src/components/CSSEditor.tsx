@@ -80,8 +80,9 @@ function propertyDefinition(property) {
   }
   else if (property.includes("grid-template-columns")) {
     return `Specifies the number (and the widths) of columns in a grid layout. The values are a space separated list, where each value specifies the size of the respective column. 
+- Note: The minmax property defines a size range (for the columns) greater than or equal to min and less than or equal to max.
 - Values can specify pixels, percentages, fractions (i.e. 1fr), or auto-fill. With auto-fill by default you go down to 1 column at the smallest widths.
-- Src: W3 Schools
+- Src: W3 Schools, Mozilla, CSS Tricks
 - Sites Using: Italic, Masterclass, Hero Icons
 - Implicit Dependencies: must use display:grid`;
   }
