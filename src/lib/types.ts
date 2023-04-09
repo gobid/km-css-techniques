@@ -22,5 +22,6 @@ export type Info = {
   name: string;
   definition: string;
   values: string[];
+  implicitDependencies: string;
   websites: string[];
 }

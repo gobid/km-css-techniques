@@ -33,7 +33,7 @@ h1 {
   position: relative;
   overflow: hidden;
   height: 50vh;
-  
+
 }
 .iframe {
   transform: scale(0.5);
@@ -59,16 +59,16 @@ h1 {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-.textspan{
+.textspan {
   border-top: solid white 1px;
-  }
+  font-size: 13px;
+}
 
 .iframe.left {
   transform-origin: top left;
-  margin-right:-1000px;
-
+  margin-right: -1000px;
 }
 .iframe.right {
   transform-origin: top right;
-  margin-left:-1000px;
+  margin-left: -1000px;
 }

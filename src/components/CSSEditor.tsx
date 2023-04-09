@@ -123,6 +123,7 @@ function toggler(declaration, index, declaration_type, info?) {
               <li className="textspan">Definition: {info.definition}</li>
               <li className="textspan">Values it takes: {info.values.join(', ')}</li>
               <li className="textspan">Used By: {info.websites.join(', ')}</li>
+              <li className="textspan">Dependencies: {info.implicitDependencies}</li>
             </ul>
           </div>
       :<>No Info Available for Technique</>
