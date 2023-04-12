@@ -26,18 +26,15 @@
 }
 
 h1 {
-  font-size: medium;
+  font-size: small;
 }
-
 .viewer {
   position: relative;
   overflow: hidden;
   height: 50vh;
-  
 }
 .iframe {
   transform: scale(0.5);
-
 }
 .iframe.left {
   transform-origin: top left;

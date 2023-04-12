@@ -25,9 +25,7 @@ export default function NewApp(): JSX.Element {
               ))}
             </select>
           </label>
-
           <p className="mx-4">vs</p>
-
           <label>
             <select
               className="select"

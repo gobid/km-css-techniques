@@ -49,9 +49,9 @@ export default function Explore({
     <div className="">
       {/* THIS IS THE SLIDER BAR */}
       <div className="w-full px-4 py-2 bg-gray-100 mb-4">
-        <div>
+        <h1>
           Window width: {(Math.round(screenWidth*viewerSize/100))}px
-        </div>
+        </h1>
         <input
           type="range"
           min={0}
