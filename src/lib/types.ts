@@ -6,6 +6,7 @@ export type Example = {
   htmlOutput?: string;
   children?: string[];
   media?: Media[];
+  scoped_declarations?: ScopedDeclaration[];
 
 };
 export type Declaration = {
@@ -13,9 +14,14 @@ export type Declaration = {
   value: string;
   enabled: boolean;
 };
+export type ScopedDeclaration = {
+  parent?: string;
+  declarations?: Declaration[];
+}
 export type Media = {
   rule?: string;
   declarations?: Declaration[];
+  scoped_declarations?: ScopedDeclaration[];
 }
 
 export type Info = {

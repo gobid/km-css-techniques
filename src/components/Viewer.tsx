@@ -16,11 +16,13 @@ export default function Viewer({ example, size, view }: ViewerProps): JSX.Elemen
       const newCSSValue = declarationsToCSSString(
         example.declarations,
         example.media,
+        example.scoped_declarations,
         example.defaultParentClassname
       );
+      console.log("newCSSValue", newCSSValue);
       viewerRef.current?.contentWindow.postMessage({type: "NEW_CSS_VALUE", data: newCSSValue});
     }
-  }, [example.declarations, example.media, example.defaultParentClassname]);
+  }, [example.declarations, example.media, example.scoped_declarations, example.defaultParentClassname]);
 
   return (
     <iframe

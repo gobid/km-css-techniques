@@ -101,6 +101,18 @@ const declarationInformation = {
     values: ["0", "10%", "1em", "10px 20px", "calc(20px + 10%)"],
     implicitDependencies: "N/A",
   },
+  "grid-row-start": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "grid-row-end": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
   margin: {
     definition:
       "Create space around elements, outside of any defined borders. A margin is the space around an element's border, while padding is the space between an element's border and the element's content. margin-top, margin-right, margin-bottom, margin-left are variants. For sites with flex, margin is by default 0px.",
