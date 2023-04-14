@@ -1,12 +1,22 @@
+.body {
+  font-family: Courier, monospace ;
+  font-size: 14px;
+}
+
 .input {
   padding: 4px 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   width: 100%;
   font-size: small;
-
 }
-
+h1 {
+  font-size: 16px;
+}
+.text {
+  overflow: scroll;
+  /* font-family: 'Courier New', Courier, monospace; */
+}
 .btn {
   padding: 3px 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -25,13 +35,11 @@
   font-size: small;
 }
 
-h1 {
-  font-size: small;
-}
 .viewer {
   position: relative;
   overflow: hidden;
   height: 50vh;
+  overflow-x: clip;
 }
 .iframe {
   transform: scale(0.5);

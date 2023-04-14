@@ -163,7 +163,7 @@ export default function CSSEditor({
           <Form>
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                <div>
                   <h1>
                     .{defaultParent}
                   </h1>
@@ -188,12 +188,12 @@ export default function CSSEditor({
                 </div>
               )}
             </FieldArray>
-            <br/><p style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</p>
-            <br/><p style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</p>
-            _______________________________________________________________{"\n"}
+            <br/><p className = "text" style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</p>
+            <br/><p className = "text" style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</p>
+            <hr/>
             <FieldArray name="media">
               {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                <div>
                   {values.media.map((media_query, m_index) => (
                     <div>
                       <h1>
@@ -201,7 +201,7 @@ export default function CSSEditor({
                       </h1>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
-                        <div>
+                        <div className = "text">
                           <h2>
                             {scoped_declaration.parent}
                           </h2>
@@ -220,12 +220,12 @@ export default function CSSEditor({
                 </div>
               )}
             </FieldArray>
-            _______________________________________________________________{"\n"}
+            <hr/>
             <FieldArray name="scoped_declarations">
               {({ insert, remove, push }) => (
                 <div style={{fontSize: 18, fontFamily: "monospace"}}>
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                    <div>
+                    <div className = "text">
                       <h1>
                         {scoped_declaration.parent}
                       </h1>

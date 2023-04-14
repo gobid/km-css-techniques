@@ -122,18 +122,22 @@ export default function Explore({
         {!firstHidden && !firstCodeHidden && (
           <div className="p-4" key="1">
             {firstExample.htmlOutput && (
-              <div>
+              <div className = "text html">
                 <h1>HTML Structure:</h1>
-                <pre>{firstExample.htmlOutput}</pre>
+                <pre>
+                  <div className = "text">{firstExample.htmlOutput}</div>
+                </pre>
               </div>
             )}
 
             {firstExample.children && (
-              <div>
+              <div className = "text">
                 <h1>Child CSS</h1>
                 {firstExample.children.map((child, i) => (
                   <div key={i}>
-                    <pre>{child}</pre>
+                    <pre>
+                      <div className = "text">{child}</div>
+                    </pre>
                   </div>
                 ))}
               </div>
@@ -154,18 +158,22 @@ export default function Explore({
         {!secondHidden && !secondCodeHidden && (
           <div className="p-4" key="1">
             {secondExample.htmlOutput && (
-              <div>
+              <div className = "text html">
                 <h1>HTML Structure:</h1>
-                <pre>{secondExample.htmlOutput}</pre>
+                <pre>
+                  <div className = "text">{secondExample.htmlOutput}</div>
+                </pre>
               </div>
             )}
 
             {secondExample.children && (
-              <div>
+              <div className = "text">
                 <h1>Child CSS</h1>
                 {secondExample.children.map((child, i) => (
                   <div key={i}>
-                    <pre>{child}</pre>
+                    <pre>
+                      <div className = "text">{child}</div>
+                    </pre>
                   </div>
                 ))}
               </div>

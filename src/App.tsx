@@ -8,7 +8,7 @@ export default function NewApp(): JSX.Element {
   const [secondSelectedIdx, setSecondSelectedIdx] = useState(1);
 
   return (
-    <div>
+    <div className = "body">
       <div className="mb-4 mt-2">
         <h1 className="text-center mb-2">Compare</h1>
         <div className="flex items-center justify-center relative">
