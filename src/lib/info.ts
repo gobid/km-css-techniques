@@ -113,6 +113,114 @@ const declarationInformation = {
     values: ["INSERT VALUES"],
     implicitDependencies: "N/A",
   },
+  "width": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "align-items": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "justify-content": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "text-align": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "font-size": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "margin-bottom": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "margin-left": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "padding-left": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "overflow-x": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "flex": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "min-height": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "box-shadow": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "padding": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "border-radius": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "background": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "color": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "flex-direction": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
+  "transition": {
+    definition:
+      "INSER DEF",
+    values: ["INSERT VALUES"],
+    implicitDependencies: "N/A",
+  },
   margin: {
     definition:
       "Create space around elements, outside of any defined borders. A margin is the space around an element's border, while padding is the space between an element's border and the element's content. margin-top, margin-right, margin-bottom, margin-left are variants. For sites with flex, margin is by default 0px.",
