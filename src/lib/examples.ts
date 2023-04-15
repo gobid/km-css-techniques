@@ -152,7 +152,7 @@ const gridMasterclass: Example = {
     getMediaFromArray([
       '@media screen and (max-width: 991px)',
       [],
-      [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
+      [getScopedDeclarationFromArray([".div-block-8", getDeclarationFromString(`
         grid-column-start: 1;
         grid-column-end: 5;
         grid-row-start: 2;
@@ -160,7 +160,7 @@ const gridMasterclass: Example = {
       ])]
     ])
   ],
-  scoped_declarations: [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
+  scoped_declarations: [getScopedDeclarationFromArray([".div-block-8", getDeclarationFromString(`
       grid-column-start: 1;
       grid-column-end: 3;
       grid-row-start: 1;
@@ -171,16 +171,16 @@ const gridMasterclass: Example = {
   <html>
     ...
     <div class="w-layout-grid grid">
-      <div id="w-node-..." class="div-block-7">
-      <div id="w-node-..." class="div-block-4"></div>
-      <div id="w-node-..." class="div-block-3"></div>
-      <div id="w-node-..." class="div-block-5"></div>
-      <div id="w-node-..." class="div-block-6"></div>
-      <div id="w-node-..." class="div-block"></div>
-      <div id="w-node-..." class="div-block-8"></div>
-      <div id="w-node-..." class="div-block-4"></div>
-      <div id="w-node-..." class="div-block-10"></div>
-      <div id="w-node-..." class="div-block-2"></div>
+      <div class="div-block-7"></div>
+      <div class="div-block-4"></div>
+      <div class="div-block-3"></div>
+      <div class="div-block-5"></div>
+      <div class="div-block-6"></div>
+      <div class="div-block"></div>
+      <div class="div-block-8"></div>
+      <div class="div-block-4"></div>
+      <div class="div-block-10"></div>
+      <div class="div-block-2"></div>
     </div>
     ...
   </html>
