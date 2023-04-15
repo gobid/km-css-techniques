@@ -101,126 +101,128 @@ const declarationInformation = {
     values: ["0", "10%", "1em", "10px 20px", "calc(20px + 10%)"],
     implicitDependencies: "N/A",
   },
+  // values taken from : https://developer.mozilla.org/en-US/docs/Web/CSS 
   "grid-row-start": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
-    implicitDependencies: "N/A",
+      "The grid-row-start CSS property specifies a grid item's start position within the grid row by contributing a line, a span, or nothing (automatic) to its grid placement, thereby specifying the inline-start edge of its grid area.",
+    values: ["auto", "3", "-1", "span 2"],
+    implicitDependencies: "display:grid;",
   },
   "grid-row-end": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
-    implicitDependencies: "N/A",
+      "The grid-row-end CSS property specifies a grid item's end position within the grid row by contributing a line, a span, or nothing (automatic) to its grid placement, thereby specifying the inline-end edge of its grid area.",
+      values: ["auto", "3", "-1", "span 2"],
+      implicitDependencies: "display:grid;",
   },
   "width": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "The width CSS property sets an element's width. By default, it sets the width of the content area, but if box-sizing is set to border-box, it sets the width of the border area.",
+    values: ['auto', '150px', '20em', '75%'],
     implicitDependencies: "N/A",
   },
   "align-items": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
-    implicitDependencies: "N/A",
+      "align-items property sets the align-self value on all direct children as a group. In Flexbox, it controls the alignment of items on the Cross Axis. In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.",
+    values: ['stretch', 'center', 'start', 'end'],
+    implicitDependencies: "display:flex; or display:grid;",
   },
   "justify-content": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
-    implicitDependencies: "N/A",
+      "justify-content property defines how the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.",
+    values: ['start', 'center', 'space-between', 'space-around', 'space-evenly'],
+    implicitDependencies: "display:flex;",
   },
   "text-align": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "text-align CSS property sets the horizontal alignment of the inline-level content inside a block element or table-cell box.",
+    values: ['start', 'end', 'center', 'justify'],
     implicitDependencies: "N/A",
   },
   "font-size": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "font-size CSS property sets the size of the font. ",
+    values: ['1.2em', 'x-small', 'smaller', '12px', '80%'],
     implicitDependencies: "N/A",
   },
   "margin-bottom": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "margin-bottom CSS property sets the margin area on the bottom of an element. A positive value places it farther from its neighbors, while a negative value places it closer.",
+    values: ['1em', '10%', '10px', '0'],
     implicitDependencies: "N/A",
   },
   "margin-left": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "margin-left CSS property sets the margin area on the left side of an element. A positive value places it farther from its neighbors, while a negative value places it closer.",
+    values: ['1em', '10%', '10px', '0'],
     implicitDependencies: "N/A",
   },
   "padding-left": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "padding-left CSS property sets the width of the padding area to the left of an element.",
+    values: ['1.5em', '10%', '20px', '1ch', '0'],
     implicitDependencies: "N/A",
   },
   "overflow-x": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "overflow-x CSS property sets what shows when content overflows a block-level element's left and right edges. ",
+    values: ['visible', 'hidden', 'clip', 'scroll', 'auto'],
     implicitDependencies: "N/A",
   },
-  "flex": {
+  flex: {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
-    implicitDependencies: "N/A",
+      "flex CSS shorthand property sets how a flex item will grow or shrink to fit the space available in its flex container.",
+    values: ['1', '1 30px', '1 1 100px'],
+    implicitDependencies: "display:flex;",
   },
   "min-height": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "min-height CSS property sets the minimum height of an element. It prevents the used value of the height property from becoming smaller than the value specified for min-height.",
+    values: ['150px', '7em', '75%', '10px'],
     implicitDependencies: "N/A",
   },
   "box-shadow": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "box-shadow CSS property adds shadow effects around an element's frame.",
+    values: ['10px 5px 5px red', '60px -16px team'],
     implicitDependencies: "N/A",
   },
   "padding": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "Ipadding CSS shorthand property sets the padding area on all four sides of an element at once.",
+    values: ['1em', '10% 0', '10px 50px 20px', '10px 50px 30px 0'],
     implicitDependencies: "N/A",
   },
   "border-radius": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "border-radius CSS property rounds the corners of an element's outer border edge.",
+    values: ['30px', '25% 10%', '10% 30% 50% 70%'],
     implicitDependencies: "N/A",
   },
   "background": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "background shorthand CSS property sets all background style properties at once, such as color, image, origin and size, or repeat method. ",
+    values: ['green', 'border-box red', 'url("test.jpg") repeat-y'],
     implicitDependencies: "N/A",
   },
   "color": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentcolor value",
+    values: ['rebeccapurple', '#00ff00', 'rgb(214, 122, 127)'],
     implicitDependencies: "N/A",
   },
   "flex-direction": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
-    implicitDependencies: "N/A",
+      "flex-direction CSS property sets how flex items are placed in the flex container defining the main axis and the direction (normal or reversed).",
+    values: ['row', 'row-reverse', 'column', 'column-reverse'],
+    implicitDependencies: "display:flex;",
   },
   "transition": {
     definition:
-      "INSER DEF",
-    values: ["INSERT VALUES"],
+      "Transitions enable you to define the transition between two states of an element.",
+    values: ['margin-right 2s', 'all 1s ease-out'],
     implicitDependencies: "N/A",
   },
+  // end of mozilla info - rest taken from Gobi
   margin: {
     definition:
       "Create space around elements, outside of any defined borders. A margin is the space around an element's border, while padding is the space between an element's border and the element's content. margin-top, margin-right, margin-bottom, margin-left are variants. For sites with flex, margin is by default 0px.",
