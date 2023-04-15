@@ -383,7 +383,9 @@ const smashingMagazineGuide: Example = {
 const heroIcons: Example = {
   name: "Hero Icons",
   iframeUrl: "/examples/hero-icons",
-  declarations: getDeclarationFromString(``),
+  declarations: getDeclarationFromString(`
+  display: grid;
+  `),
   defaultParentClassname: "grid",
   media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
   scoped_declarations: [getScopedDeclarationFromArray([".icon-grid",getDeclarationFromString(`
