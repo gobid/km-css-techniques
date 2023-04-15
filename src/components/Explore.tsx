@@ -31,7 +31,7 @@ export default function Explore({
     secondExample.scoped_declarations
   );
 
-  const [viewerSize, setViewerSize] = useState(30);
+  const [viewerSize, setViewerSize] = useState(70);
   const [firstHidden, setFirstHidden] = useState(false);
   const [secondHidden, setSecondHidden] = useState(false);
   const [firstCodeHidden, setFirstCodeHidden] = useState(false);

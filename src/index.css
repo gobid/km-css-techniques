@@ -16,7 +16,6 @@ h1 {
 }
 .text {
   overflow-x: scroll;
-  /* font-family: 'Courier New', Courier, monospace; */
 }
 .btn {
   padding: 3px 5px;
@@ -52,8 +51,11 @@ h1 {
   border-bottom: 1px dotted black;
 }
 .tooltip .tooltiptext {
+  /* display: flex;
+  flex-direction: column;
+  flex-wrap: wrap; */
   visibility: hidden;
-  width: 30vw;
+  width: 25vw;
   background-color: black;
   color: #fff;
   text-align: center;

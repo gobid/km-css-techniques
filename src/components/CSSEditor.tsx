@@ -201,7 +201,7 @@ export default function CSSEditor({
                       </h1>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
-                        <div className = "text">
+                        <div>
                           <h2>
                             {scoped_declaration.parent}
                           </h2>
@@ -225,7 +225,7 @@ export default function CSSEditor({
               {({ insert, remove, push }) => (
                 <div style={{fontSize: 18, fontFamily: "monospace"}}>
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                    <div className = "text">
+                    <div>
                       <h1>
                         {scoped_declaration.parent}
                       </h1>
