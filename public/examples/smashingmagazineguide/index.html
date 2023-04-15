@@ -393,10 +393,10 @@
           flex-basis: 33.33333%;
           max-width: 33.33333%;
         }
-        .col-12 {
+        /* .col-12 {
           flex-basis: 100%;
           max-width: 100%;
-        }
+        } */
       }
       @media screen and (min-width: 40em) {
         .col--article--grid:nth-of-type(n + 5) {
@@ -1016,11 +1016,11 @@
       .f-article-item {
         flex-basis: 100%;
       }
-      @media screen and (min-width: 64rem) {
+      /* @media screen and (min-width: 64rem) {
         .f-article-item {
           flex-basis: 50%;
         }
-      }
+      } */
       .f-article-item .article--post__content {
         width: 90%;
       }
@@ -1089,12 +1089,12 @@
         position: relative;
         top: 0.1em;
       }
-      @media all and (max-width: 1025px) {
+      /* @media all and (max-width: 1025px) {
         .vertical {
           transform: none;
           margin: 2.5em 0 2.5em calc(1.3em - 2px);
         }
-      }
+      } */
       @media (max-width: 40em) {
         .vertical {
           transform: none;
@@ -1127,8 +1127,8 @@
         line-height: 1;
         font-size: 0.7em;
         margin: 3em 0 0;
-        transform-origin: left center;
-        transform: rotateZ(90deg) translateX(-5em) translateY(1em);
+        /* transform-origin: left center;
+        transform: rotateZ(90deg) translateX(-5em) translateY(1em); */
         letter-spacing: 4px;
         max-width: 22.5em;
       }
@@ -5651,6 +5651,34 @@
       .f-article-highlights {
         display: flex;
         flex-wrap: wrap;
+      }
+      @media screen and (min-width: 48em) {
+        .col-12 {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+      }
+      @media screen and (min-width: 64rem) {
+        .f-article-item {
+          flex-basis: 50%;
+        }
+      }
+      @media all and (max-width: 1025px) {
+        .vertical {
+          transform: none;
+          margin: 2.5em 0 2.5em calc(1.3em - 2px);
+        }
+      }
+      .article--grid__sponsors{
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-bottom:0;
+      }
+      .vertical--white{
+        transform-origin: left center;
+        transform: rotateZ(90deg) translateX(-5em) translateY(1em);
       }
     </style>
 
