@@ -25679,9 +25679,9 @@ section.blog img {
   .col--icons {
     padding: 0;
   }
-  .icons .icon--item {
+  /* .icons .icon--item {
     min-width: 33.33%;
-  }
+  } */
 }
 @media (max-width: 360px) {
   .icons .icon--item img {
