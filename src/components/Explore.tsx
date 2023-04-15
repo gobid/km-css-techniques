@@ -78,12 +78,12 @@ export default function Explore({
           <button className="btn" onClick={() => setSecondHidden(!secondHidden)}>
             {secondHidden ? "Show" : "Hide"} Example 2{" "}
           </button>
-          <button className="btn" onClick={() => setFirstCodeHidden(!firstCodeHidden)}>
+          {/* <button className="btn" onClick={() => setFirstCodeHidden(!firstCodeHidden)}>
             {firstCodeHidden ? "Show Code" : "Hide Code"} Example 1{" "}
-          </button>
-          <button className="btn" onClick={() => setSecondCodeHidden(!secondCodeHidden)}>
+          </button> */}
+          {/* <button className="btn" onClick={() => setSecondCodeHidden(!secondCodeHidden)}>
             {secondCodeHidden ? "Show Code" : "Hide Code"} Example 2{" "}
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -108,7 +108,7 @@ export default function Explore({
       </div>
 
       <div className="grid grid-cols-4 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {!firstHidden && !firstCodeHidden && (
+        {!firstHidden  && (
           <CSSEditor
             declarations={firstSetOfDeclarations}
             defaultParent={firstExample.defaultParentClassname}
@@ -119,7 +119,7 @@ export default function Explore({
               setFirstSetOfScopedDeclarations(scoped_declarations))}
           /> 
         )}
-        {!firstHidden && !firstCodeHidden && (
+        {!firstHidden && (
           <div className="p-4" key="1">
             {firstExample.htmlOutput && (
               <div className = "text html">
@@ -144,7 +144,7 @@ export default function Explore({
             )}
           </div>
         )}
-        {!secondHidden && !secondCodeHidden && (
+        {!secondHidden  && (
           <CSSEditor
             declarations={secondSetOfDeclarations}
             defaultParent={secondExample.defaultParentClassname}
@@ -155,7 +155,7 @@ export default function Explore({
               setSecondSetOfScopedDeclarations(scoped_declarations))}
           />
         )}
-        {!secondHidden && !secondCodeHidden && (
+        {!secondHidden  && (
           <div className="p-4" key="1">
             {secondExample.htmlOutput && (
               <div className = "text html">
