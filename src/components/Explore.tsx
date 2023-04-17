@@ -18,23 +18,34 @@ export default function Explore({
   const [firstSetOfMediaDeclarations, setFirstSetOfMediaDeclarations] = useState(
     firstExample.media
   );
+  const [firstSetOfScopedDeclarations, setFirstSetOfScopedDeclarations] = useState(
+    firstExample.scoped_declarations
+  );
   const [secondSetOfDeclarations, setSecondSetOfDeclarations] = useState(
     secondExample.declarations
   );
   const [secondSetOfMediaDeclarations, setSecondSetOfMediaDeclarations] = useState(
     secondExample.media
   );
+  const [secondSetOfScopedDeclarations, setSecondSetOfScopedDeclarations] = useState(
+    secondExample.scoped_declarations
+  );
 
   const [viewerSize, setViewerSize] = useState(30);
   const [firstHidden, setFirstHidden] = useState(false);
   const [secondHidden, setSecondHidden] = useState(false);
-
+  const [firstCodeHidden, setFirstCodeHidden] = useState(false);
+  const [secondCodeHidden, setSecondCodeHidden] = useState(false);
+  
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
     setFirstSetOfMediaDeclarations(firstExample.media)
+    setFirstSetOfScopedDeclarations(firstExample.scoped_declarations)
     setSecondSetOfDeclarations(secondExample.declarations);
     setSecondSetOfMediaDeclarations(secondExample.media)
-  }, [firstExample.declarations, firstExample.media, secondExample.declarations, secondExample.media]);
+    setSecondSetOfScopedDeclarations(secondExample.scoped_declarations)
+  }, [firstExample.declarations, firstExample.media, firstExample.scoped_declarations, 
+    secondExample.declarations, secondExample.media, secondExample.scoped_declarations]);
 
   const htmlExamplesToShow = [];
 
@@ -64,11 +75,14 @@ export default function Explore({
           <button className="btn" onClick={() => setFirstHidden(!firstHidden)}>
             {firstHidden ? "Show" : "Hide"} Example 1{" "}
           </button>
-          <button
-            className="btn"
-            onClick={() => setSecondHidden(!secondHidden)}
-          >
+          <button className="btn" onClick={() => setSecondHidden(!secondHidden)}>
             {secondHidden ? "Show" : "Hide"} Example 2{" "}
+          </button>
+          <button className="btn" onClick={() => setFirstCodeHidden(!firstCodeHidden)}>
+            {firstCodeHidden ? "Show Code" : "Hide Code"} Example 1{" "}
+          </button>
+          <button className="btn" onClick={() => setSecondCodeHidden(!secondCodeHidden)}>
+            {secondCodeHidden ? "Show Code" : "Hide Code"} Example 2{" "}
           </button>
         </div>
       </div>
@@ -76,7 +90,7 @@ export default function Explore({
       <div className="flex flex-wrap w-full justify-between gap-y-4 mb-8">
         {!firstHidden && (
           <Viewer
-            example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations }}
+            example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations, scoped_declarations: firstSetOfScopedDeclarations }}
             size={viewerSize}
           />
         )}
@@ -84,47 +98,38 @@ export default function Explore({
         {!secondHidden && (
           <Viewer
             example={{
-              ...secondExample,
-              declarations: secondSetOfDeclarations, media: secondSetOfMediaDeclarations
+              ...secondExample, declarations: secondSetOfDeclarations, media: secondSetOfMediaDeclarations, scoped_declarations: secondSetOfScopedDeclarations 
             }}
             size={viewerSize}
           />
         )}
       </div>
 
-      <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {!firstHidden && (
+      <div className="grid grid-cols-4 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+        {!firstHidden && !firstCodeHidden && (
           <CSSEditor
             declarations={firstSetOfDeclarations}
+            defaultParent={firstExample.defaultParentClassname}
             diffAgainstDeclarations={secondSetOfDeclarations}
             media = {firstSetOfMediaDeclarations}
-            onChange={(declarations, media) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media))}
-          />
+            scoped_declarations= {firstSetOfScopedDeclarations}
+            onChange={(declarations, media, scoped_declarations) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media), 
+              setFirstSetOfScopedDeclarations(scoped_declarations))}
+          /> 
         )}
-        {!secondHidden && (
-          <CSSEditor
-            declarations={secondSetOfDeclarations}
-            diffAgainstDeclarations={firstSetOfDeclarations}
-            media = {secondSetOfMediaDeclarations}
-            onChange={(declarations, media) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media))}
-          />
-        )}
-      </div>
-
-      <div className="grid grid-cols-2 w-full max-w-6xl mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {htmlExamplesToShow.map((example, i) => (
-          <div className="p-4" key={i}>
-            {example.htmlOutput && (
+        {!firstHidden && !firstCodeHidden && (
+          <div className="p-4" key="1">
+            {firstExample.htmlOutput && (
               <div>
                 <h1>HTML Structure:</h1>
-                <pre>{example.htmlOutput}</pre>
+                <pre>{firstExample.htmlOutput}</pre>
               </div>
             )}
 
-            {example.children && (
+            {firstExample.children && (
               <div>
                 <h1>Child CSS</h1>
-                {example.children.map((child, i) => (
+                {firstExample.children.map((child, i) => (
                   <div key={i}>
                     <pre>{child}</pre>
                   </div>
@@ -132,7 +137,39 @@ export default function Explore({
               </div>
             )}
           </div>
-        ))}
+        )}
+        {!secondHidden && !secondCodeHidden && (
+          <CSSEditor
+            declarations={secondSetOfDeclarations}
+            defaultParent={secondExample.defaultParentClassname}
+            diffAgainstDeclarations={firstSetOfDeclarations}
+            media = {secondSetOfMediaDeclarations}
+            scoped_declarations={secondSetOfScopedDeclarations}
+            onChange={(declarations, media, scoped_declarations) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media),
+              setSecondSetOfScopedDeclarations(scoped_declarations))}
+          />
+        )}
+        {!secondHidden && !secondCodeHidden && (
+          <div className="p-4" key="1">
+            {secondExample.htmlOutput && (
+              <div>
+                <h1>HTML Structure:</h1>
+                <pre>{secondExample.htmlOutput}</pre>
+              </div>
+            )}
+
+            {secondExample.children && (
+              <div>
+                <h1>Child CSS</h1>
+                {secondExample.children.map((child, i) => (
+                  <div key={i}>
+                    <pre>{child}</pre>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
