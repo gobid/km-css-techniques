@@ -36,6 +36,62 @@ function diffDeclarations(
     return { ...d, diffType };
   });
 }
+function diffMedia(media: Media, compareAgainst: Declaration[]): Media {
+  const declarationMap = Object.fromEntries(
+    compareAgainst.map((d) => [d.name, d.value])
+  );
+  media.declarations = media.declarations.map((d) => {
+    let diffType: DeclarationDiffType = DeclarationDiffType.None;
+
+    if (d.name in declarationMap) {
+      if (declarationMap[d.name] === d.value) {
+        diffType = DeclarationDiffType.SamePropertyAndValue;
+      } else {
+        diffType = DeclarationDiffType.SameProperty;
+      }
+    }
+    return { ...d, diffType };
+  });
+  media.scoped_declarations = media.scoped_declarations.map((sd) => {
+    sd.declarations = sd.declarations.map((d) => {
+      let diffType: DeclarationDiffType = DeclarationDiffType.None;
+
+      if (d.name in declarationMap) {
+        if (declarationMap[d.name] === d.value) {
+          diffType = DeclarationDiffType.SamePropertyAndValue;
+        } else {
+          diffType = DeclarationDiffType.SameProperty;
+        }
+      }
+      return { ...d, diffType };
+    });
+    return sd;
+  });
+  return media;
+}
+
+function diffScopedDeclarations(
+  scoped_declaration: ScopedDeclaration,
+  compareAgainst: Declaration[]
+): ScopedDeclaration {
+  const declarationMap = Object.fromEntries(
+    compareAgainst.map((d) => [d.name, d.value])
+  );
+
+  scoped_declaration.declarations = scoped_declaration.declarations.map((d) => {
+    let diffType: DeclarationDiffType = DeclarationDiffType.None;
+    if (d.name in declarationMap) {
+      if (declarationMap[d.name] === d.value) {
+        diffType = DeclarationDiffType.SamePropertyAndValue;
+      } else {
+        diffType = DeclarationDiffType.SameProperty;
+      }
+    }
+
+    return { ...d, diffType };
+  });
+  return scoped_declaration;
+}
 
 const suggestedValues = {
   "justify-content": [
@@ -73,67 +129,67 @@ interface CSSEditorProps {
 
 function toggler(declaration, index, declaration_type, info?) {
   return (
-      <div
-        className={`editor flex gap-2 items-center transition-opacity px-2 py-2 mb-1 rounded ${
-          !declaration.enabled ? "opacity-60" : ""
-        } ${getColorForDiffType(declaration.diffType)} `}
-        key={index}
-      >
-        <div className="editor flex">
-          <Field
-            name={`${declaration_type}.[${index}].enabled`}
-            type="checkbox"
-            checked={declaration.enabled}
-          />
-        </div>
+    <div
+      className={`editor flex gap-2 items-center transition-opacity px-2 py-2 mb-1 rounded ${
+        !declaration.enabled ? "opacity-60" : ""
+      } ${getColorForDiffType(declaration.diffType)} `}
+      key={index}
+    >
+      <div className="editor flex">
+        <Field
+          name={`${declaration_type}.[${index}].enabled`}
+          type="checkbox"
+          checked={declaration.enabled}
+        />
+      </div>
 
-        <div className="editor flex-1">
+      <div className="editor flex-1">
+        <Field
+          name={`${declaration_type}.${index}.name`}
+          placeholder="background-color"
+          type="text"
+          className="input"
+        />
+      </div>
+
+      <div className="editor flex-1">
+        {suggestedValues[declaration.name] ? (
           <Field
-            name={`${declaration_type}.${index}.name`}
-            placeholder="background-color"
-            type="text"
+            name={`${declaration_type}.${index}.value`}
+            as="select"
             className="input"
-          />
-        </div>
-
-        <div className="editor flex-1">
-          {suggestedValues[declaration.name] ? (
-            <Field
-              name={`${declaration_type}.${index}.value`}
-              as="select"
-              className="input"
-            >
+          >
               {suggestedValues[declaration.name].map(
                 (value: string) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
+              <option key={value} value={value}>
+                {value}
+              </option>
                 )
               )}
-            </Field>
-          ) : (
-            <Field
-              name={`${declaration_type}.${index}.value`}
-              placeholder="blue"
-              type=""
-              className="input"
-            />
-          )}
-        </div>
+          </Field>
+        ) : (
+          <Field
+            name={`${declaration_type}.${index}.value`}
+            placeholder="blue"
+            type=""
+            className="input"
+          />
+        )}
+      </div>
         {info?
           <div className="tooltip">?
-            <ul className="tooltiptext">
-              <li className="textspan">Definition: {info.definition}</li>
+          <ul className="tooltiptext">
+            <li className="textspan">Definition: {info.definition}</li>
               <li className="textspan">Values it takes: {info.values.join(', ')}</li>
               <li className="textspan">Used By: {info.websites.join(', ')}</li>
               <li className="textspan">Dependencies: {info.implicitDependencies}</li>
-            </ul>
-          </div>
+          </ul>
+        </div>
       :<>No Info Available for Technique</>
         }
         
-      </div>
-      );
+    </div>
+  );
 }
 
 export default function CSSEditor({
@@ -146,8 +202,10 @@ export default function CSSEditor({
 }: CSSEditorProps): JSX.Element {
   const initialValues = {
     declarations: diffDeclarations(declarations, diffAgainstDeclarations),
-    media: media,
-    scoped_declarations: scoped_declarations,
+    media: media.map((m) => diffMedia(m, diffAgainstDeclarations)),
+    scoped_declarations: scoped_declarations.map((sd) =>
+      diffScopedDeclarations(sd, diffAgainstDeclarations)
+    ),
   };
 
   return (
@@ -176,14 +234,14 @@ export default function CSSEditor({
                     type="button"
                     className="btn mt-8"
                     onClick={() =>
-                    push({
-                      name: "",
-                      value: "",
-                      enabled: true,
+                      push({
+                        name: "",
+                        value: "",
+                        enabled: true,
                       } as Declaration)
                     }
                   >
-                  Add Declaration
+                    Add Declaration
                   </button>
                 </div>
               )}
@@ -201,14 +259,14 @@ export default function CSSEditor({
                       </h1>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
-                        <div>
+                          <div>
                           <h2>
                             {scoped_declaration.parent}
                           </h2>
                             {scoped_declaration.declarations.map((sd_declaration, d_index) => (
                               toggler(sd_declaration, d_index, `media.${m_index}.scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
                           ))}
-                        </div>
+                          </div>
                       ))}
 
                       {media_query.declarations.map((med_declaration, d_index) => (
@@ -216,7 +274,7 @@ export default function CSSEditor({
                       ))}
 
                     </div>
-                  ))} 
+                  ))}
                 </div>
               )}
             </FieldArray>
@@ -225,14 +283,14 @@ export default function CSSEditor({
               {({ insert, remove, push }) => (
                 <div style={{fontSize: 18, fontFamily: "monospace"}}>
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                    <div>
+                      <div>
                       <h1>
                         {scoped_declaration.parent}
                       </h1>
                         {scoped_declaration.declarations.map((sd_declaration, d_index) => (
                           toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
                       ))}
-                    </div>
+                      </div>
                   ))} 
                 </div>
               )}

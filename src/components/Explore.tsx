@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CSSEditor from "./CSSEditor";
 import { Example } from "../lib/types";
 import Viewer from "./Viewer";
-
+import {mergeDeclarations} from "../lib/examples";
 interface ExploreProps {
   firstExample: Example;
   secondExample: Example;
@@ -112,7 +112,7 @@ export default function Explore({
           <CSSEditor
             declarations={firstSetOfDeclarations}
             defaultParent={firstExample.defaultParentClassname}
-            diffAgainstDeclarations={secondSetOfDeclarations}
+            diffAgainstDeclarations={mergeDeclarations(secondSetOfDeclarations, secondSetOfMediaDeclarations, secondSetOfScopedDeclarations)}
             media = {firstSetOfMediaDeclarations}
             scoped_declarations= {firstSetOfScopedDeclarations}
             onChange={(declarations, media, scoped_declarations) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media), 
@@ -148,7 +148,7 @@ export default function Explore({
           <CSSEditor
             declarations={secondSetOfDeclarations}
             defaultParent={secondExample.defaultParentClassname}
-            diffAgainstDeclarations={firstSetOfDeclarations}
+            diffAgainstDeclarations={mergeDeclarations(firstSetOfDeclarations, firstSetOfMediaDeclarations, firstSetOfScopedDeclarations)}
             media = {secondSetOfMediaDeclarations}
             scoped_declarations={secondSetOfScopedDeclarations}
             onChange={(declarations, media, scoped_declarations) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media),

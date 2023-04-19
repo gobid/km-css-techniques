@@ -40,7 +40,23 @@ function getMediaFromArray(css_list): Media {
 function getScopedDeclarationFromArray(css_list): ScopedDeclaration {
   return {parent: css_list[0], declarations: css_list[1]};
 }
-
+export function mergeDeclarations(mainDeclaration: Declaration[], mediaDeclaration?: Media[], scoped_declarations?: ScopedDeclaration[]): Declaration[]{
+  var allDeclarations = mainDeclaration
+  mediaDeclaration.forEach(m => {
+    if (m.declarations){
+      allDeclarations = allDeclarations.concat(m.declarations)
+    }
+    if (m.scoped_declarations){
+      m.scoped_declarations.forEach(sd => {
+        allDeclarations = allDeclarations.concat(sd.declarations)
+      })  
+    }  
+  });
+ scoped_declarations.forEach(sd =>{
+  allDeclarations = allDeclarations.concat(sd.declarations)
+ })
+  return  allDeclarations
+}
 export function declarationsToCSSString(
   declarations: Declaration[],
   media: Media[],
