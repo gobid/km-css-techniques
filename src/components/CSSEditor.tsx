@@ -246,6 +246,22 @@ export default function CSSEditor({
                 </div>
               )}
             </FieldArray>
+            <FieldArray name="scoped_declarations">
+              {({ insert, remove, push }) => (
+                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                  {values.scoped_declarations.map((scoped_declaration, sd_index) => (
+                    <div>
+                      <p>
+                        {scoped_declaration.parent}
+                      </p>
+                        {scoped_declaration.declarations.map((sd_declaration, d_index) => (
+                          toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
+                      ))}
+                    </div>
+                  ))} 
+                </div>
+              )}
+            </FieldArray>
             <br/><p className = "text" style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</p>
             <br/><p className = "text" style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</p>
             <hr/>
@@ -254,9 +270,9 @@ export default function CSSEditor({
                 <div>
                   {values.media.map((media_query, m_index) => (
                     <div>
-                      <h1>
+                      <p>
                         {media_query.rule} {"{"}
-                      </h1>
+                      </p>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
                           <div>
