@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Explore from "./components/Explore";
+import ProcessManagement from "./components/GoogleSheets";
 import { examples } from "./lib/examples";
 
 // @ts-ignore
 export default function NewApp(): JSX.Element {
   const [firstSelectedIdx, setFirstSelectedIdx] = useState(0);
   const [secondSelectedIdx, setSecondSelectedIdx] = useState(1);
-
+  
   return (
     <div className = "body">
+
+      <ProcessManagement/>
       <div className="mb-4 mt-2">
         <h1 className="text-center mb-2">Compare</h1>
         <div className="flex items-center justify-center relative">
@@ -41,7 +44,6 @@ export default function NewApp(): JSX.Element {
           </label>
         </div>
       </div>
-
       <Explore
         firstExample={examples[firstSelectedIdx]}
         secondExample={examples[secondSelectedIdx]}
