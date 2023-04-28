@@ -274,8 +274,16 @@ export default function CSSEditor({
                 <div>
                   {values.media.map((media_query, m_index) => (
                     <div>
-                      <p>
+                      <p style={{fontSize: 18, fontFamily: "monospace"}}>
                         {media_query.rule} {"{"}
+                        <div className="tooltip">?
+                          <ul className="tooltiptext">
+                            <li className="textspan">Media queries allow you to apply CSS styles depending on a device's general type (such as print vs. screen) or other characteristics such as screen resolution or browser viewport width.  </li>
+                              <li className="textspan">Values it takes: a media rule and CSS</li>
+                              <li className="textspan">Used By: Italics, Flat Icons, Smashing Magazine, Hero Icons, CSS Tricks</li>
+                              <li className="textspan">Dependencies: N/A</li>
+                          </ul>
+                        </div>
                       </p>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
