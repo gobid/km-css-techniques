@@ -124,6 +124,8 @@ interface CSSEditorProps {
   media: Media[];
   scoped_declarations: ScopedDeclaration[];
   diffAgainstDeclarations: Declaration[];
+  htmlOutput: string;
+  children: string[];
   onChange: (declarations: Declaration[], media: Media[], scoped_declarations: ScopedDeclaration[]) => void;
 }
 
@@ -198,6 +200,8 @@ export default function CSSEditor({
   diffAgainstDeclarations,
   media,
   scoped_declarations,
+  htmlOutput,
+  children,
   onChange,
 }: CSSEditorProps): JSX.Element {
   const initialValues = {
@@ -209,7 +213,7 @@ export default function CSSEditor({
   };
 
   return (
-    <div className="w-full px-4 py-4">
+    <div className="grid grid-cols-2 w-full px-4 py-4">
       <Formik
         initialValues={initialValues}
         enableReinitialize
@@ -315,6 +319,28 @@ export default function CSSEditor({
           </Form>
         )}
       </Formik>
+      <div className="p-4" key="1">
+            {htmlOutput && (
+              <div className = "text">
+                <h1>HTML Structure:</h1>
+                <pre>
+                  <div >{htmlOutput}</div>
+                </pre>
+              </div>
+            )}
+            {children && (
+              <div className = "text">
+                <h1>Child CSS</h1>
+                {children.map((child, i) => (
+                  <div key={i}>
+                    <pre>
+                      <div >{child}</div>
+                    </pre>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
     </div>
   );
 }

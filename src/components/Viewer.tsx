@@ -6,9 +6,10 @@ interface ViewerProps {
   example: Example;
   size: number;
   view: string;
+  selectedStep: string;
 }
 
-export default function Viewer({ example, size, view }: ViewerProps): JSX.Element {
+export default function Viewer({ example, size, view, selectedStep }: ViewerProps): JSX.Element {
   const viewerRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
