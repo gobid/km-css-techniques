@@ -502,7 +502,7 @@ const CSSTricks: Example = {
 };
 export const examples: Example[] = [
   italic,
-  gridMasterclass,
+  // gridMasterclass,
   flatIcons,
   smashingMagazineGuide,
   heroIcons,
