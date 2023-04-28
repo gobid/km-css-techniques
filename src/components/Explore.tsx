@@ -38,7 +38,7 @@ export default function Explore({
   const [secondHidden, setSecondHidden] = useState(false);
   const [firstCodeHidden, setFirstCodeHidden] = useState(false);
   const [secondCodeHidden, setSecondCodeHidden] = useState(false);
-  
+  const [windowSizerUsed, setWindowSizerUsed] = useState(false);
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
     setFirstSetOfMediaDeclarations(firstExample.media)
@@ -65,11 +65,14 @@ export default function Explore({
         <h1>
           Window width: {(Math.round(screenWidth*viewerSize/100))}px
         </h1>
+        {windowSizerUsed ?  <></>: <p>Resize Me!</p>}
         <input
           type="range"
           min={0}
           max={100}
-          onChange={(e) => setViewerSize(Number(e.target.value))}
+          onChange={(e) => {
+            setViewerSize(Number(e.target.value))
+            setWindowSizerUsed(true)}}
           value={viewerSize}
           className="w-full"
         />
