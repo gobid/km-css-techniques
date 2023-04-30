@@ -295,22 +295,6 @@ export default function CSSEditor({
               )}
             </FieldArray>
             <hr/>
-            <FieldArray name="scoped_declarations">
-              {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
-                  {values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                      <div>
-                      <h1>
-                        {scoped_declaration.parent}
-                      </h1>
-                        {scoped_declaration.declarations.map((sd_declaration, d_index) => (
-                          toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
-                      ))}
-                      </div>
-                  ))} 
-                </div>
-              )}
-            </FieldArray>
             <AutoSave />
           </Form>
         )}

@@ -23,7 +23,7 @@ export default function ProcessManagement(): JSX.Element {
              <iframe 
                     src = "https://docs.google.com/spreadsheets/d/13nOm8UYbmZ9kSphnMYQIldHQfixlQR-EMxPuUEPZ1KE/edit?usp=sharing"
                     width = {1300}
-                    height = {600}
+                    height = {700}
                     frameBorder="0"
                     className={`border border-gray-200 rounded`}
              ></iframe>
