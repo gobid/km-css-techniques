@@ -189,6 +189,8 @@ function toggler(declaration, index, declaration_type, info?) {
         </div>
       :<>No Info Available for Technique</>
         }
+        <button id="copyBtn" onClick={() => {
+          navigator.clipboard.writeText(declaration.name+": "+declaration.value +";")}}>Copy</button>
         
     </div>
   );
@@ -214,6 +216,8 @@ export default function CSSEditor({
 
   return (
     <div className="grid grid-cols-2 w-full px-4 py-4">
+      
+      {/* <hr/> */}
       <Formik
         initialValues={initialValues}
         enableReinitialize
@@ -225,16 +229,18 @@ export default function CSSEditor({
           <Form>
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
-                <div>
-                  <h1>
+                <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                  <h1 style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
                     .{defaultParent}
                   </h1>
+                  <div>
+                  </div>
                   <div>
                     {values.declarations.map((declaration, index) => (
                       toggler(declaration, index, "declarations", getInfo(declaration))
                     ))}
                   </div>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn mt-8"
                     onClick={() =>
@@ -246,16 +252,16 @@ export default function CSSEditor({
                     }
                   >
                     Add Declaration
-                  </button>
+                  </button> */}
                 </div>
               )}
             </FieldArray>
             <FieldArray name="scoped_declarations">
               {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                <div>
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                    <div>
-                      <p>
+                    <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                      <p style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
                         {scoped_declaration.parent}
                       </p>
                         {scoped_declaration.declarations.map((sd_declaration, d_index) => (
@@ -266,28 +272,27 @@ export default function CSSEditor({
                 </div>
               )}
             </FieldArray>
-            <br/><p className = "text" style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</p>
-            <br/><p className = "text" style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</p>
-            <hr/>
             <FieldArray name="media">
               {({ insert, remove, push }) => (
                 <div>
                   {values.media.map((media_query, m_index) => (
-                    <div>
-                      <p style={{fontSize: 18, fontFamily: "monospace"}}>
-                        {media_query.rule} {"{"}
+                    <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                      <div style={{display:"flex", justifyContent: "space-between"}} >
+                        <span style={{fontSize: 16, fontFamily: "monospace", fontWeight: "bold"}}>
+                          {media_query.rule} {"{"}
+                        </span>
                         <div className="tooltip">?
-                          <ul className="tooltiptext">
-                            <li className="textspan">Media queries allow you to apply CSS styles depending on a device's general type (such as print vs. screen) or other characteristics such as screen resolution or browser viewport width.  </li>
-                              <li className="textspan">Values it takes: a media rule and CSS</li>
-                              <li className="textspan">Used By: Italics, Flat Icons, Smashing Magazine, Hero Icons, CSS Tricks</li>
-                              <li className="textspan">Dependencies: N/A</li>
-                          </ul>
-                        </div>
-                      </p>
+                            <ul className="tooltiptext">
+                              <li className="textspan">Media queries allow you to apply CSS styles depending on a device's general type (such as print vs. screen) or other characteristics such as screen resolution or browser viewport width.  </li>
+                                <li className="textspan">Values it takes: a media rule and CSS</li>
+                                <li className="textspan">Used By: Italics, Flat Icons, Smashing Magazine, Hero Icons, CSS Tricks</li>
+                                <li className="textspan">Dependencies: N/A</li>
+                            </ul>
+                          </div>
+                      </div>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
-                          <div>
+                          <div style={{border: "solid LightGrey", borderWidth: "1px", margin: "5px"}}>
                           <h2>
                             {scoped_declaration.parent}
                           </h2>
@@ -309,10 +314,10 @@ export default function CSSEditor({
             <hr/>
             <FieldArray name="scoped_declarations">
               {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                <div >
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                      <div>
-                      <h1>
+                      <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                      <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
                         {scoped_declaration.parent}
                       </h1>
                         {scoped_declaration.declarations.map((sd_declaration, d_index) => (

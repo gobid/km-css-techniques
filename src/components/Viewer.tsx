@@ -30,7 +30,7 @@ export default function Viewer({ example, size, view, selectedStep }: ViewerProp
       title="example-1"
       src={example.iframeUrl}
       width={`${size}%`}
-      height={800}
+      height={1000}
       frameBorder="0"
       className={`iframe ${view} border border-gray-200 rounded`}
       ref={viewerRef}
