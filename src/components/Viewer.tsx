@@ -6,9 +6,10 @@ interface ViewerProps {
   example: Example;
   size: number;
   view: string;
+  selectedStep: string;
 }
 
-export default function Viewer({ example, size, view }: ViewerProps): JSX.Element {
+export default function Viewer({ example, size, view, selectedStep }: ViewerProps): JSX.Element {
   const viewerRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function Viewer({ example, size, view }: ViewerProps): JSX.Elemen
       title="example-1"
       src={example.iframeUrl}
       width={`${size}%`}
-      height={800}
+      height={1000}
       frameBorder="0"
       className={`iframe ${view} border border-gray-200 rounded`}
       ref={viewerRef}

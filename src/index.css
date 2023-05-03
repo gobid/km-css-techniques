@@ -38,7 +38,6 @@ h1 {
 .viewer {
   position: relative;
   overflow: hidden;
-  height: 50vh;
   overflow-x: clip;
 }
 .iframe {
