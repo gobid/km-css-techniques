@@ -1,55 +1,19 @@
 import React, { useState } from "react";
 import Explore from "./components/Explore";
 import ProcessManagement from "./components/GoogleSheets";
+import Instructions from "./components/Instructions";
+
 import { examples } from "./lib/examples";
 
 // @ts-ignore
 export default function NewApp(): JSX.Element {
   const [firstSelectedIdx, setFirstSelectedIdx] = useState(0);
   const [secondSelectedIdx, setSecondSelectedIdx] = useState(1);
-<<<<<<< HEAD
-  
-  return (
-    <div className = "body">
-
-      <ProcessManagement/>
-      <div className="mb-4 mt-2">
-        <h1 className="text-center mb-2">Compare</h1>
-        <div className="flex items-center justify-center relative">
-          <label>
-            <select
-              className="select"
-              value={firstSelectedIdx}
-              onChange={(e) => setFirstSelectedIdx(Number(e.target.value))}
-            >
-              {examples.map((example, idx) => (
-                <option key={idx} value={idx}>
-                  {example.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <p className="mx-4">vs</p>
-          <label>
-            <select
-              className="select"
-              value={secondSelectedIdx}
-              onChange={(e) => setSecondSelectedIdx(Number(e.target.value))}
-            >
-              {examples.map((example, idx) => (
-                <option key={idx} value={idx}>
-                  {example.name}
-                </option>
-              ))}
-            </select>
-          </label>
-=======
   const [selectedStep, setSelectedStep] = useState("One");
 
   return (
     <div className="body">
-      <div className="flex items-center justify-evenly relative mb-1 mt-2">
-        <div className="flex items-center justify-center relative" >
+      <div className="step-btn" >
           <h1 className="text-center mb-2">Step: </h1>
           <select
             className="select"
@@ -60,7 +24,10 @@ export default function NewApp(): JSX.Element {
             <option>Two</option>
             <option>Three</option>
           </select>
-        </div>
+       </div>
+       <Instructions curr_step = {selectedStep}/>
+       <ProcessManagement/>
+      <div className="flex items-center justify-evenly relative mb-1 mt-2">
         <div>
           <h1 className="text-center">Compare: </h1>
           <div className="flex items-center justify-center relative">
@@ -92,7 +59,6 @@ export default function NewApp(): JSX.Element {
               </select>
             </label>
           </div>
->>>>>>> cf029604f4cb5959a807f80cb0a3845fec9b4b76
         </div>
       </div>
       <Explore

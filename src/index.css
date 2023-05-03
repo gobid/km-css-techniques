@@ -94,5 +94,19 @@ h1 {
 .toggle-sheets {
   margin: 10px 0px;
   display: flex;
-  align-self: center;
+  margin-left: 5%;
+  align-self: flex-start;
+}
+
+.responsive-iframe {
+    /* position: absolute; */
+    width: 90vw;
+    height: 85vh;
+}
+
+.step-btn {
+  justify-self: flex-start;
+  padding-top: 2%;
+  padding-left: 5%;
+  display: flex;
 }
