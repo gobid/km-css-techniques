@@ -312,8 +312,6 @@ export default function CSSEditor({
               )}
             </FieldArray>
             <hr/>
-<<<<<<< HEAD
-=======
             <FieldArray name="scoped_declarations">
               {({ insert, remove, push }) => (
                 <div >
@@ -330,7 +328,6 @@ export default function CSSEditor({
                 </div>
               )}
             </FieldArray>
->>>>>>> cf029604f4cb5959a807f80cb0a3845fec9b4b76
             <AutoSave />
           </Form>
         )}
