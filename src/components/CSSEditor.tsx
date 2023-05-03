@@ -189,8 +189,12 @@ function toggler(declaration, index, declaration_type, info?) {
         </div>
       :<>No Info Available for Technique</>
         }
-        <button id="copyBtn" onClick={() => {
-          navigator.clipboard.writeText(declaration.name+": "+declaration.value +";")}}>Copy</button>
+        <button className="tooltip" id="copyBtn" onClick={(e) => {
+          navigator.clipboard.writeText(declaration.name+": "+declaration.value +";")
+          console.log("copying e", e.target)
+          var el = e.target as HTMLElement
+          el.style.color = "gray"
+          }}>Copy</button>
         
     </div>
   );
