@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Explore from "./components/Explore";
+import ProcessManagement from "./components/GoogleSheets";
 import { examples } from "./lib/examples";
 
 // @ts-ignore
@@ -10,6 +11,8 @@ export default function NewApp(): JSX.Element {
 
   return (
     <div className="body">
+
+      <ProcessManagement/>
       <div className="flex items-center justify-evenly relative mb-1 mt-2">
         <div className="flex items-center justify-center relative" >
           <h1 className="text-center mb-2">Step: </h1>
@@ -56,7 +59,6 @@ export default function NewApp(): JSX.Element {
           </div>
         </div>
       </div>
-
       <Explore
         firstExample={examples[firstSelectedIdx]}
         secondExample={examples[secondSelectedIdx]}

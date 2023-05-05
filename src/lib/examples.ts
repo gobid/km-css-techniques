@@ -131,27 +131,63 @@ const italic: Example = {
       padding-bottom: 1.9rem;
       grid-template-columns: 1fr 1fr;`),
     []
-    ])],
-  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
-  htmlOutput: `
-  <html>
+  ]),
+  getMediaFromArray([
+    '@media (max-width: 767px)',
+    [],
+    [
+      getScopedDeclarationFromArray([".pcp-featured-swiper", getDeclarationFromString(`display: block;`)]),
+      getScopedDeclarationFromArray([".pcp-featured-grid", getDeclarationFromString(`display: none;`)]),
+    ]
+  ]),
+  getMediaFromArray([
+    '@media (min-width: 768px)',
+    [],
+    [
+      getScopedDeclarationFromArray([".cr", getDeclarationFromString(`display: block;`)]),
+    ]
+  ])
+],
+scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+htmlOutput: `
+<html>
+  ...
+  <div class="pcp-featured-grid">
+    <a href="/featured/all-time-member-favorites" ...> ... All-Time Member Favorites ... </a>
+    <a ...> ... Better Sweater Weather ... </a>
+    <a ...> ... The Leather Edit ... </a>
+    <a ...> ... The Best Bags ... </a>
+  </div>
+  <div class="pcp-featured-swiper ae" ...>
+    <div class="swiper-wrapper" ...>
+      <a href="/featured/all-time-member-favorites" ...> ... All-Time Member Favorites ... </a>
+      <a ...> ... Better Sweater Weather ... </a>
+      <a ...> ... The Leather Edit ... </a>
+      <a ...> ... The Best Bags ... </a>
+    </div>
+  </div>
+  ...
+  <div class="... cr">
     ...
-    <div class="pcp-featured-grid">
+    <div> ... Apparel ...</div>
+    <div> ... Bags ...</div>
+    <div> ... Shoes ...</div>
+    <div> ... Accessories ...</div>
+  </div>
+  ...
+  <div class="department-section ae cm">
+    ...
+    <div class="collections-grid ae cx">
+      <a href="/products/1...>
+      <a href="/products/2...>
+      <a href="/products/3...>
+      ...
+      <div class="ae">Shop All Apparel ...</div>
       ...
     </div>
-    <div class="department-section ae cm">
-      ...
-      <div class="collections-grid ae cx">
-        <a href="/products/1...>
-        <a href="/products/2...>
-        <a href="/products/3...>
-        ...
-        <div class="ae">Shop All Apparel ...</div>
-        ...
-      </div>
-    </div>
-    ...
-  </html>`
+  </div>
+  ...
+</html>`
 };
 
 // const gridMasterclass: Example = {  
@@ -408,7 +444,6 @@ const heroIcons: Example = {
     display: grid;
     gap: 4rem;
     text-align: center;
-    font-size: 0.8rem;
     grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
   `)])],
   htmlOutput:`
@@ -464,9 +499,6 @@ const CSSTricks: Example = {
     `)]),
     getScopedDeclarationFromArray([".mini-card",getDeclarationFromString(`
       padding: 1.5rem;
-      border-radius: 16px;
-      background: linear-gradient(85deg, #434343, #262626);
-      color: #fff;
       display: flex;
       flex-direction: column;
       transition: 0.2s;

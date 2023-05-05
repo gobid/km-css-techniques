@@ -78,3 +78,20 @@ h1 {
 .iframe.right {
   transform-origin: top right;
 }
+
+.process-management {
+  display: flex;
+  flex-direction: column;
+}
+
+.iframe-sheets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-sheets {
+  margin: 10px 0px;
+  display: flex;
+  align-self: center;
+}
