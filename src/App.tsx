@@ -13,7 +13,8 @@ export default function NewApp(): JSX.Element {
 
   return (
     <div className="body">
-      <div className="step-btn" >
+      <div className = "steps">
+        <div className="step-btn" >
           <h1 className="text-center mb-2">Step: </h1>
           <select
             className="select"
@@ -24,8 +25,10 @@ export default function NewApp(): JSX.Element {
             <option>Two</option>
             <option>Three</option>
           </select>
-       </div>
-       <Instructions curr_step = {selectedStep}/>
+        </div>
+          <Instructions curr_step = {selectedStep}/>
+      </div>
+       
        <ProcessManagement/>
       <div className="flex items-center justify-evenly relative mb-1 mt-2">
         <div>

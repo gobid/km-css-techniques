@@ -92,7 +92,7 @@ export default function Explore({
         </div>
       </div>
 
-      <div className="viewer flex flex-wrap w-full justify-between gap-y-4 mb-1" style={{ height: (selectedStep==="Three") ? "45vh": "100vh"}}>
+      <div className="viewer flex flex-wrap w-full justify-between gap-y-4 mb-1" style={{ height: "65vh"}}>
         {!firstHidden && (
           <Viewer
             example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations, scoped_declarations: firstSetOfScopedDeclarations }}
