@@ -6,11 +6,13 @@ import {mergeDeclarations} from "../lib/examples";
 interface ExploreProps {
   firstExample: Example;
   secondExample: Example;
+  selectedStep: string;
 }
 
 export default function Explore({
   firstExample,
   secondExample,
+  selectedStep
 }: ExploreProps): JSX.Element {
   const [firstSetOfDeclarations, setFirstSetOfDeclarations] = useState(
     firstExample.declarations
@@ -36,7 +38,7 @@ export default function Explore({
   const [secondHidden, setSecondHidden] = useState(false);
   const [firstCodeHidden, setFirstCodeHidden] = useState(false);
   const [secondCodeHidden, setSecondCodeHidden] = useState(false);
-  
+  const [windowSizerUsed, setWindowSizerUsed] = useState(false);
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
     setFirstSetOfMediaDeclarations(firstExample.media)
@@ -63,11 +65,14 @@ export default function Explore({
         <h1>
           Window width: {(Math.round(screenWidth*viewerSize/100))}px
         </h1>
+        {windowSizerUsed ?  <></>: <p>Resize Me!</p>}
         <input
           type="range"
           min={0}
           max={100}
-          onChange={(e) => setViewerSize(Number(e.target.value))}
+          onChange={(e) => {
+            setViewerSize(Number(e.target.value))
+            setWindowSizerUsed(true)}}
           value={viewerSize}
           className="w-full"
         />
@@ -87,12 +92,13 @@ export default function Explore({
         </div>
       </div>
 
-      <div className="viewer flex flex-wrap w-full justify-between gap-y-4 mb-8">
+      <div className="viewer flex flex-wrap w-full justify-between gap-y-4 mb-1" style={{ height: (selectedStep==="Three") ? "45vh": "100vh"}}>
         {!firstHidden && (
           <Viewer
             example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations, scoped_declarations: firstSetOfScopedDeclarations }}
             size={viewerSize}
             view = "left"
+            selectedStep = {selectedStep}
           />
         )}
 
@@ -103,83 +109,46 @@ export default function Explore({
             }}
             size={viewerSize}
             view = "right"
+            selectedStep = {selectedStep}
           />
         )}
       </div>
-
-      <div className="grid grid-cols-4 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {!firstHidden  && (
+        {selectedStep=="Three" &&(
+          <div style={{backgroundColor:"lightGray", display: "flex", flexFlow: "column wrap", padding: "0px 10px"}} >
+            <h1 style={{fontSize: 16,  textAlign: "center", fontWeight: "bold"}}>Instructions</h1>
+            <p><b>Toggle</b> the checkboxes to identify the visual effects of CSS code. Click on the ? mark next to the properties to read their definitions. <b>Edit</b> the property/values to identify the visual effects of CSS code. Play with the slider bar to see how it affects the layout.</p>
+            <span style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</span>
+            <span style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</span>
+          </div>
+        )}
+        <div className="grid grid-cols-2 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+        {!firstHidden && selectedStep!=="One" && selectedStep!=="Two"&& (
           <CSSEditor
             declarations={firstSetOfDeclarations}
             defaultParent={firstExample.defaultParentClassname}
             diffAgainstDeclarations={mergeDeclarations(secondSetOfDeclarations, secondSetOfMediaDeclarations, secondSetOfScopedDeclarations)}
             media = {firstSetOfMediaDeclarations}
             scoped_declarations= {firstSetOfScopedDeclarations}
+            htmlOutput={firstExample.htmlOutput}
+            children={firstExample.children}
             onChange={(declarations, media, scoped_declarations) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media), 
               setFirstSetOfScopedDeclarations(scoped_declarations))}
           /> 
         )}
-        {!firstHidden && (
-          <div className="p-4" key="1">
-            {firstExample.htmlOutput && (
-              <div className = "text html">
-                <h1>HTML Structure:</h1>
-                <pre>
-                  <div className = "text">{firstExample.htmlOutput}</div>
-                </pre>
-              </div>
-            )}
-
-            {firstExample.children && (
-              <div className = "text">
-                <h1>Child CSS</h1>
-                {firstExample.children.map((child, i) => (
-                  <div key={i}>
-                    <pre>
-                      <div className = "text">{child}</div>
-                    </pre>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-        {!secondHidden  && (
+        {!secondHidden && selectedStep!=="One" && selectedStep!=="Two" && (
           <CSSEditor
             declarations={secondSetOfDeclarations}
             defaultParent={secondExample.defaultParentClassname}
             diffAgainstDeclarations={mergeDeclarations(firstSetOfDeclarations, firstSetOfMediaDeclarations, firstSetOfScopedDeclarations)}
             media = {secondSetOfMediaDeclarations}
             scoped_declarations={secondSetOfScopedDeclarations}
+            htmlOutput={secondExample.htmlOutput}
+            children={secondExample.children}
             onChange={(declarations, media, scoped_declarations) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media),
               setSecondSetOfScopedDeclarations(scoped_declarations))}
           />
         )}
-        {!secondHidden  && (
-          <div className="p-4" key="1">
-            {secondExample.htmlOutput && (
-              <div className = "text html">
-                <h1>HTML Structure:</h1>
-                <pre>
-                  <div className = "text">{secondExample.htmlOutput}</div>
-                </pre>
-              </div>
-            )}
 
-            {secondExample.children && (
-              <div className = "text">
-                <h1>Child CSS</h1>
-                {secondExample.children.map((child, i) => (
-                  <div key={i}>
-                    <pre>
-                      <div className = "text">{child}</div>
-                    </pre>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
