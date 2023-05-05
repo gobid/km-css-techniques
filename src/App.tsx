@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Explore from "./components/Explore";
 import ProcessManagement from "./components/GoogleSheets";
+import Instructions from "./components/Instructions";
+
 import { examples } from "./lib/examples";
 
 // @ts-ignore
@@ -11,10 +13,8 @@ export default function NewApp(): JSX.Element {
 
   return (
     <div className="body">
-
-      <ProcessManagement/>
-      <div className="flex items-center justify-evenly relative mb-1 mt-2">
-        <div className="flex items-center justify-center relative" >
+      <div className = "steps">
+        <div className="step-btn" >
           <h1 className="text-center mb-2">Step: </h1>
           <select
             className="select"
@@ -26,6 +26,11 @@ export default function NewApp(): JSX.Element {
             <option>Three</option>
           </select>
         </div>
+          <Instructions curr_step = {selectedStep}/>
+      </div>
+       
+       <ProcessManagement/>
+      <div className="flex items-center justify-evenly relative mb-1 mt-2">
         <div>
           <h1 className="text-center">Compare: </h1>
           <div className="flex items-center justify-center relative">

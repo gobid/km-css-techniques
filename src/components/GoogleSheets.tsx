@@ -25,7 +25,7 @@ export default function ProcessManagement(): JSX.Element {
                     width = {1300}
                     height = {700}
                     frameBorder="0"
-                    className={`border border-gray-200 rounded`}
+                    className={`responsive-iframe border border-gray-200 rounded`}
              ></iframe>
             </div>
         </div>
