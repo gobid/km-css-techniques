@@ -29,7 +29,7 @@ export default function NewApp(): JSX.Element {
           <Instructions curr_step = {selectedStep}/>
       </div>
        
-       <ProcessManagement/>
+       <ProcessManagement curr_step = {selectedStep}/>
       <div className="flex items-center justify-evenly relative mb-1 mt-2">
         <div>
           <h1 className="text-center">Compare: </h1>
