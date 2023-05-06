@@ -191,9 +191,12 @@ function toggler(declaration, index, declaration_type, info?) {
         }
         <button className="tooltip" id="copyBtn" onClick={(e) => {
           navigator.clipboard.writeText(declaration.name+": "+declaration.value +";")
-          console.log("copying e", e.target)
           var el = e.target as HTMLElement
           el.style.color = "gray"
+          setTimeout(() => {
+            el.style.color = "black"
+          }, 3000)
+          
           }}>Copy</button>
         
     </div>
