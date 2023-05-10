@@ -336,7 +336,9 @@ const flatIcons: Example = {
     ]
   ])
   ],
-  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  scoped_declarations: [getScopedDeclarationFromArray([".icons .icon--item",getDeclarationFromString(`
+    min-width: 140px;
+    max-width: 100%`)])],
   htmlOutput:`
     <html>
       ...

@@ -25447,8 +25447,8 @@ section.blog img {
   margin: -64px 0 0 -64px;
 }
 .icons .icon--item {
-  min-width: 140px;
-  max-width: 100%;
+  /* min-width: 140px;
+  max-width: 100%; */
   flex: 1;
   position: relative;
 }
