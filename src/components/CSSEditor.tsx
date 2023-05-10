@@ -237,45 +237,64 @@ export default function CSSEditor({
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
                 <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                  <div style={{display: "flex", justifyContent: "space-between"}}>
                   <h1 style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
-                    .{defaultParent}
+                    .{defaultParent} {"{"}
                   </h1>
-                  <div>
+                  
+                    <button className="tooltip" id="copyBtn" onClick={(e) => {
+                      navigator.clipboard.writeText("."+defaultParent+"{}")
+                      var el = e.target as HTMLElement
+                      el.style.color = "gray"
+                      setTimeout(() => {
+                        el.style.color = "black"
+                      }, 3000)
+                    }}>Copy</button>
                   </div>
                   <div>
                     {values.declarations.map((declaration, index) => (
                       toggler(declaration, index, "declarations", getInfo(declaration))
                     ))}
                   </div>
-                  {/* <button
-                    type="button"
-                    className="btn mt-8"
-                    onClick={() =>
-                      push({
-                        name: "",
-                        value: "",
-                        enabled: true,
-                      } as Declaration)
-                    }
-                  >
-                    Add Declaration
-                  </button> */}
+                  <h1 style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                  {"}"}
+                  </h1>
                 </div>
               )}
             </FieldArray>
             <FieldArray name="scoped_declarations">
               {({ insert, remove, push }) => (
                 <div>
+                  {values.scoped_declarations.length ? 
+                  <>
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
                     <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                      <div style={{display: "flex", justifyContent: "space-between"}}>
                       <p style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
-                        {scoped_declaration.parent}
+                        {scoped_declaration.parent} {"{"}
                       </p>
+                      <button className="tooltip" id="copyBtn" onClick={(e) => {
+                        navigator.clipboard.writeText(scoped_declaration.parent+"{}")
+                        var el = e.target as HTMLElement
+                        el.style.color = "gray"
+                        setTimeout(() => {
+                          el.style.color = "black"
+                        }, 3000)
+                      }}>Copy</button>
+                      </div>
                         {scoped_declaration.declarations.map((sd_declaration, d_index) => (
                           toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
                       ))}
+                      <p style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                       {"}"}
+                      </p>
                     </div>
                   ))} 
+                  </>
+                :
+                <>
+                </>
+                }  
                 </div>
               )}
             </FieldArray>
@@ -295,14 +314,32 @@ export default function CSSEditor({
                                 <li className="textspan">Used By: Italics, Flat Icons, Smashing Magazine, Hero Icons, CSS Tricks</li>
                                 <li className="textspan">Dependencies: N/A</li>
                             </ul>
-                          </div>
+                        </div>
+                        <button className="tooltip" id="copyBtn" onClick={(e) => {
+                          navigator.clipboard.writeText(media_query.rule+"{}")
+                          var el = e.target as HTMLElement
+                          el.style.color = "gray"
+                          setTimeout(() => {
+                            el.style.color = "black"
+                          }, 3000)
+                      }}>Copy</button>
                       </div>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
                           <div style={{border: "solid LightGrey", borderWidth: "1px", margin: "5px"}}>
-                          <h2>
-                            {scoped_declaration.parent}
-                          </h2>
+                            <div  style={{display:"flex", justifyContent: "space-between"}} >
+                              <h2>
+                                {scoped_declaration.parent}
+                              </h2>
+                              <button className="tooltip" id="copyBtn" onClick={(e) => {
+                                navigator.clipboard.writeText(scoped_declaration.parent+"{}")
+                                var el = e.target as HTMLElement
+                                el.style.color = "gray"
+                                setTimeout(() => {
+                                  el.style.color = "black"
+                                }, 3000)
+                              }}>Copy</button>
+                          </div>
                             {scoped_declaration.declarations.map((sd_declaration, d_index) => (
                               toggler(sd_declaration, d_index, `media.${m_index}.scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
                           ))}
@@ -312,6 +349,9 @@ export default function CSSEditor({
                       {media_query.declarations.map((med_declaration, d_index) => (
                         toggler(med_declaration, d_index, `media.${m_index}.declarations`, getInfo(med_declaration))
                       ))}
+                      <span style={{fontSize: 16, fontFamily: "monospace", fontWeight: "bold"}}>
+                         {"}"}
+                        </span>
 
                     </div>
                   ))}
@@ -324,12 +364,25 @@ export default function CSSEditor({
                 <div >
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
                       <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
-                      <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
-                        {scoped_declaration.parent}
-                      </h1>
+                      <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                          {scoped_declaration.parent} {"{"}
+                        </h1>
+                        <button className="tooltip" id="copyBtn" onClick={(e) => {
+                          navigator.clipboard.writeText(scoped_declaration.parent+"{}")
+                          var el = e.target as HTMLElement
+                          el.style.color = "gray"
+                          setTimeout(() => {
+                            el.style.color = "black"
+                          }, 3000)
+                      }}>Copy</button>
+                      </div>
                         {scoped_declaration.declarations.map((sd_declaration, d_index) => (
                           toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
                       ))}
+                       <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                        {"}"}
+                      </h1>
                       </div>
                   ))} 
                 </div>

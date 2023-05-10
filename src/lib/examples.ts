@@ -148,7 +148,7 @@ const italic: Example = {
     ]
   ])
 ],
-scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+scoped_declarations: [],
 htmlOutput: `
 <html>
   ...
