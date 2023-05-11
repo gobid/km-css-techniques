@@ -148,7 +148,7 @@ const italic: Example = {
     ]
   ])
 ],
-scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+scoped_declarations: [],
 htmlOutput: `
 <html>
   ...
@@ -441,7 +441,7 @@ const heroIcons: Example = {
   display: grid;
   `),
   defaultParentClassname: "grid",
-  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
+  media: [],
   scoped_declarations: [getScopedDeclarationFromArray([".icon-grid",getDeclarationFromString(`
     display: grid;
     gap: 4rem;
