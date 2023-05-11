@@ -16,9 +16,8 @@ export default function Instuctions(props): JSX.Element {
     function showStep(step) {
         if (step=="One") {
             return `The goal of this step is to identify a common layout feature between 
-                    2-6 example websites. To start, you will compare just two websites in 
-                    order to come up with your common layout feature. Then you will examine 
-                    if the other websites also share that feature.`
+                    2-5 example websites. First explore the layouts of the different websites. 
+                    Then, identify and describe a specific shared feature.`
         }
         if (step=="Two") {
             return `You have just created a grouping of websites that share a layout feature. 

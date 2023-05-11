@@ -117,8 +117,8 @@ export default function Explore({
           <div style={{backgroundColor:"lightGray", display: "flex", flexFlow: "column wrap", padding: "0px 10px"}} >
             <h1 style={{fontSize: 16,  textAlign: "center", fontWeight: "bold"}}>Instructions</h1>
             <p><b>Toggle</b> the checkboxes to identify the visual effects of CSS code. Click on the ? mark next to the properties to read their definitions. <b>Edit</b> the property/values to identify the visual effects of CSS code. Play with the slider bar to see how it affects the layout.</p>
-            <span style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</span>
-            <span style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</span>
+            <span style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair.</span>
+            <span style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. </span>
           </div>
         )}
         <div className="grid grid-cols-2 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
