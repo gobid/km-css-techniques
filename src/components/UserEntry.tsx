@@ -17,6 +17,7 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
   const [currSite, setCurrSite] = useState(0);
   useEffect(() => {
     setCurrSite(0);
+    console.log('prev step', curr_step)
   }, [curr_step]);
   useEffect(() => {
     setSiteList(Array.from(websitesWithFeature));
@@ -149,28 +150,76 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
               placeholder="Enter Explanation for code"
             />
             <span
-              id="nextSite"
+              id="save"
               onClick={() => {
-                if (currSite <= Array.from(websitesWithFeature).length - 1) {
-                  var currSelected = siteList[currSite];
-                  var layoutCode = {};
+                var currSelected = siteList[currSite];
+                var layoutCode = {};
                   layoutCode[currSelected] = {
                     code: (document.getElementById("codeInput") as HTMLInputElement).value,
                     explanation: (document.getElementById("codeExplanationInput") as HTMLInputElement).value,}
                   setWebsiteLayoutCode({ ...websiteLayoutCode, ...layoutCode });
-                  setCurrSite(currSite + 1);
-                  if (currSite == Array.from(websitesWithFeature).length - 1) {
-                    document.getElementById("nextSite").style.display = "none";
-                  }
-                } else {
-                  document.getElementById("nextSite").style.display = "none";
-                }
+                console.log(websiteLayoutCode)
               }}
             >
-              next site
+              save
             </span>
+            {Array.from(websitesWithFeature).map((website, i) => (
+              <div onClick={() => {
+                setCurrSite(i)}}
+              >{website}</div>
+            ))}
           </form>
         </div>
+      )}
+      {curr_step=="Four" && (
+        <div style={{ border: "solid grey" }}>
+        <div>
+          <span>Your Identified Layout Feature:</span>
+          <span>{layoutFeature}</span>
+          <span>Your Identified Layout Diff:</span>
+          <span>{websiteDiff[currSite]}</span>
+          <span>
+            current site: {Array.from(websitesWithFeature)[currSite]}
+          </span>
+        </div>
+        <form style={{ display: "flex", justifyContent: "space-between" }}>
+          <input
+            style={{ border: "solid grey" }}
+            id="diffCodeInput"
+            name="diffCodeInput"
+            placeholder={
+              "Enter Diff Code for" +
+              Array.from(websitesWithFeature)[currSite] +
+              ""
+            }
+          />
+          <input
+            style={{ border: "solid grey" }}
+            id="diffCodeExplanationInput"
+            name="diffCodeExplanationInput"
+            placeholder="Enter Explanation for  diff code"
+          />
+          <span
+            id="save"
+            onClick={() => {
+              var currSelected = siteList[currSite];
+              var layoutCode = {};
+                layoutCode[currSelected] = {
+                  code: (document.getElementById("diffCodeInput") as HTMLInputElement).value,
+                  explanation: (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value,}
+                  setWebsiteDiffCode({ ...websiteLayoutCode, ...layoutCode });
+              console.log(websiteDiffCode)
+            }}
+          >
+            save
+          </span>
+          {Array.from(websitesWithFeature).map((website, i) => (
+            <div onClick={() => {
+              setCurrSite(i)}}
+            >{website}</div>
+          ))}
+        </form>
+      </div>
       )}
     </>
   );

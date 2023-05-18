@@ -8,33 +8,24 @@ import UserEntry from "./components/UserEntry";
 // @ts-ignore
 export default function NewApp(): JSX.Element {
   const possibleSteps = ["One", "Two", "Three", "Four", "Five"]
-  var i = 0
+  const [i, setI] = useState(0);
   const [firstSelectedIdx, setFirstSelectedIdx] = useState(0);
   const [secondSelectedIdx, setSecondSelectedIdx] = useState(1);
   const [selectedStep, setSelectedStep] = useState(possibleSteps[i]);
- 
+
 
   return (
     <div className="body">
       <div className = "steps">
         <div className="step-btn" >
           <h1 className="text-center mb-2">Step: </h1>
-          <select
-            className="select"
-            value={selectedStep}
-            onChange={(e) => setSelectedStep(e.target.value)}
-          >
-            <option>One</option>
-            <option>Two</option>
-            <option>Three</option>
-          </select>
         </div>
           <Instructions curr_step = {selectedStep}/>
           
       </div>
        <UserEntry curr_step={selectedStep}></UserEntry>
        <button type="submit" onClick={() => {
-            i+=1
+            setI(i+1)
             setSelectedStep(possibleSteps[i])
             console.log('going to step ', possibleSteps[i])
           }}>Next</button>
