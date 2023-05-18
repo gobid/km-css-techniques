@@ -1,3 +1,4 @@
+import { SIGBREAK } from "constants";
 import React, { useState, useEffect } from "react";
 import { examples } from "../lib/examples";
 
@@ -5,11 +6,11 @@ interface UserEntryProps {
   curr_step: String;
 }
 export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
-  console.log("step", curr_step);
   const [layoutFeature, setLayoutFeature] = useState("");
   const [websitesWithFeature, setWebsitesWithFeature] = useState(
     () => new Set<string>()
   );
+  const [siteList, setSiteList] = useState([]);
   const [websiteDiff, setWebsiteDiff] = useState({});
   const [websiteLayoutCode, setWebsiteLayoutCode] = useState({});
   const [websiteDiffCode, setWebsiteDiffCode] = useState({});
@@ -17,6 +18,9 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
   useEffect(() => {
     setCurrSite(0);
   }, [curr_step]);
+  useEffect(() => {
+    setSiteList(Array.from(websitesWithFeature));
+  }, [websitesWithFeature]);
 
   return (
     <>
@@ -24,13 +28,12 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
         <div style={{ border: "solid grey" }}>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
             <input
-              style={{ border: "solid grey" }}
+              style={{ border: "solid grey", width:`${30}%`, textAlign: "center" }}
               id="layoutFeature"
               name="layoutFeature"
               placeholder="Enter your layout feature here"
               onChange={(e) => {
                 setLayoutFeature(e.target.value);
-                console.log("lf ", layoutFeature);
               }}
             />
             <div style={{ display: "flex", flexFlow: "column" }}>
@@ -54,7 +57,6 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
                           return next;
                         });
                       }
-                      console.log("checkbox sites ", websitesWithFeature);
                     }}
                   ></input>
                   <label htmlFor={ex.name}>{ex.name}</label>
@@ -69,49 +71,55 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
         <div style={{ border: "solid grey" }}>
           <div>
             <span>Your Identified Layout Feature:</span>
-            <span>{layoutFeature}</span>
+            <span>{layoutFeature} </span>
             <span>
-              current site: {Array.from(websitesWithFeature)[currSite]}
+              Current Site: {Array.from(websitesWithFeature)[currSite]}
             </span>
           </div>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
-            <input
-              style={{ border: "solid grey" }}
-              id="layoutDifference"
-              name="layoutDifference"
-              placeholder={
-                "Enter Difference for" +
-                Array.from(websitesWithFeature)[currSite] +
-                ""
-              }
-            />
-            <div style={{ display: "flex", flexFlow: "column" }}></div>
-            {/* to do add last site btn too */}
-            <span
-              id="nextSite"
-              onClick={() => {
-                if (currSite <= Array.from(websitesWithFeature).length - 1) {
-                  var siteList = Array.from(websitesWithFeature);
-                  var currSelected = siteList[currSite];
-                  var siteDiffs = {};
-                  siteDiffs[currSelected] = (
-                    document.getElementById(
-                      "layoutDifference"
-                    ) as HTMLInputElement
-                  ).value;
-                  setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
-                  setCurrSite(currSite + 1);
-                  if (currSite == Array.from(websitesWithFeature).length - 1) {
-                    document.getElementById("nextSite").style.display = "none";
-                  }
-                } else {
-                  document.getElementById("nextSite").style.display = "none";
+            <>
+              <input
+                style={{ border: "solid grey" }}
+                id="layoutDifference"
+                name="layoutDifference"
+                placeholder={
+                  "Enter Difference for" +
+                  Array.from(websitesWithFeature)[currSite] +
+                  ""
                 }
+              />
+              <span
+              id="save"
+              onClick={() => {
+                var currSelected = siteList[currSite];
+                var siteDiffs = {};
+                siteDiffs[currSelected] = (
+                  document.getElementById(
+                    "layoutDifference"
+                  ) as HTMLInputElement
+                ).value;
+                setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
+                console.log(websiteDiff)
               }}
             >
-              next site
+              save
             </span>
+            </>
+            {Array.from(websitesWithFeature).map((website, i) => (
+              <div onClick={() => {
+                setCurrSite(i)}}
+              >{website}</div>
+            ))}
+            
           </form>
+          <div>
+            {Object.keys(websiteDiff).map((site) => (
+              <div>
+                <p>{site}</p>
+                <p>{websiteDiff[site]}</p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {curr_step == "Three" && (
@@ -144,13 +152,11 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
               id="nextSite"
               onClick={() => {
                 if (currSite <= Array.from(websitesWithFeature).length - 1) {
-                  var siteList = Array.from(websitesWithFeature);
                   var currSelected = siteList[currSite];
                   var layoutCode = {};
                   layoutCode[currSelected] = {
                     code: (document.getElementById("codeInput") as HTMLInputElement).value,
                     explanation: (document.getElementById("codeExplanationInput") as HTMLInputElement).value,}
-                  console.log('layout code entered prev ', websiteLayoutCode, layoutCode, {...layoutCode})
                   setWebsiteLayoutCode({ ...websiteLayoutCode, ...layoutCode });
                   setCurrSite(currSite + 1);
                   if (currSite == Array.from(websitesWithFeature).length - 1) {
