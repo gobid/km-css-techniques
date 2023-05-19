@@ -118,9 +118,9 @@ h1 {
 .instructions {
   display: flex;
   flex-direction: column;
-  background-color: rgba(51, 51, 51, 0.199);
+  background-color: rgba(209, 209, 209, 0.37);
   border-radius: 5px;
-  border: 0.25px solid grey;
+  border: 0.25px solid black;
   padding: 5px;
   margin-left: 5%;
   width: 70%;
@@ -129,4 +129,61 @@ h1 {
 }
 .instructions h1 {
   font-weight: bold;
+}
+
+.user-entry {
+  border: 0.25px solid black;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 10px;
+  background-color: rgba(209, 209, 209, 0.37);
+}
+
+.user-entry .user-input {
+   width: 40%;
+   text-align: center;
+   border: 0.25px solid black;
+   border-radius: 10px;
+}
+
+.user-entry .website-checklist {
+  display: flex;
+  flex-flow: column;
+  margin-left: 15px;
+}
+.flex-container {
+  display: flex;
+  align-items: flex-end;
+}
+.enter-btn {
+  height: fit-content;
+  margin: 5px;
+  padding: 5px 25px;
+  border: 0.25px solid black;
+  border-radius: 5px;
+  background-color: rgb(209, 209, 209);
+  text-align: center;
+}
+
+.next-btn {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 0.25px solid black;
+  border-radius: 5px;
+  background-color: rgba(209, 209, 209, 0.37);
+}
+
+.website-btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.website-btn {
+  padding: 2px;
+  margin: 2px;
+  border: 0.25px solid black;
+  border-radius: 5px;
+  background-color: rgba(209, 209, 209, 0.37);
 }

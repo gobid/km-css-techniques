@@ -32,12 +32,7 @@ export default function NewApp(): JSX.Element {
           <Instructions curr_step = {selectedStep}/>
           
       </div>
-       <UserEntry curr_step={selectedStep}></UserEntry>
-       <button type="submit" onClick={() => {
-            i+=1
-            setSelectedStep(possibleSteps[i])
-            console.log('going to step ', possibleSteps[i])
-          }}>Next</button>
+      
       <div className="flex items-center justify-evenly relative mb-1 mt-2">
         <div>
           <h1 className="text-center">Compare Websites: </h1>
@@ -72,6 +67,13 @@ export default function NewApp(): JSX.Element {
           </div>
         </div>
       </div>
+      <UserEntry curr_step={selectedStep}></UserEntry>
+       <button className = "next-btn"
+            type="submit" onClick={() => {
+            i+=1
+            setSelectedStep(possibleSteps[i])
+            console.log('going to step ', possibleSteps[i])
+          }}>Next Step</button>
       <Explore
         firstExample={examples[firstSelectedIdx]}
         secondExample={examples[secondSelectedIdx]}

@@ -7,6 +7,7 @@ interface UserEntryProps {
 }
 export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
   const [layoutFeature, setLayoutFeature] = useState("");
+  const [savedLayoutFeature, setSavedLayoutFeature] = useState("");
   const [websitesWithFeature, setWebsitesWithFeature] = useState(
     () => new Set<string>()
   );
@@ -23,12 +24,13 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
   }, [websitesWithFeature]);
 
   return (
-    <>
+    <div className = "user-entry">
       {curr_step == "One" && (
-        <div style={{ border: "solid grey" }}>
-          <form style={{ display: "flex", justifyContent: "space-between" }}>
+        <div>
+          
+          <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <input
-              style={{ border: "solid grey", width:`${30}%`, textAlign: "center" }}
+              className = "user-input layout-feature"
               id="layoutFeature"
               name="layoutFeature"
               placeholder="Enter your layout feature here"
@@ -36,9 +38,9 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
                 setLayoutFeature(e.target.value);
               }}
             />
-            <div style={{ display: "flex", flexFlow: "column" }}>
+            <div className = "website-checklist" style={{ display: "flex", flexFlow: "column" }}>
               {examples.map((ex) => (
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", gap: "8px" }}>
                   <input
                     type="checkbox"
                     name={ex.name}
@@ -63,12 +65,27 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
                 </div>
               ))}
             </div>
-            <button type="submit"></button>
+            <div className = "flex-container">
+              <span
+                className = "enter-btn"
+                id="save"
+                onClick={() => {
+                  setSavedLayoutFeature(layoutFeature);
+                }}
+              >
+                Enter
+              </span>
+            </div>
+            
+            <div>
+              Your identified layout feature: {savedLayoutFeature}
+            </div>
           </form>
+          
         </div>
       )}
       {curr_step == "Two" && (
-        <div style={{ border: "solid grey" }}>
+        <div>
           <div>
             <span>Your Identified Layout Feature:</span>
             <span>{layoutFeature} </span>
@@ -76,54 +93,59 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
               Current Site: {Array.from(websitesWithFeature)[currSite]}
             </span>
           </div>
-          <form style={{ display: "flex", justifyContent: "space-between" }}>
+          <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <>
-              <input
-                style={{ border: "solid grey" }}
+              <input 
+                className = "user-input layout-difference"
                 id="layoutDifference"
                 name="layoutDifference"
                 placeholder={
-                  "Enter Difference for" +
+                  "Enter Difference for " +
                   Array.from(websitesWithFeature)[currSite] +
                   ""
                 }
               />
-              <span
-              id="save"
-              onClick={() => {
-                var currSelected = siteList[currSite];
-                var siteDiffs = {};
-                siteDiffs[currSelected] = (
-                  document.getElementById(
-                    "layoutDifference"
-                  ) as HTMLInputElement
-                ).value;
-                setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
-                console.log(websiteDiff)
-              }}
-            >
-              save
-            </span>
+              <div className = "flex-container">
+                <span
+                className = "enter-btn"
+                id="save"
+                onClick={() => {
+                  var currSelected = siteList[currSite];
+                  var siteDiffs = {};
+                  siteDiffs[currSelected] = (
+                    document.getElementById(
+                      "layoutDifference"
+                    ) as HTMLInputElement
+                  ).value;
+                  setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
+                  console.log(websiteDiff)
+                }}
+              >
+                Enter
+              </span>
+            </div>
             </>
-            {Array.from(websitesWithFeature).map((website, i) => (
-              <div onClick={() => {
-                setCurrSite(i)}}
-              >{website}</div>
-            ))}
-            
+            <div className = "website-btns">
+              {Array.from(websitesWithFeature).map((website, i) => (
+                <div className = "website-btn"
+                  onClick={() => {
+                  setCurrSite(i)}}
+                >{website}</div>
+              ))}
+            </div>
+            <div>
+              {Object.keys(websiteDiff).map((site) => (
+                <div>
+                  <p>{site}</p>
+                  <p>{websiteDiff[site]}</p>
+                </div>
+              ))}
+            </div>
           </form>
-          <div>
-            {Object.keys(websiteDiff).map((site) => (
-              <div>
-                <p>{site}</p>
-                <p>{websiteDiff[site]}</p>
-              </div>
-            ))}
-          </div>
         </div>
       )}
       {curr_step == "Three" && (
-        <div style={{ border: "solid grey" }}>
+        <div>
           <div>
             <span>Your Identified Layout Feature:</span>
             <span>{layoutFeature}</span>
@@ -133,17 +155,17 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
           </div>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
             <input
-              style={{ border: "solid grey" }}
+              className = "user-input code-input"
               id="codeInput"
               name="codeInput"
               placeholder={
-                "Enter Code for" +
+                "Enter Code for " +
                 Array.from(websitesWithFeature)[currSite] +
                 ""
               }
             />
             <input
-              style={{ border: "solid grey" }}
+              className = "user-input code-explaintion-input"
               id="codeExplanationInput"
               name="codeExplanationInput"
               placeholder="Enter Explanation for code"
@@ -172,6 +194,6 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
           </form>
         </div>
       )}
-    </>
+    </div>
   );
 }
