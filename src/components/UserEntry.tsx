@@ -195,54 +195,54 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
       )}
       {curr_step=="Four" && (
         <div style={{ border: "solid grey" }}>
-        <div>
-          <span>Your Identified Layout Feature:</span>
-          <span>{layoutFeature}</span>
-          <span>Your Identified Layout Diff:</span>
-          <span>{websiteDiff[currSite]}</span>
-          <span>
-            current site: {Array.from(websitesWithFeature)[currSite]}
-          </span>
+          <div>
+            <span>Your Identified Layout Feature:</span>
+            <span>{layoutFeature}</span>
+            <span>Your Identified Layout Diff:</span>
+            <span>{websiteDiff[currSite]}</span>
+            <span>
+              current site: {Array.from(websitesWithFeature)[currSite]}
+            </span>
+          </div>
+          <form style={{ display: "flex", justifyContent: "space-between" }}>
+            <input
+              style={{ border: "solid grey" }}
+              id="diffCodeInput"
+              name="diffCodeInput"
+              placeholder={
+                "Enter Diff Code for" +
+                Array.from(websitesWithFeature)[currSite] +
+                ""
+              }
+            />
+            <input
+              style={{ border: "solid grey" }}
+              id="diffCodeExplanationInput"
+              name="diffCodeExplanationInput"
+              placeholder="Enter Explanation for  diff code"
+            />
+            <span
+              id="save"
+              onClick={() => {
+                var currSelected = siteList[currSite];
+                var layoutCode = {};
+                  layoutCode[currSelected] = {
+                    code: (document.getElementById("diffCodeInput") as HTMLInputElement).value,
+                    explanation: (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value,}
+                    setWebsiteDiffCode({ ...websiteLayoutCode, ...layoutCode });
+                console.log(websiteDiffCode)
+              }}
+            >
+              save
+            </span>
+            {Array.from(websitesWithFeature).map((website, i) => (
+              <div onClick={() => {
+                setCurrSite(i)}}
+              >{website}</div>
+            ))}
+          </form>
         </div>
-        <form style={{ display: "flex", justifyContent: "space-between" }}>
-          <input
-            style={{ border: "solid grey" }}
-            id="diffCodeInput"
-            name="diffCodeInput"
-            placeholder={
-              "Enter Diff Code for" +
-              Array.from(websitesWithFeature)[currSite] +
-              ""
-            }
-          />
-          <input
-            style={{ border: "solid grey" }}
-            id="diffCodeExplanationInput"
-            name="diffCodeExplanationInput"
-            placeholder="Enter Explanation for  diff code"
-          />
-          <span
-            id="save"
-            onClick={() => {
-              var currSelected = siteList[currSite];
-              var layoutCode = {};
-                layoutCode[currSelected] = {
-                  code: (document.getElementById("diffCodeInput") as HTMLInputElement).value,
-                  explanation: (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value,}
-                  setWebsiteDiffCode({ ...websiteLayoutCode, ...layoutCode });
-              console.log(websiteDiffCode)
-            }}
-          >
-            save
-          </span>
-          {Array.from(websitesWithFeature).map((website, i) => (
-            <div onClick={() => {
-              setCurrSite(i)}}
-            >{website}</div>
-          ))}
-        </form>
-      </div>
       )}
-    </>
+    </div>
   );
 }
