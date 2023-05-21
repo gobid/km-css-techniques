@@ -10,7 +10,7 @@ export default function UserEntry({
   curr_step,
   setCurrStep,
 }: UserEntryProps): JSX.Element {
-  const possibleSteps = ["One", "Two", "Three", "Four", "Five"];
+  // const possibleSteps = ["One", "Two", "Three", "Four", "Five"];
   var i = 0;
 
   const [layoutFeature, setLayoutFeature] = useState("");
@@ -25,10 +25,38 @@ export default function UserEntry({
   const [currSite, setCurrSite] = useState(0);
   useEffect(() => {
     setCurrSite(0);
+    showSaved();
   }, [curr_step]);
   useEffect(() => {
     setSiteList(Array.from(websitesWithFeature));
   }, [websitesWithFeature]);
+
+  function showSaved() {
+    if (curr_step == 1) {
+      (document.getElementById("layoutFeature") as HTMLInputElement).value =
+        localStorage.getItem("layoutFeature");
+      console.log(
+        "site list stored ",
+        JSON.parse(localStorage.getItem("siteList"))
+      );
+      JSON.parse(localStorage.getItem("siteList")).map((site) => {
+        (
+          document.getElementById(site + "checkbox") as HTMLInputElement
+        ).checked = true;
+      });
+    }
+    if (curr_step == 2) {
+      if (localStorage.getItem("websiteDiff")) {
+        console.log("diff", localStorage.getItem("websiteDiff"));
+        console.log("diff parsed", JSON.parse(localStorage.getItem("websiteDiff")));
+        var res = JSON.parse(localStorage.getItem("websiteDiff"))[siteList[currSite]]
+        if (res !="undefined"){
+          (document.getElementById("layoutDifference") as HTMLInputElement).value = res
+        }
+        
+      }
+    }
+  }
 
   return (
     <div className="user-entry">
@@ -54,6 +82,7 @@ export default function UserEntry({
                     type="checkbox"
                     name={ex.name}
                     value={ex.name}
+                    id={ex.name + "checkbox"}
                     onChange={(e) => {
                       var boxName = e.target.name;
                       var checked = e.target.checked;
@@ -287,6 +316,15 @@ export default function UserEntry({
         {curr_step != 5 && (
           <button
             onClick={() => {
+              if (curr_step == 1) {
+                localStorage.setItem("layoutFeature", layoutFeature);
+                localStorage.setItem("siteList", JSON.stringify(siteList));
+              } else if (curr_step == 2) {
+                localStorage.setItem(
+                  "websiteDiff",
+                  JSON.stringify(websiteDiff)
+                );
+              }
               setCurrStep(curr_step + 1);
             }}
           >
