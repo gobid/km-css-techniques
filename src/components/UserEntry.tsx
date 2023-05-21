@@ -1,11 +1,18 @@
 import { SIGBREAK } from "constants";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { examples } from "../lib/examples";
 
 interface UserEntryProps {
-  curr_step: String;
+  curr_step: number;
+  setCurrStep: Dispatch<SetStateAction<Number>>;
 }
-export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
+export default function UserEntry({
+  curr_step,
+  setCurrStep,
+}: UserEntryProps): JSX.Element {
+  const possibleSteps = ["One", "Two", "Three", "Four", "Five"];
+  var i = 0;
+
   const [layoutFeature, setLayoutFeature] = useState("");
   const [savedLayoutFeature, setSavedLayoutFeature] = useState("");
   const [websitesWithFeature, setWebsitesWithFeature] = useState(
@@ -18,20 +25,18 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
   const [currSite, setCurrSite] = useState(0);
   useEffect(() => {
     setCurrSite(0);
-    console.log('prev step', curr_step)
   }, [curr_step]);
   useEffect(() => {
     setSiteList(Array.from(websitesWithFeature));
   }, [websitesWithFeature]);
 
   return (
-    <div className = "user-entry">
-      {curr_step == "One" && (
+    <div className="user-entry">
+      {curr_step == 1 && (
         <div>
-          
           <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <input
-              className = "user-input layout-feature"
+              className="user-input layout-feature"
               id="layoutFeature"
               name="layoutFeature"
               placeholder="Enter your layout feature here"
@@ -39,7 +44,10 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
                 setLayoutFeature(e.target.value);
               }}
             />
-            <div className = "website-checklist" style={{ display: "flex", flexFlow: "column" }}>
+            <div
+              className="website-checklist"
+              style={{ display: "flex", flexFlow: "column" }}
+            >
               {examples.map((ex) => (
                 <div style={{ display: "flex", gap: "8px" }}>
                   <input
@@ -66,9 +74,9 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
                 </div>
               ))}
             </div>
-            <div className = "flex-container">
+            <div className="flex-container">
               <span
-                className = "enter-btn"
+                className="enter-btn"
                 id="save"
                 onClick={() => {
                   setSavedLayoutFeature(layoutFeature);
@@ -77,15 +85,12 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
                 Enter
               </span>
             </div>
-            
-            <div>
-              Your identified layout feature: {savedLayoutFeature}
-            </div>
+
+            <div>Your identified layout feature: {savedLayoutFeature}</div>
           </form>
-          
         </div>
       )}
-      {curr_step == "Two" && (
+      {curr_step == 2 && (
         <div>
           <div>
             <span>Your Identified Layout Feature:</span>
@@ -96,8 +101,8 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
           </div>
           <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <>
-              <input 
-                className = "user-input layout-difference"
+              <input
+                className="user-input layout-difference"
                 id="layoutDifference"
                 name="layoutDifference"
                 placeholder={
@@ -106,32 +111,36 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
                   ""
                 }
               />
-              <div className = "flex-container">
+              <div className="flex-container">
                 <span
-                className = "enter-btn"
-                id="save"
-                onClick={() => {
-                  var currSelected = siteList[currSite];
-                  var siteDiffs = {};
-                  siteDiffs[currSelected] = (
-                    document.getElementById(
-                      "layoutDifference"
-                    ) as HTMLInputElement
-                  ).value;
-                  setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
-                  console.log(websiteDiff)
-                }}
-              >
-                Enter
-              </span>
-            </div>
-            </>
-            <div className = "website-btns">
-              {Array.from(websitesWithFeature).map((website, i) => (
-                <div className = "website-btn"
+                  className="enter-btn"
+                  id="save"
                   onClick={() => {
-                  setCurrSite(i)}}
-                >{website}</div>
+                    var currSelected = siteList[currSite];
+                    var siteDiffs = {};
+                    siteDiffs[currSelected] = (
+                      document.getElementById(
+                        "layoutDifference"
+                      ) as HTMLInputElement
+                    ).value;
+                    setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
+                    console.log(websiteDiff);
+                  }}
+                >
+                  Enter
+                </span>
+              </div>
+            </>
+            <div className="website-btns">
+              {Array.from(websitesWithFeature).map((website, i) => (
+                <div
+                  className="website-btn"
+                  onClick={() => {
+                    setCurrSite(i);
+                  }}
+                >
+                  {website}
+                </div>
               ))}
             </div>
             <div>
@@ -145,7 +154,7 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
           </form>
         </div>
       )}
-      {curr_step == "Three" && (
+      {curr_step == 3 && (
         <div>
           <div>
             <span>Your Identified Layout Feature:</span>
@@ -156,7 +165,7 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
           </div>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
             <input
-              className = "user-input code-input"
+              className="user-input code-input"
               id="codeInput"
               name="codeInput"
               placeholder={
@@ -166,7 +175,7 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
               }
             />
             <input
-              className = "user-input code-explaintion-input"
+              className="user-input code-explaintion-input"
               id="codeExplanationInput"
               name="codeExplanationInput"
               placeholder="Enter Explanation for code"
@@ -176,24 +185,35 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
               onClick={() => {
                 var currSelected = siteList[currSite];
                 var layoutCode = {};
-                  layoutCode[currSelected] = {
-                    code: (document.getElementById("codeInput") as HTMLInputElement).value,
-                    explanation: (document.getElementById("codeExplanationInput") as HTMLInputElement).value,}
-                  setWebsiteLayoutCode({ ...websiteLayoutCode, ...layoutCode });
-                console.log(websiteLayoutCode)
+                layoutCode[currSelected] = {
+                  code: (
+                    document.getElementById("codeInput") as HTMLInputElement
+                  ).value,
+                  explanation: (
+                    document.getElementById(
+                      "codeExplanationInput"
+                    ) as HTMLInputElement
+                  ).value,
+                };
+                setWebsiteLayoutCode({ ...websiteLayoutCode, ...layoutCode });
+                console.log(websiteLayoutCode);
               }}
             >
               save
             </span>
             {Array.from(websitesWithFeature).map((website, i) => (
-              <div onClick={() => {
-                setCurrSite(i)}}
-              >{website}</div>
+              <div
+                onClick={() => {
+                  setCurrSite(i);
+                }}
+              >
+                {website}
+              </div>
             ))}
           </form>
         </div>
       )}
-      {curr_step=="Four" && (
+      {curr_step == 4 && (
         <div style={{ border: "solid grey" }}>
           <div>
             <span>Your Identified Layout Feature:</span>
@@ -226,23 +246,54 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
               onClick={() => {
                 var currSelected = siteList[currSite];
                 var layoutCode = {};
-                  layoutCode[currSelected] = {
-                    code: (document.getElementById("diffCodeInput") as HTMLInputElement).value,
-                    explanation: (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value,}
-                    setWebsiteDiffCode({ ...websiteLayoutCode, ...layoutCode });
-                console.log(websiteDiffCode)
+                layoutCode[currSelected] = {
+                  code: (
+                    document.getElementById("diffCodeInput") as HTMLInputElement
+                  ).value,
+                  explanation: (
+                    document.getElementById(
+                      "diffCodeExplanationInput"
+                    ) as HTMLInputElement
+                  ).value,
+                };
+                setWebsiteDiffCode({ ...websiteLayoutCode, ...layoutCode });
+                console.log(websiteDiffCode);
               }}
             >
               save
             </span>
             {Array.from(websitesWithFeature).map((website, i) => (
-              <div onClick={() => {
-                setCurrSite(i)}}
-              >{website}</div>
+              <div
+                onClick={() => {
+                  setCurrSite(i);
+                }}
+              >
+                {website}
+              </div>
             ))}
           </form>
         </div>
       )}
+      <div>
+        {curr_step != 1 && (
+          <button
+            onClick={() => {
+              setCurrStep(curr_step - 1);
+            }}
+          >
+            Last Step
+          </button>
+        )}
+        {curr_step != 5 && (
+          <button
+            onClick={() => {
+              setCurrStep(curr_step + 1);
+            }}
+          >
+            Next Step
+          </button>
+        )}
+      </div>
     </div>
   );
 }

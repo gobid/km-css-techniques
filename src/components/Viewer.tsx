@@ -6,7 +6,7 @@ interface ViewerProps {
   example: Example;
   size: number;
   view: string;
-  selectedStep: string;
+  selectedStep: number;
 }
 
 export default function Viewer({ example, size, view, selectedStep }: ViewerProps): JSX.Element {
@@ -20,7 +20,6 @@ export default function Viewer({ example, size, view, selectedStep }: ViewerProp
         example.scoped_declarations,
         example.defaultParentClassname
       );
-      console.log("newCSSValue", newCSSValue);
       viewerRef.current?.contentWindow.postMessage({type: "NEW_CSS_VALUE", data: newCSSValue});
     }
   }, [example.declarations, example.media, example.scoped_declarations, example.defaultParentClassname]);

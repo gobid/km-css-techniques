@@ -6,7 +6,7 @@ import {mergeDeclarations} from "../lib/examples";
 interface ExploreProps {
   firstExample: Example;
   secondExample: Example;
-  selectedStep: string;
+  selectedStep: number;
 }
 
 export default function Explore({
@@ -113,7 +113,7 @@ export default function Explore({
           />
         )}
       </div>
-        {selectedStep=="Three" &&(
+        {selectedStep==3 &&(
           <div style={{backgroundColor:"lightGray", display: "flex", flexFlow: "column wrap", padding: "0px 10px"}} >
             <h1 style={{fontSize: 16,  textAlign: "center", fontWeight: "bold"}}>Instructions</h1>
             <p><b>Toggle</b> the checkboxes to identify the visual effects of CSS code. Click on the ? mark next to the properties to read their definitions. <b>Edit</b> the property/values to identify the visual effects of CSS code. Play with the slider bar to see how it affects the layout.</p>
@@ -122,7 +122,7 @@ export default function Explore({
           </div>
         )}
         <div className="grid grid-cols-2 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {!firstHidden && selectedStep!=="One" && selectedStep!=="Two"&& (
+        {!firstHidden && selectedStep!==1 && selectedStep!==2 && (
           <CSSEditor
             declarations={firstSetOfDeclarations}
             defaultParent={firstExample.defaultParentClassname}
@@ -135,7 +135,7 @@ export default function Explore({
               setFirstSetOfScopedDeclarations(scoped_declarations))}
           /> 
         )}
-        {!secondHidden && selectedStep!=="One" && selectedStep!=="Two" && (
+        {!secondHidden && selectedStep!==1 && selectedStep!==2 && (
           <CSSEditor
             declarations={secondSetOfDeclarations}
             defaultParent={secondExample.defaultParentClassname}
