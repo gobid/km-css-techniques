@@ -1,31 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
+interface InstructionsProps {
+    curr_step: number;
+}
 
-export default function Instuctions(props): JSX.Element {
-    const [step, setStep] = useState(props.curr_step)
+export default function Instructions({curr_step}:InstructionsProps): JSX.Element {
 
-    const step1 = "1"
-    const step2 = "22"
-    const step3 = "333"
-
-    useEffect(() => {
-        setStep(props.curr_step)
-    }, [props.curr_step])
-    
-
-
-    function showStep(step) {
-        if (step=="One") {
+    function showStep(curr_step) {
+        if (curr_step==1) {
             return `The goal of this step is to identify a common layout feature between 
                     2-5 example websites. First explore the layouts of the different websites. 
                     Then, identify and describe a specific shared feature.`
         }
-        if (step=="Two") {
+        if (curr_step==2) {
             return `You have just created a grouping of websites that share a layout feature. 
                     The goal of step 2 is to identify layout differences that you find 
                     within that grouping; What are the ways that distinguish certain websites 
                     within a broader shared layout.`
         }
-        if (step=="Three") {
+        if (curr_step==3 || curr_step==4) {
             return `In steps 1 & 2, you found similarities and differences between a group of 
                     websites. The goal of this step is to identify the CSS or HTML code that 
                     drive those similarities and differences, and to note the complexities behind 
@@ -35,7 +27,7 @@ export default function Instuctions(props): JSX.Element {
     return (
         <div className = "instructions">
             <h1>Overview:</h1>
-            <div>{showStep(step)}</div>
+            <div>{showStep(curr_step)}</div>
         </div>
     )
 }
