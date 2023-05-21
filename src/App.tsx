@@ -17,11 +17,7 @@ export default function NewApp(): JSX.Element {
   return (
     <div className="body">
       <div className = "steps">
-        <div className="step-btn" >
-          <h1 className="text-center mb-2">Step:{selectedStep} </h1>
-        </div>
-          <Instructions curr_step={selectedStep}/>
-          
+        <Instructions curr_step={selectedStep}/> 
       </div>
       
       <div className="flex items-center justify-evenly relative mb-1 mt-2">

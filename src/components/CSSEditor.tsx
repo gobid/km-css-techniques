@@ -222,7 +222,7 @@ export default function CSSEditor({
   };
 
   return (
-    <div className="grid grid-cols-2 w-full px-4 py-4">
+    <div className="css-editor grid grid-cols-2 w-full px-4 py-4">
       
       {/* <hr/> */}
       <Formik

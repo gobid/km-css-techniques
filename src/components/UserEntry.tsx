@@ -23,7 +23,6 @@ export default function UserEntry({
   const [websiteLayoutCode, setWebsiteLayoutCode] = useState({});
   const [websiteDiffCode, setWebsiteDiffCode] = useState({});
   const [currSite, setCurrSite] = useState(0);
-
   useEffect(() => {
     setCurrSite(0);
   }, [curr_step]);
@@ -36,15 +35,17 @@ export default function UserEntry({
     <div className="user-entry">
       {curr_step == 1 && (
         <div>
+          <div className = "identified-feature">
+              <strong>Your identified layout feature: </strong>
+              {layoutFeature}
+          </div>
           <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <input
               className="user-input layout-feature"
               id="layoutFeature"
               name="layoutFeature"
               placeholder="Enter your layout feature here"
-              onChange={(e) => {
-                setLayoutFeature(e.target.value);
-              }}
+              
             />
             <div
               className="website-checklist"
@@ -81,25 +82,23 @@ export default function UserEntry({
                 className="enter-btn"
                 id="save"
                 onClick={() => {
-                  setSavedLayoutFeature(layoutFeature);
+                  setLayoutFeature((document.getElementById("layoutFeature") as HTMLInputElement).value);
+                  (document.getElementById("layoutFeature") as HTMLInputElement).value = ''
                 }}
               >
                 Enter
               </span>
             </div>
-
-            <div>Your identified layout feature: {savedLayoutFeature}</div>
           </form>
         </div>
       )}
       {curr_step == 2 && (
         <div>
           <div>
-            <span>Your Identified Layout Feature:</span>
-            <span>{layoutFeature} </span>
-            <span>
-              Current Site: {Array.from(websitesWithFeature)[currSite]}
-            </span>
+            <div className = "identified-feature">
+              <strong>Your identified layout feature: </strong>
+              {layoutFeature}
+            </div>
           </div>
           <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <>
@@ -126,7 +125,10 @@ export default function UserEntry({
                     ) as HTMLInputElement
                   ).value;
                   setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
-                  console.log(websiteDiff)
+                  (document.getElementById("layoutDifference") as HTMLInputElement).value = '';
+                  if (currSite+1 !== Array.from(websitesWithFeature).length) {
+                    setCurrSite(currSite + 1);
+                  }
                 }}
               >
                 Enter
@@ -139,7 +141,10 @@ export default function UserEntry({
                   <div 
                     className = "website-btn"
                     onClick={() => {setCurrSite(i)}}
-                    style = {{ backgroundColor: websiteDiff[website] ? '#33b249' : 'initial' }}
+                    style = {{
+                      boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                      backgroundColor: websiteDiff[website] ? '#90EE90' : 'initial'
+                      }}
                   >
                     {website}
                   </div>
@@ -150,14 +155,6 @@ export default function UserEntry({
               ))}
             </div>
             <div>
-              {/* <div className = "website-diffs">
-                {Array.from(websitesWithFeature).map((website, i) => (
-                  <div>
-                    <div>{website}</div>
-                    <div>{websiteDiff[i]}</div>
-                  </div>
-                ))}
-              </div> */}
             </div>
           </form>
         </div>
@@ -165,8 +162,10 @@ export default function UserEntry({
       {curr_step == 3 && (
         <div>
           <div>
-            <span>Your Identified Layout Feature:</span>
-            <span>{layoutFeature}</span>
+            <div className = "identified-feature">
+              <strong>Your identified layout feature: </strong>
+              {layoutFeature}
+            </div>
             <span>
               current site: {Array.from(websitesWithFeature)[currSite]}
             </span>
@@ -294,6 +293,7 @@ export default function UserEntry({
         )}
         {curr_step != 5 && (
           <button
+            className = "next-step"
             onClick={() => {
               setCurrStep(curr_step + 1);
             }}

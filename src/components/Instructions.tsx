@@ -26,7 +26,7 @@ export default function Instructions({curr_step}:InstructionsProps): JSX.Element
     }
     return (
         <div className = "instructions">
-            <h1>Overview:</h1>
+            <h1>Step:{curr_step}:</h1>
             <div>{showStep(curr_step)}</div>
         </div>
     )
