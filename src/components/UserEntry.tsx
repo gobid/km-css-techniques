@@ -16,6 +16,7 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
   const [websiteLayoutCode, setWebsiteLayoutCode] = useState({});
   const [websiteDiffCode, setWebsiteDiffCode] = useState({});
   const [currSite, setCurrSite] = useState(0);
+
   useEffect(() => {
     setCurrSite(0);
     console.log('prev step', curr_step)
@@ -23,6 +24,7 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
   useEffect(() => {
     setSiteList(Array.from(websitesWithFeature));
   }, [websitesWithFeature]);
+
 
   return (
     <div className = "user-entry">
@@ -126,21 +128,31 @@ export default function UserEntry({ curr_step }: UserEntryProps): JSX.Element {
               </span>
             </div>
             </>
-            <div className = "website-btns">
+            <div className = "website-diffs">
               {Array.from(websitesWithFeature).map((website, i) => (
-                <div className = "website-btn"
-                  onClick={() => {
-                  setCurrSite(i)}}
-                >{website}</div>
+                <div className = "website-dif">
+                  <div 
+                    className = "website-btn"
+                    onClick={() => {setCurrSite(i)}}
+                    style = {{ backgroundColor: websiteDiff[website] ? '#33b249' : 'initial' }}
+                  >
+                    {website}
+                  </div>
+                  <div>
+                    {websiteDiff[website]}
+                  </div>
+                </div>
               ))}
             </div>
             <div>
-              {Object.keys(websiteDiff).map((site) => (
-                <div>
-                  <p>{site}</p>
-                  <p>{websiteDiff[site]}</p>
-                </div>
-              ))}
+              {/* <div className = "website-diffs">
+                {Array.from(websitesWithFeature).map((website, i) => (
+                  <div>
+                    <div>{website}</div>
+                    <div>{websiteDiff[i]}</div>
+                  </div>
+                ))}
+              </div> */}
             </div>
           </form>
         </div>

@@ -174,11 +174,12 @@ h1 {
   background-color: rgba(209, 209, 209, 0.37);
 }
 
-.website-btns {
+.website-diffs {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
+
 
 .website-btn {
   padding: 2px;
@@ -186,4 +187,9 @@ h1 {
   border: 0.25px solid black;
   border-radius: 5px;
   background-color: rgba(209, 209, 209, 0.37);
+}
+
+.website-dif {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
