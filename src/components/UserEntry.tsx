@@ -342,11 +342,46 @@ export default function UserEntry({
         </div>
       )}
       {curr_step == 5 && (
-        <div style={{ border: "solid grey" }}>       
+        <div style={{ border: "solid grey" }}>     
+          <div>
+            <h1>You Identified {localStorage.getItem("layoutFeature")} as a layout feature</h1>
+            <div>Sites containing {localStorage.getItem("layoutFeature")}</div>
+            {JSON.parse(localStorage.getItem('siteList')).map((site:string) =>(
+              <div>
+                <h2> {site}</h2>
+                <div className="siteInfo">
+
+                <div>{site} has this feature due to the following code:</div>
+                <div>{JSON.parse(localStorage.getItem("websiteLayoutCode"))[site].code}</div>
+                <div>because the code above: {JSON.parse(localStorage.getItem("websiteLayoutCode"))[site].explanation}</div>
+                <div>Also {site} is different in the following way:{JSON.parse(localStorage.getItem('websiteDiff'))[site]}</div>
+                <div>{site} has this difference due to the following code:</div>
+                <div>{JSON.parse(localStorage.getItem("websiteDiffCode"))[site].code}</div>
+                <div>because {JSON.parse(localStorage.getItem("websiteDiffCode"))[site].explanation}</div>
+                </div>
+              </div>
+            ))}
+             
+          </div>
          
           <button onClick={() =>{
             setCurrStep(1)
-            localStorage.clear()
+            // save stuff first
+            var iteration = {
+              layoutFeature: localStorage.getItem('layoutFeature'),
+              sitesWithFeature: JSON.parse(localStorage.getItem('siteList')),
+              websiteDiffs: JSON.parse(localStorage.getItem('websiteDiff')),
+              layoutCode: JSON.parse(localStorage.getItem("websiteLayoutCode")),
+              diffCode: JSON.parse(localStorage.getItem('websiteDiffCode'))
+            }
+            var oldIterations = localStorage.getItem('iterations')
+            localStorage.setItem("iterations", oldIterations+JSON.stringify(iteration))
+            localStorage.setItem("currSite", "0");
+            localStorage.setItem("layoutFeature","");
+            localStorage.setItem("siteList", "");
+            localStorage.setItem("websiteDiff", "");
+            localStorage.setItem("websiteLayoutCode","");
+            localStorage.setItem("websiteDiffCode", "");
             }}>Start Over</button>
         </div>
       )}
