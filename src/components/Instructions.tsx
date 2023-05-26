@@ -17,11 +17,17 @@ export default function Instructions({curr_step}:InstructionsProps): JSX.Element
                     within that grouping; What are the ways that distinguish certain websites 
                     within a broader shared layout.`
         }
-        if (curr_step==3 || curr_step==4) {
-            return `In steps 1 & 2, you found similarities and differences between a group of 
-                    websites. The goal of this step is to identify the CSS or HTML code that 
-                    drive those similarities and differences, and to note the complexities behind 
+        if (curr_step==3) {
+            return `Back in step 1, you identified a layout feature shared by a group of 
+                    websites. The goal of this step is to identify the CSS and/or HTML code that 
+                    is responsible for that layout feature, and to note the complexities behind 
                     the relationship between CSS/HTML and the layouts they produce.`
+        }
+        if (curr_step==4) {
+            return `Back in step 2, you identified differences between the group of websites that shared your 
+                    identified layout feature. The goal of this step is to 
+                    identify the CSS and/or HTML code that is responsible for those differences in layout, and to 
+                    note the complexities behind the relationship between CSS/HTML and the layouts they produce`
         }
     }
     return (

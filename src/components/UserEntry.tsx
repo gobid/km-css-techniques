@@ -136,6 +136,9 @@ export default function UserEntry({
                       ) as HTMLInputElement
                     ).value;
                     setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
+                    if (currSite+1 !== Array.from(websitesWithFeature).length) {
+                      setCurrSite(currSite + 1);
+                    }
                     localStorage.setItem("websiteDiff", JSON.stringify({ ...websiteDiff, ...siteDiffs }));
                   }}
                 >
@@ -143,21 +146,27 @@ export default function UserEntry({
                 </span>
               </div>
             </>
-            <div className="website-btns">
-              {Array.from(JSON.parse(localStorage.getItem('siteList'))).map((website, i) => (
-                <div className="website-btn"
-                  onClick={() => {
-                    setCurrSite(i);
-                    localStorage.setItem("currSite", i.toString());
-                    var diff = JSON.parse(localStorage.getItem("websiteDiff"));
-                    if (diff && diff[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]]) {
-                      (document.getElementById("layoutDifference") as HTMLInputElement).value = JSON.parse(localStorage.getItem("websiteDiff"))[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite") ]];
-                    } else {
-                      (document.getElementById("layoutDifference") as HTMLInputElement).value = "";
-                    }
+            <div className="website-diffs">
+              {JSON.parse(localStorage.getItem('siteList')).map((website, i) => (
+                <div className = "website-dif">
+                  <div className="website-btn"
+                    style = {{
+                      boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                      backgroundColor: websiteDiff[website] ? '#90EE90' : 'initial'
+                      }}
+                    onClick={() => {
+                      setCurrSite(i);
+                      localStorage.setItem("currSite", i.toString());
+                      var diff = JSON.parse(localStorage.getItem("websiteDiff"));
+                      if (diff && diff[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]]) {
+                        (document.getElementById("layoutDifference") as HTMLInputElement).value = JSON.parse(localStorage.getItem("websiteDiff"))[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite") ]];
+                      } else {
+                        (document.getElementById("layoutDifference") as HTMLInputElement).value = "";
+                      }
                   }}
                 >
                   {website}
+                </div>
                 </div>
               ))}
             </div>
@@ -184,7 +193,7 @@ export default function UserEntry({
               className="user-input code-input"
               id="codeInput"
               name="codeInput"
-              placeholder={"Enter Code for " + JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")] + ""}
+              placeholder={"Enter Code for " + siteList[currSite] + ""}
             />
             <input
               className="user-input code-explaintion-input"
@@ -193,6 +202,7 @@ export default function UserEntry({
               placeholder="Enter Explanation for code"
             />
             <span
+              className = "enter-btn"
               id="save"
               onClick={() => {
                 var currSelected = siteList[currSite];
@@ -212,23 +222,31 @@ export default function UserEntry({
                   "websiteLayoutCode",
                   JSON.stringify({ ...websiteLayoutCode, ...layoutCode })
                 );
-
+                if (currSite+1 !== Array.from(websitesWithFeature).length) {
+                  setCurrSite(currSite + 1);
+                }
                 console.log(websiteLayoutCode);
               }}
             >
-              save
+              Enter
             </span>
             {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
-              <div
+              <div className = "website-btn"
+                style = {{
+                  boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                  backgroundColor: websiteLayoutCode[website] ? '#90EE90' : 'initial'
+                }}
                 onClick={() => {
                   setCurrSite(i);
                   var codeEntry = JSON.parse(localStorage.getItem("websiteLayoutCode"));
-                  var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
-                  if (codeEntry && codeForCurr) {
+                  if (codeEntry) {
+                    var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
+                    if (codeForCurr) {
                     console.log("code for curr ", codeForCurr);
                     (document.getElementById("codeInput") as HTMLInputElement).value = codeForCurr.code;
                     (document.getElementById("codeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
-                  } else {
+                  }} 
+                  else {
                     (document.getElementById("codeInput") as HTMLInputElement).value = "";
                     (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";
                   }
@@ -241,28 +259,51 @@ export default function UserEntry({
         </div>
       )}
       {curr_step == 4 && (
-        <div style={{ border: "solid grey" }}>
-          <div>
-            <span>Your Identified Layout Feature:</span>
-            <span>{localStorage.getItem('layoutFeature')}</span>
-            <span>Your Identified Layout Diff:</span>
-            <span>{JSON.parse(localStorage.getItem('websiteDiff'))[localStorage.getItem('currSite')]}</span>
-            <span>current site: {siteList[currSite]}</span>
-          </div>
+        <div>
+          <div className = "flex-container">
+            <div>
+              <strong>Your Identified Layout Feature:</strong>
+              <span>{localStorage.getItem('layoutFeature')}</span>
+              <strong>Your Identified Layout Diff:</strong>
+              <span>{JSON.parse(localStorage.getItem('websiteDiff'))[localStorage.getItem('currSite')]}</span>
+            </div>
+            {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
+              <div className="website-btn"
+              style = {{
+                boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                backgroundColor: websiteDiffCode[website] ? '#90EE90' : 'initial'
+                }}
+                onClick={() => {
+                  setCurrSite(i);
+                  var codeEntry = JSON.parse(localStorage.getItem("websiteDiffCode"));
+                  var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
+                  if (codeEntry && codeForCurr) {
+                    (document.getElementById("diffCodeInput") as HTMLInputElement).value = codeForCurr.code;
+                    (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
+                  } else {
+                    (document.getElementById("diffCodeInput") as HTMLInputElement).value = "";
+                    (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = ""
+                  }
+                }}
+              >
+                {website}
+              </div>
+            ))}
           <form style={{ display: "flex", justifyContent: "space-between" }}>
             <input
-              style={{ border: "solid grey" }}
+              className="user-input code-input"
               id="diffCodeInput"
               name="diffCodeInput"
               placeholder={"Enter Diff Code for" + JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")] + ""}
             />
             <input
-              style={{ border: "solid grey" }}
+              className="user-input code-explaination-input"
               id="diffCodeExplanationInput"
               name="diffCodeExplanationInput"
               placeholder="Enter Explanation for  diff code"
             />
             <span
+              className = "enter-btn"
               id="save"
               onClick={() => {
                 var currSelected = siteList[currSite];
@@ -282,31 +323,17 @@ export default function UserEntry({
                   "websiteDiffCode",
                   JSON.stringify({ ...websiteDiffCode, ...diffCode })
                 );
-
+                if (currSite+1 !== Array.from(websitesWithFeature).length) {
+                  setCurrSite(currSite + 1);
+                }
                 console.log(websiteDiffCode);
               }}
             >
-              save
+              Enter
             </span>
-            {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
-              <div
-                onClick={() => {
-                  setCurrSite(i);
-                  var codeEntry = JSON.parse(localStorage.getItem("websiteDiffCode"));
-                  var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
-                  if (codeEntry && codeForCurr) {
-                    (document.getElementById("diffCodeInput") as HTMLInputElement).value = codeForCurr.code;
-                    (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
-                  } else {
-                    (document.getElementById("diffCodeInput") as HTMLInputElement).value = "";
-                    (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = ""
-                  }
-                }}
-              >
-                {website}
-              </div>
-            ))}
+            
           </form>
+          </div>
         </div>
       )}
       {curr_step == 5 && (
@@ -321,6 +348,7 @@ export default function UserEntry({
       <div>
         {curr_step != 1 && (
           <button
+            className = "next-step"
             onClick={() => {
               setCurrStep(curr_step - 1);
             }}
