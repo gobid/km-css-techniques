@@ -1,10 +1,15 @@
 import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { examples } from "../lib/examples";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons'
+
 
 interface UserEntryProps {
   curr_step: number;
   setCurrStep: Dispatch<SetStateAction<Number>>;
 }
+
+
 export default function UserEntry({
   curr_step,
   setCurrStep,
@@ -55,6 +60,10 @@ export default function UserEntry({
     <div className="user-entry">
       {curr_step == 1 && (
         <div>
+          <div>
+              <span>Your Identified Layout Feature: </span>
+              <strong>{localStorage.getItem('layoutFeature')}</strong>
+          </div>
           <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <input
               className="user-input layout-feature"
@@ -104,16 +113,14 @@ export default function UserEntry({
                 Enter
               </span>
             </div>
-            <div>Your identified layout feature: {localStorage.getItem('layoutFeature')}</div>
           </form>
         </div>
       )}
       {curr_step == 2 && (
         <div>
           <div>
-            <span>Your Identified Layout Feature:</span>
-            <span>{localStorage.getItem('layoutFeature')} </span>
-            <span>Current Site: {siteList[currSite]}</span>
+            <span>Your Identified Layout Feature: </span>
+            <strong>{localStorage.getItem('layoutFeature')} </strong>
           </div>
           <form style={{ display: "flex", justifyContent: "flex-start" }}>
             <>
@@ -163,18 +170,11 @@ export default function UserEntry({
                       } else {
                         (document.getElementById("layoutDifference") as HTMLInputElement).value = "";
                       }
-                  }}
-                >
+                    }}
+                  >
                   {website}
-                </div>
-                </div>
-              ))}
-            </div>
-            <div>
-              {Object.keys(websiteDiff).map((site) => (
-                <div>
-                  <p>{site}</p>
-                  <p>{websiteDiff[site]}</p>
+                  </div>
+                  {websiteDiff[website]}
                 </div>
               ))}
             </div>
@@ -183,10 +183,38 @@ export default function UserEntry({
       )}
       {curr_step == 3 && (
         <div>
-          <div>
-            <span>Your Identified Layout Feature:</span>
-            <span>{localStorage.getItem('LayoutFeature')}</span>
-            <span>current site: {siteList[currSite]}</span>
+          <div className = "flex-container">
+            <div>
+                <span>Your Identified Layout Feature: </span>
+                <strong>{localStorage.getItem('layoutFeature')}</strong>
+            </div>
+            <div className = "flex-container">
+              {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
+                <div className = "website-btn"
+                  style = {{
+                    boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                    backgroundColor: websiteLayoutCode[website] ? '#90EE90' : 'initial'
+                  }}
+                  onClick={() => {
+                    setCurrSite(i);
+                    var codeEntry = JSON.parse(localStorage.getItem("websiteLayoutCode"));
+                    if (codeEntry) {
+                      var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
+                      if (codeForCurr) {
+                      console.log("code for curr ", codeForCurr);
+                      (document.getElementById("codeInput") as HTMLInputElement).value = codeForCurr.code;
+                      (document.getElementById("codeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
+                    }} 
+                    else {
+                      (document.getElementById("codeInput") as HTMLInputElement).value = "";
+                      (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";
+                    }
+                  }}
+                >
+                  {website}
+                </div>
+              ))}
+            </div>
           </div>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
             <input
@@ -230,31 +258,7 @@ export default function UserEntry({
             >
               Enter
             </span>
-            {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
-              <div className = "website-btn"
-                style = {{
-                  boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
-                  backgroundColor: websiteLayoutCode[website] ? '#90EE90' : 'initial'
-                }}
-                onClick={() => {
-                  setCurrSite(i);
-                  var codeEntry = JSON.parse(localStorage.getItem("websiteLayoutCode"));
-                  if (codeEntry) {
-                    var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
-                    if (codeForCurr) {
-                    console.log("code for curr ", codeForCurr);
-                    (document.getElementById("codeInput") as HTMLInputElement).value = codeForCurr.code;
-                    (document.getElementById("codeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
-                  }} 
-                  else {
-                    (document.getElementById("codeInput") as HTMLInputElement).value = "";
-                    (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";
-                  }
-                }}
-              >
-                {website}
-              </div>
-            ))}
+            
           </form>
         </div>
       )}
@@ -262,33 +266,36 @@ export default function UserEntry({
         <div>
           <div className = "flex-container">
             <div>
-              <strong>Your Identified Layout Feature:</strong>
-              <span>{localStorage.getItem('layoutFeature')}</span>
-              <strong>Your Identified Layout Diff:</strong>
-              <span>{JSON.parse(localStorage.getItem('websiteDiff'))[localStorage.getItem('currSite')]}</span>
+              <span>Your Identified Layout Feature: </span>
+              <strong>{localStorage.getItem('layoutFeature')}</strong>
+              <span>Your Identified Layout Diff:</span>
+              <strong>{JSON.parse(localStorage.getItem('websiteDiff'))[localStorage.getItem('currSite')]}</strong>
             </div>
-            {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
-              <div className="website-btn"
-              style = {{
-                boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
-                backgroundColor: websiteDiffCode[website] ? '#90EE90' : 'initial'
-                }}
-                onClick={() => {
-                  setCurrSite(i);
-                  var codeEntry = JSON.parse(localStorage.getItem("websiteDiffCode"));
-                  var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
-                  if (codeEntry && codeForCurr) {
-                    (document.getElementById("diffCodeInput") as HTMLInputElement).value = codeForCurr.code;
-                    (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
-                  } else {
-                    (document.getElementById("diffCodeInput") as HTMLInputElement).value = "";
-                    (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = ""
-                  }
-                }}
-              >
-                {website}
-              </div>
-            ))}
+            <div className="flex-container">
+              {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
+                <div className="website-btn"
+                style = {{
+                  boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                  backgroundColor: websiteDiffCode[website] ? '#90EE90' : 'initial'
+                  }}
+                  onClick={() => {
+                    setCurrSite(i);
+                    var codeEntry = JSON.parse(localStorage.getItem("websiteDiffCode"));
+                    var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
+                    if (codeEntry && codeForCurr) {
+                      (document.getElementById("diffCodeInput") as HTMLInputElement).value = codeForCurr.code;
+                      (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
+                    } else {
+                      (document.getElementById("diffCodeInput") as HTMLInputElement).value = "";
+                      (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = ""
+                    }
+                  }}
+                >
+                  {website}
+                </div>
+              ))}
+            </div>
+          </div>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
             <input
               className="user-input code-input"
@@ -331,9 +338,7 @@ export default function UserEntry({
             >
               Enter
             </span>
-            
           </form>
-          </div>
         </div>
       )}
       {curr_step == 5 && (
@@ -348,21 +353,21 @@ export default function UserEntry({
       <div>
         {curr_step != 1 && (
           <button
-            className = "next-step"
+            className = "next-btn"
             onClick={() => {
               setCurrStep(curr_step - 1);
             }}
           >
-            Last Step
+            <FontAwesomeIcon icon={faAngleLeft} style = {{lineHeight: "50px"}}/>
           </button>
         )}
         {curr_step != 5 && (
-          <button
+          <button className = "next-btn"
             onClick={() => {
               setCurrStep(curr_step + 1);
             }}
           >
-            Next Step
+            <FontAwesomeIcon icon={faAngleRight}/>
           </button>
         )}
       </div>

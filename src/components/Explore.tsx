@@ -91,65 +91,67 @@ export default function Explore({
           </button> */}
         </div>
       </div>
+      <div>
+        <div className="viewer flex flex-wrap w-full justify-between gap-y-4 mb-1" style={{ height: "65vh"}}>
+          {!firstHidden && (
+            <Viewer
+              example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations, scoped_declarations: firstSetOfScopedDeclarations }}
+              size={viewerSize}
+              view = "left"
+              selectedStep = {selectedStep}
+            />
+          )}
 
-      <div className="viewer flex flex-wrap w-full justify-between gap-y-4 mb-1" style={{ height: "65vh"}}>
-        {!firstHidden && (
-          <Viewer
-            example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations, scoped_declarations: firstSetOfScopedDeclarations }}
-            size={viewerSize}
-            view = "left"
-            selectedStep = {selectedStep}
-          />
-        )}
+          {!secondHidden && (
+            <Viewer
+              example={{
+                ...secondExample, declarations: secondSetOfDeclarations, media: secondSetOfMediaDeclarations, scoped_declarations: secondSetOfScopedDeclarations 
+              }}
+              size={viewerSize}
+              view = "right"
+              selectedStep = {selectedStep}
+            />
+          )}
+        </div>
+          {selectedStep==3 &&(
+            <div style={{backgroundColor:"lightGray", display: "flex", flexFlow: "column wrap", padding: "0px 10px"}} >
+              <h1 style={{fontSize: 16,  textAlign: "center", fontWeight: "bold"}}>Instructions</h1>
+              <p><b>Toggle</b> the checkboxes to identify the visual effects of CSS code. Click on the ? mark next to the properties to read their definitions. <b>Edit</b> the property/values to identify the visual effects of CSS code. Play with the slider bar to see how it affects the layout.</p>
+              <span style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair.</span>
+              <span style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. </span>
+            </div>
+          )}
+          <div className="grid grid-cols-2 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
+          {!firstHidden && selectedStep!==1 && selectedStep!==2 && (
+            <CSSEditor
+              declarations={firstSetOfDeclarations}
+              defaultParent={firstExample.defaultParentClassname}
+              diffAgainstDeclarations={mergeDeclarations(secondSetOfDeclarations, secondSetOfMediaDeclarations, secondSetOfScopedDeclarations)}
+              media = {firstSetOfMediaDeclarations}
+              scoped_declarations= {firstSetOfScopedDeclarations}
+              htmlOutput={firstExample.htmlOutput}
+              children={firstExample.children}
+              onChange={(declarations, media, scoped_declarations) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media), 
+                setFirstSetOfScopedDeclarations(scoped_declarations))}
+            /> 
+          )}
+          {!secondHidden && selectedStep!==1 && selectedStep!==2 && (
+            <CSSEditor
+              declarations={secondSetOfDeclarations}
+              defaultParent={secondExample.defaultParentClassname}
+              diffAgainstDeclarations={mergeDeclarations(firstSetOfDeclarations, firstSetOfMediaDeclarations, firstSetOfScopedDeclarations)}
+              media = {secondSetOfMediaDeclarations}
+              scoped_declarations={secondSetOfScopedDeclarations}
+              htmlOutput={secondExample.htmlOutput}
+              children={secondExample.children}
+              onChange={(declarations, media, scoped_declarations) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media),
+                setSecondSetOfScopedDeclarations(scoped_declarations))}
+            />
+          )}
 
-        {!secondHidden && (
-          <Viewer
-            example={{
-              ...secondExample, declarations: secondSetOfDeclarations, media: secondSetOfMediaDeclarations, scoped_declarations: secondSetOfScopedDeclarations 
-            }}
-            size={viewerSize}
-            view = "right"
-            selectedStep = {selectedStep}
-          />
-        )}
+        </div>
       </div>
-        {selectedStep==3 &&(
-          <div style={{backgroundColor:"lightGray", display: "flex", flexFlow: "column wrap", padding: "0px 10px"}} >
-            <h1 style={{fontSize: 16,  textAlign: "center", fontWeight: "bold"}}>Instructions</h1>
-            <p><b>Toggle</b> the checkboxes to identify the visual effects of CSS code. Click on the ? mark next to the properties to read their definitions. <b>Edit</b> the property/values to identify the visual effects of CSS code. Play with the slider bar to see how it affects the layout.</p>
-            <span style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair.</span>
-            <span style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. </span>
-          </div>
-        )}
-        <div className="grid grid-cols-2 w-full  mx-auto bg-gray-100 rounded divide-x-2 mb-16">
-        {!firstHidden && selectedStep!==1 && selectedStep!==2 && (
-          <CSSEditor
-            declarations={firstSetOfDeclarations}
-            defaultParent={firstExample.defaultParentClassname}
-            diffAgainstDeclarations={mergeDeclarations(secondSetOfDeclarations, secondSetOfMediaDeclarations, secondSetOfScopedDeclarations)}
-            media = {firstSetOfMediaDeclarations}
-            scoped_declarations= {firstSetOfScopedDeclarations}
-            htmlOutput={firstExample.htmlOutput}
-            children={firstExample.children}
-            onChange={(declarations, media, scoped_declarations) => (setFirstSetOfDeclarations(declarations), setFirstSetOfMediaDeclarations(media), 
-              setFirstSetOfScopedDeclarations(scoped_declarations))}
-          /> 
-        )}
-        {!secondHidden && selectedStep!==1 && selectedStep!==2 && (
-          <CSSEditor
-            declarations={secondSetOfDeclarations}
-            defaultParent={secondExample.defaultParentClassname}
-            diffAgainstDeclarations={mergeDeclarations(firstSetOfDeclarations, firstSetOfMediaDeclarations, firstSetOfScopedDeclarations)}
-            media = {secondSetOfMediaDeclarations}
-            scoped_declarations={secondSetOfScopedDeclarations}
-            htmlOutput={secondExample.htmlOutput}
-            children={secondExample.children}
-            onChange={(declarations, media, scoped_declarations) => (setSecondSetOfDeclarations(declarations), setSecondSetOfMediaDeclarations(media),
-              setSecondSetOfScopedDeclarations(scoped_declarations))}
-          />
-        )}
-
-      </div>
+      
     </div>
   );
 }

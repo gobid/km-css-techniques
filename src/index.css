@@ -167,12 +167,13 @@ h1 {
 }
 
 .next-btn {
-  margin-left: 10px;
-  margin-bottom: 10px;
+  margin: 5px;
   padding: 5px;
   border: 0.25px solid black;
-  border-radius: 5px;
+  border-radius: 50%;
   background-color: rgba(209, 209, 209, 0.37);
+  width: 30px;
+  height: 30px;
 }
 
 .website-diffs {
@@ -203,6 +204,9 @@ h1 {
   background-color: rgba(209, 209, 209, 0.37);
 }
 
+.code-input {
+  margin-right: 1%;
+}
 .css-editor {
   font-family: Courier, monospace ;
 }
