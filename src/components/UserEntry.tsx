@@ -23,10 +23,12 @@ export default function UserEntry({
   const [websiteLayoutCode, setWebsiteLayoutCode] = useState({});
   const [websiteDiffCode, setWebsiteDiffCode] = useState({});
   const [currSite, setCurrSite] = useState(0);
+  const [currStepDone, setCurrStepDone] = useState(false);
   useEffect(() => {
     setCurrSite(0);
     localStorage.setItem("currSite", "0");
     showSaved();
+    setCurrStepDone(false)
   }, [curr_step]);
   useEffect(() => {
     setSiteList(Array.from(websitesWithFeature));
@@ -108,6 +110,7 @@ export default function UserEntry({
                   }
                   setWebsitesWithFeature(checkedCheckboxes);
                   localStorage.setItem("siteList", JSON.stringify(Array.from(checkedCheckboxes)));
+                  setCurrStepDone(true);
                 }}
               >
                 Enter
@@ -145,6 +148,8 @@ export default function UserEntry({
                     setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
                     if (currSite+1 !== Array.from(websitesWithFeature).length) {
                       setCurrSite(currSite + 1);
+                    }else{
+                      setCurrStepDone(true)
                     }
                     localStorage.setItem("websiteDiff", JSON.stringify({ ...websiteDiff, ...siteDiffs }));
                   }}
@@ -252,6 +257,8 @@ export default function UserEntry({
                 );
                 if (currSite+1 !== Array.from(websitesWithFeature).length) {
                   setCurrSite(currSite + 1);
+                }else{
+                  setCurrStepDone(true)
                 }
                 console.log(websiteLayoutCode);
               }}
@@ -332,6 +339,8 @@ export default function UserEntry({
                 );
                 if (currSite+1 !== Array.from(websitesWithFeature).length) {
                   setCurrSite(currSite + 1);
+                }else{
+                  setCurrStepDone(true)
                 }
                 console.log(websiteDiffCode);
               }}
@@ -396,7 +405,7 @@ export default function UserEntry({
             <FontAwesomeIcon icon={faAngleLeft} style = {{lineHeight: "50px"}}/>
           </button>
         )}
-        {curr_step != 5 && (
+        {curr_step != 5 && currStepDone && (
           <button className = "next-btn"
             onClick={() => {
               setCurrStep(curr_step + 1);
