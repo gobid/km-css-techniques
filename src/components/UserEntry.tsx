@@ -276,7 +276,7 @@ export default function UserEntry({
               <span>Your Identified Layout Feature: </span>
               <strong>{localStorage.getItem('layoutFeature')}</strong>
               <span>Your Identified Layout Diff:</span>
-              <strong>{JSON.parse(localStorage.getItem('websiteDiff'))[localStorage.getItem('currSite')]}</strong>
+              <strong>{JSON.parse(localStorage.getItem('websiteDiff'))[JSON.parse(localStorage.getItem('siteList'))[JSON.parse(localStorage.getItem('currSite'))]]}</strong>
             </div>
             <div className="flex-container">
               {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
