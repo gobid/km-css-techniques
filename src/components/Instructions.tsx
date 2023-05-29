@@ -15,7 +15,8 @@ export default function Instructions({curr_step}:InstructionsProps): JSX.Element
             return `You have just created a grouping of websites that share a layout feature. 
                     The goal of step 2 is to identify layout differences that you find 
                     within that grouping; What are the ways that distinguish certain websites 
-                    within a broader shared layout.`
+                    within a broader shared layout. Look for variations in how the websites employ 
+                    your identified layout feature, rather than general differences in website layouts.",`
         }
         if (curr_step==3) {
             return `Back in step 1, you identified a layout feature shared by a group of 
