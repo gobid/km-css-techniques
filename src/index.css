@@ -35,11 +35,14 @@ h1 {
   font-size: small;
 }
 
-.viewer {
-  position: relative;
-  overflow: hidden;
-  overflow-x: clip;
+.viewer-container {
+  flex: 1 0 0;
+  height: 65vh
 }
+.css-editor-container {
+  flex: 1
+}
+
 .iframe {
   transform: scale(0.5);
 }
@@ -213,4 +216,8 @@ h1 {
 
 .css-editor input {
   font-family: Courier, monospace ;
+}
+
+.view-edit {
+  display: flex;
 }

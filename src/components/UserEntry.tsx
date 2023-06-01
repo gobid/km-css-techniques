@@ -8,7 +8,12 @@ interface UserEntryProps {
   curr_step: number;
   setCurrStep: Dispatch<SetStateAction<Number>>;
 }
-
+const specificInstructions = [
+  "List one layout feature shared by any 1-5 websites, and mark the corresponding checkboxes.",
+  "List one distinguishing difference for each  website in the grouping. You may repeat differences if a subset of the grouping shares a distinguishing characteristic.",
+  "Identify and copy the specific line/s of CSS (or HTML) leading to the overall layout feature you identified in step 1. Then, explain why that code is responsible for the feature.",
+  "Identify and copy the specific line/s of CSS (or HTML) leading to each layout difference you identified in step 2. Then, explain why that code is responsible for that difference."
+]
 
 export default function UserEntry({
   curr_step,
@@ -63,6 +68,7 @@ export default function UserEntry({
       {curr_step == 1 && (
         <div>
           <div>
+              <div>{specificInstructions[curr_step-1]}</div>
               <span>Your Identified Layout Feature: </span>
               <strong>{localStorage.getItem('layoutFeature')}</strong>
           </div>
@@ -122,6 +128,7 @@ export default function UserEntry({
       {curr_step == 2 && (
         <div>
           <div>
+            <div>{specificInstructions[curr_step-1]}</div>
             <span>Your Identified Layout Feature: </span>
             <strong>{localStorage.getItem('layoutFeature')} </strong>
           </div>
@@ -188,6 +195,7 @@ export default function UserEntry({
       )}
       {curr_step == 3 && (
         <div>
+          <div>{specificInstructions[curr_step-1]}</div>
           <div className = "flex-container">
             <div>
                 <span>Your Identified Layout Feature: </span>
@@ -271,14 +279,14 @@ export default function UserEntry({
       )}
       {curr_step == 4 && (
         <div>
+          <div>{specificInstructions[curr_step-1]}</div>
           <div className = "flex-container">
             <div>
-              <span>Your Identified Layout Feature: </span>
-              <strong>{localStorage.getItem('layoutFeature')}</strong>
-              <span>Your Identified Layout Diff:</span>
-              <strong>{JSON.parse(localStorage.getItem('websiteDiff'))[JSON.parse(localStorage.getItem('siteList'))[JSON.parse(localStorage.getItem('currSite'))]]}</strong>
+              <div>Your Identified Layout Feature: {localStorage.getItem('layoutFeature')}</div>
+              <div>Your Identified Layout Diff: {JSON.parse(localStorage.getItem('websiteDiff'))[localStorage.getItem('currSite')]}</div>
             </div>
-            <div className="flex-container">
+          </div>
+          <div className="flex-container">
               {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
                 <div className="website-btn"
                 style = {{
@@ -302,7 +310,6 @@ export default function UserEntry({
                 </div>
               ))}
             </div>
-          </div>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
             <input
               className="user-input code-input"
@@ -359,7 +366,6 @@ export default function UserEntry({
               <div>
                 <h2> {site}</h2>
                 <div className="siteInfo">
-
                 <div>{site} has this feature due to the following code:</div>
                 <div>{JSON.parse(localStorage.getItem("websiteLayoutCode"))[site].code}</div>
                 <div>because the code above: {JSON.parse(localStorage.getItem("websiteLayoutCode"))[site].explanation}</div>
