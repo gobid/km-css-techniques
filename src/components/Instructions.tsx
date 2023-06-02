@@ -30,6 +30,11 @@ export default function Instructions({curr_step}:InstructionsProps): JSX.Element
                     identify the CSS and/or HTML code that is responsible for those differences in layout, and to 
                     note the complexities behind the relationship between CSS/HTML and the layouts they produce`
         }
+        if (curr_step==5){
+            return `Congrats you just finished a cycle of the KM process! Below you can see the the knowledge mapping you created
+                    through out this process. You can also continue your learning by starting another cycle by clicking the 'Start Another
+                    Cycle' button below.`
+        }
     }
     return (
         <div className = "instructions">
