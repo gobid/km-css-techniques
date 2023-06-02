@@ -315,7 +315,7 @@ export default function UserEntry({
               className="user-input code-input"
               id="diffCodeInput"
               name="diffCodeInput"
-              placeholder={"Enter Diff Code for" + JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")] + ""}
+              placeholder={"Enter Diff Code for " + JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")] + ""}
             />
             <input
               className="user-input code-explaination-input"
@@ -358,46 +358,59 @@ export default function UserEntry({
         </div>
       )}
       {curr_step == 5 && (
-        <div style={{ border: "solid grey" }}>     
-          <div>
-            <h1>You Identified {localStorage.getItem("layoutFeature")} as a layout feature</h1>
-            <div>Sites containing {localStorage.getItem("layoutFeature")}</div>
-            {JSON.parse(localStorage.getItem('siteList')).map((site:string) =>(
-              <div>
-                <h2> {site}</h2>
-                <div className="siteInfo">
-                <div>{site} has this feature due to the following code:</div>
-                <div>{JSON.parse(localStorage.getItem("websiteLayoutCode"))[site].code}</div>
-                <div>because the code above: {JSON.parse(localStorage.getItem("websiteLayoutCode"))[site].explanation}</div>
-                <div>Also {site} is different in the following way:{JSON.parse(localStorage.getItem('websiteDiff'))[site]}</div>
-                <div>{site} has this difference due to the following code:</div>
-                <div>{JSON.parse(localStorage.getItem("websiteDiffCode"))[site].code}</div>
-                <div>because {JSON.parse(localStorage.getItem("websiteDiffCode"))[site].explanation}</div>
-                </div>
-              </div>
+        <div style={{ border: "solid grey" }}>    
+        <div>
+        <table>
+          {JSON.parse(localStorage.getItem('iterations')).map((i, index) =>(
+            <div style={{border: "solid 1px grey"}}>
+            <tr>
+              <th colSpan={7}>Cycle #{index+1}</th>
+            </tr>
+             <tr>
+                <th>Layout Feature: {i.layoutFeature}</th>
+                <th>Websites </th>
+                <th>Code driving layout feature</th>
+                <th>How these CSS techniques drive your identified layout feature</th>
+                <th>Differences</th>
+                <th>Code driving difference</th>
+                <th>How do these CSS techniques drive your identified difference</th>
+              </tr>
+              
+            {i.sitesWithFeature.map((site) => (
+              <tr>
+                <td></td>
+                <td>{site}</td>
+                <td style={{fontFamily: "monospace"}}>{i.layoutCode[site]["code"]}</td>
+                <td>{i.layoutCode[site]["explanation"]}</td>
+                <td>{i.websiteDiffs[site]}</td>
+                <td style={{fontFamily: "monospace"}}>{i.diffCode[site]["code"]}</td>
+                <td>{i.diffCode[site]["explanation"]}</td>
+
+              </tr>
             ))}
-             
-          </div>
-         
-          <button onClick={() =>{
+            </div>
+          ))}
+          </table>
+          </div> 
+          <button 
+          style={{border: "1px solid grey", boxShadow: "0 0 5px -1px black", margin: "10px 45%"}}
+          onClick={() =>{
             setCurrStep(1)
             // save stuff first
-            var iteration = {
-              layoutFeature: localStorage.getItem('layoutFeature'),
-              sitesWithFeature: JSON.parse(localStorage.getItem('siteList')),
-              websiteDiffs: JSON.parse(localStorage.getItem('websiteDiff')),
-              layoutCode: JSON.parse(localStorage.getItem("websiteLayoutCode")),
-              diffCode: JSON.parse(localStorage.getItem('websiteDiffCode'))
-            }
-            var oldIterations = localStorage.getItem('iterations')
-            localStorage.setItem("iterations", oldIterations+JSON.stringify(iteration))
+            
             localStorage.setItem("currSite", "0");
             localStorage.setItem("layoutFeature","");
             localStorage.setItem("siteList", "");
             localStorage.setItem("websiteDiff", "");
             localStorage.setItem("websiteLayoutCode","");
             localStorage.setItem("websiteDiffCode", "");
-            }}>Start Over</button>
+            setWebsiteDiffCode({})
+            setWebsiteLayoutCode({})
+            setWebsiteDiff({})
+            setLayoutFeature("")
+            setCurrSite(0)
+            setSiteList([])
+            }}>Start Another Cycle</button>
         </div>
       )}
       <div>
@@ -415,6 +428,30 @@ export default function UserEntry({
           <button className = "next-btn"
             onClick={() => {
               setCurrStep(curr_step + 1);
+              if (curr_step == 4){
+                var iteration = {
+                  layoutFeature: localStorage.getItem('layoutFeature'),
+                  sitesWithFeature: JSON.parse(localStorage.getItem('siteList')),
+                  websiteDiffs: JSON.parse(localStorage.getItem('websiteDiff')),
+                  layoutCode: JSON.parse(localStorage.getItem("websiteLayoutCode")),
+                  diffCode: JSON.parse(localStorage.getItem('websiteDiffCode'))
+                }
+                var oldIterations = JSON.parse(localStorage.getItem('iterations'))
+                console.log('old iterations ', oldIterations)
+                console.log('curr iter', iteration)
+                if (oldIterations != null){
+                  console.log('adding to existing')
+                  oldIterations.push(iteration);
+                  localStorage.setItem("iterations", JSON.stringify(oldIterations))
+                  console.log('result itr', JSON.parse(localStorage.getItem('iterations')))
+    
+                }else{
+                  console.log('first iter')
+                  localStorage.setItem("iterations", JSON.stringify([iteration]))
+                  console.log('result itr', JSON.parse(localStorage.getItem('iterations')))
+                }
+
+              }
             }}
           >
             <FontAwesomeIcon icon={faAngleRight}/>
