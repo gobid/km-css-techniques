@@ -155,12 +155,13 @@ export default function UserEntry({
                     setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
                     if (currSite+1 !== Array.from(websitesWithFeature).length) {
                       setCurrSite(currSite + 1);
-                      localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1 )
+                      localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1);
+                      (document.getElementById("layoutDifference") as HTMLInputElement).value = "";                  
+
                     }else{
                       setCurrStepDone(true)
                     }
                     localStorage.setItem("websiteDiff", JSON.stringify({ ...websiteDiff, ...siteDiffs }));
-                    (document.getElementById("layoutDifference") as HTMLInputElement).value = "";                  
                   }}
                 >
                   Enter
@@ -273,14 +274,15 @@ export default function UserEntry({
                 );
                 if (currSite+1 !== Array.from(websitesWithFeature).length) {
                   setCurrSite(currSite + 1);
-                  localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1 )
+                  localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1);
+                  (document.getElementById("codeInput") as HTMLInputElement).value = "";                  
+                  (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";         
 
                 }else{
                   setCurrStepDone(true)
                 }
                 console.log(websiteLayoutCode);
-                (document.getElementById("codeInput") as HTMLInputElement).value = "";                  
-                (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";                  
+                         
               }}
             >
               Enter
@@ -368,14 +370,14 @@ export default function UserEntry({
                 );
                 if (currSite+1 !== Array.from(websitesWithFeature).length) {
                   setCurrSite(currSite + 1);
-                  localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1 )
+                  localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1);
+                  (document.getElementById("diffCodeInput") as HTMLInputElement).value = "";                  
+                  (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = "";   
 
                 }else{
                   setCurrStepDone(true)
                 }
-                console.log(websiteDiffCode);
-                (document.getElementById("diffCodeInput") as HTMLInputElement).value = "";                  
-                (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = "";      
+                console.log(websiteDiffCode);   
               }}
             >
               Enter
