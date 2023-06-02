@@ -10,7 +10,7 @@ interface UserEntryProps {
 }
 const specificInstructions = [
   "List one layout feature shared by any 1-5 websites, and mark the corresponding checkboxes.",
-  "List one distinguishing difference for each  website in the grouping. You may repeat differences if a subset of the grouping shares a distinguishing characteristic.",
+  "List one difference in a way each site implements the layout feature. You may repeat differences if a subset of the grouping shares a distinguishing characteristic.",
   "Identify and copy the specific line/s of CSS (or HTML) leading to the overall layout feature you identified in step 1. Then, explain why that code is responsible for the feature.",
   "Identify and copy the specific line/s of CSS (or HTML) leading to each layout difference you identified in step 2. Then, explain why that code is responsible for that difference."
 ]
@@ -155,10 +155,12 @@ export default function UserEntry({
                     setWebsiteDiff({ ...websiteDiff, ...siteDiffs });
                     if (currSite+1 !== Array.from(websitesWithFeature).length) {
                       setCurrSite(currSite + 1);
+                      localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1 )
                     }else{
                       setCurrStepDone(true)
                     }
                     localStorage.setItem("websiteDiff", JSON.stringify({ ...websiteDiff, ...siteDiffs }));
+                    (document.getElementById("layoutDifference") as HTMLInputElement).value = "";                  
                   }}
                 >
                   Enter
@@ -171,6 +173,7 @@ export default function UserEntry({
                   <div className="website-btn"
                     style = {{
                       boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                      border: i === currSite ? '5px solid #3b82f6' : 'none',
                       backgroundColor: websiteDiff[website] ? '#90EE90' : 'initial'
                       }}
                     onClick={() => {
@@ -196,16 +199,18 @@ export default function UserEntry({
       {curr_step == 3 && (
         <div>
           <div>{specificInstructions[curr_step-1]}</div>
-          <div className = "flex-container">
+          <div className = "flex-container" style={{ flexFlow: "column", alignItems: "start"}}>
             <div>
                 <span>Your Identified Layout Feature: </span>
                 <strong>{localStorage.getItem('layoutFeature')}</strong>
             </div>
-            <div className = "flex-container">
+            <div className = "flex-container" style={{ alignItems: "center"}}>
+            <span>Websites Containing Layout Feature: </span>
               {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
                 <div className = "website-btn"
                   style = {{
                     boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                    border: i === currSite ? '5px solid #3b82f6' : 'none',
                     backgroundColor: websiteLayoutCode[website] ? '#90EE90' : 'initial'
                   }}
                   onClick={() => {
@@ -229,18 +234,21 @@ export default function UserEntry({
               ))}
             </div>
           </div>
-          <form style={{ display: "flex", justifyContent: "space-between" }}>
-            <input
+          <form style={{ display: "flex", justifyContent: "space-between", alignItems:"center" }}>
+            <textarea
               className="user-input code-input"
               id="codeInput"
               name="codeInput"
-              placeholder={"Enter Code for " + siteList[currSite] + ""}
+              placeholder={"Enter Code for " + JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")] + ""}
+              rows={4}
+              style={{ fontFamily: "monospace", textAlign: "left"}}
             />
-            <input
+            <textarea
               className="user-input code-explaintion-input"
               id="codeExplanationInput"
               name="codeExplanationInput"
               placeholder="Enter Explanation for code"
+              rows={4}
             />
             <span
               className = "enter-btn"
@@ -265,10 +273,14 @@ export default function UserEntry({
                 );
                 if (currSite+1 !== Array.from(websitesWithFeature).length) {
                   setCurrSite(currSite + 1);
+                  localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1 )
+
                 }else{
                   setCurrStepDone(true)
                 }
                 console.log(websiteLayoutCode);
+                (document.getElementById("codeInput") as HTMLInputElement).value = "";                  
+                (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";                  
               }}
             >
               Enter
@@ -280,17 +292,24 @@ export default function UserEntry({
       {curr_step == 4 && (
         <div>
           <div>{specificInstructions[curr_step-1]}</div>
-          <div className = "flex-container">
+          <div className = "flex-container" style={{ flexFlow: "column", alignItems: "start"}}>
             <div>
-              <div>Your Identified Layout Feature: {localStorage.getItem('layoutFeature')}</div>
-              <div>Your Identified Layout Diff: {JSON.parse(localStorage.getItem('websiteDiff'))[localStorage.getItem('currSite')]}</div>
+                <span>Your Identified Layout Feature: </span>
+                <strong>{localStorage.getItem('layoutFeature')}</strong>
+            </div>
+            <div>
+                <span>Your Identified Layout Difference for {JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]}: </span>
+                <strong> {JSON.parse(localStorage.getItem('websiteDiff'))[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]]}</strong>
             </div>
           </div>
-          <div className="flex-container">
+          <div className="flex-container" style={{ alignItems: "center"}}>
+          <span>Websites Containing Layout Feature:</span>
+
               {JSON.parse(localStorage.getItem("siteList")).map((website, i) => (
                 <div className="website-btn"
                 style = {{
                   boxShadow: i === currSite ? '2px 2px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                  border: i === currSite ? '5px solid #3b82f6' : 'none',
                   backgroundColor: websiteDiffCode[website] ? '#90EE90' : 'initial'
                   }}
                   onClick={() => {
@@ -311,17 +330,20 @@ export default function UserEntry({
               ))}
             </div>
           <form style={{ display: "flex", justifyContent: "space-between" }}>
-            <input
+            <textarea
               className="user-input code-input"
               id="diffCodeInput"
               name="diffCodeInput"
               placeholder={"Enter Diff Code for " + JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")] + ""}
+              rows={4}
+              style={{ fontFamily: "monospace", textAlign: "left"}}
             />
-            <input
+            <textarea
               className="user-input code-explaination-input"
               id="diffCodeExplanationInput"
               name="diffCodeExplanationInput"
-              placeholder="Enter Explanation for  diff code"
+              placeholder="Enter Why code Is Responsible For the Layout Difference"
+              rows={4}
             />
             <span
               className = "enter-btn"
@@ -346,10 +368,14 @@ export default function UserEntry({
                 );
                 if (currSite+1 !== Array.from(websitesWithFeature).length) {
                   setCurrSite(currSite + 1);
+                  localStorage.setItem("currSite", JSON.parse(localStorage.getItem('currSite'))+1 )
+
                 }else{
                   setCurrStepDone(true)
                 }
                 console.log(websiteDiffCode);
+                (document.getElementById("diffCodeInput") as HTMLInputElement).value = "";                  
+                (document.getElementById("diffCodeExplanationInput") as HTMLInputElement).value = "";      
               }}
             >
               Enter
