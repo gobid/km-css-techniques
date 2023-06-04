@@ -31,8 +31,8 @@ export default function Instructions({curr_step}:InstructionsProps): JSX.Element
                     note the complexities behind the relationship between CSS/HTML and the layouts they produce`
         }
         if (curr_step==5){
-            return `Congrats you just finished a cycle of the KM process! Below you can see the the knowledge mapping you created
-                    through out this process. You can also continue your learning by starting another cycle by clicking the 'Start Another
+            return `Congrats! You just finished a cycle of the KM process! Below you can see the the knowledge mapping you created
+                    through out this process. Click finish to answer some final reflection questions. Or, you can also continue your learning by starting another cycle by clicking the 'Start Another
                     Cycle' button below.`
         }
     }
