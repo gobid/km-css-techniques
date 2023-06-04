@@ -1078,8 +1078,8 @@
         font-size: 0.7em;
         margin: 3em 0 0 0.75em;
         max-width: 17.5em;
-        transform-origin: left center;
-        transform: rotateZ(90deg) translateX(-5em) translateY(1em);
+        /* transform-origin: left center; */
+        /* transform: rotateZ(90deg) translateX(-5em) translateY(1em); */
         letter-spacing: 4px;
       }
       .vertical span {
@@ -1103,11 +1103,11 @@
           background-image: none;
         }
       }
-      @media all and (max-width: 1300px) {
+      /* @media all and (max-width: 1300px) {
         .vertical {
           transform: rotateZ(90deg) translateX(-100px) translateY(10px);
         }
-      }
+      } */
       @media all and (max-width: 1025px) {
         .vertical {
           transform: none;
@@ -1144,11 +1144,11 @@
         position: relative;
         top: 0.1em;
       }
-      @media all and (max-width: 1025px) {
+      /* @media all and (max-width: 1025px) {
         .vertical--white {
           transform: none;
           margin: 2.5em 0 2.5em calc(1.3em - 2px);
-        }
+        } */
       }
       @media (max-width: 40em) {
         .vertical--white {
@@ -5663,6 +5663,10 @@
           flex-basis: 50%;
         }
       }
+      .vertical--white{
+        transform-origin: left center;
+        transform: rotateZ(90deg) translateX(-5em) translateY(1em);
+      }
       @media all and (max-width: 1025px) {
         .vertical {
           transform: none;
@@ -5671,15 +5675,13 @@
       }
       .article--grid__sponsors{
         width:100%;
-        display:flex;
+        display: none;
+        /* display:flex; */
         align-items:center;
         justify-content:center;
         margin-bottom:0;
       }
-      .vertical--white{
-        transform-origin: left center;
-        transform: rotateZ(90deg) translateX(-5em) translateY(1em);
-      }
+      
     </style>
 
     <script>

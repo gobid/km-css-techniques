@@ -2938,7 +2938,8 @@ body.subheader-visible .fixed-categories {
   }
 }
 .pcp-featured-grid {
-  display: grid;
+  display: none; /* we changed this */
+  /* display: grid; */
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 1.25rem;
   padding-bottom: 1.25rem;
@@ -2956,7 +2957,8 @@ body.subheader-visible .fixed-categories {
 }
 @media (max-width: 767px) {
   .pcp-featured-swiper {
-    display: block;
+    display: none;
+    /* display: block; */
   }
 }
 .pcp-featured-swiper .swiper-container {

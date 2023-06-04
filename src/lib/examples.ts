@@ -133,14 +133,6 @@ const italic: Example = {
     []
   ]),
   getMediaFromArray([
-    '@media (max-width: 767px)',
-    [],
-    [
-      getScopedDeclarationFromArray([".pcp-featured-swiper", getDeclarationFromString(`display: block;`)]),
-      getScopedDeclarationFromArray([".pcp-featured-grid", getDeclarationFromString(`display: none;`)]),
-    ]
-  ]),
-  getMediaFromArray([
     '@media (min-width: 768px)',
     [],
     [
@@ -151,22 +143,6 @@ const italic: Example = {
 scoped_declarations: [],
 htmlOutput: `
 <html>
-  ...
-  <div class="pcp-featured-grid">
-    <a href="/featured/all-time-member-favorites" ...> ... All-Time Member Favorites ... </a>
-    <a ...> ... Better Sweater Weather ... </a>
-    <a ...> ... The Leather Edit ... </a>
-    <a ...> ... The Best Bags ... </a>
-  </div>
-  <div class="pcp-featured-swiper ae" ...>
-    <div class="swiper-wrapper" ...>
-      <a href="/featured/all-time-member-favorites" ...> ... All-Time Member Favorites ... </a>
-      <a ...> ... Better Sweater Weather ... </a>
-      <a ...> ... The Leather Edit ... </a>
-      <a ...> ... The Best Bags ... </a>
-    </div>
-  </div>
-  ...
   <div class="... cr">
     ...
     <div> ... Apparel ...</div>
@@ -385,14 +361,7 @@ const smashingMagazineGuide: Example = {
     ]
   ])
   ],
-  scoped_declarations: [getScopedDeclarationFromArray([".article--grid__sponsors",getDeclarationFromString(`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0;
-  `)]),
-  getScopedDeclarationFromArray([".vertical--white",getDeclarationFromString(`
+  scoped_declarations: [getScopedDeclarationFromArray([".vertical--white",getDeclarationFromString(`
     transform-origin: left center;
     transform: rotateZ(90deg) translateX(-5em) translateY(1em);
   `)])],
@@ -420,13 +389,8 @@ const smashingMagazineGuide: Example = {
       <div class="f-article-highlights col-12 ...">
         <div class="f-article-item">...A11y Myths...</div>
         <div class="f-article-item">...</div>
-        <div class="f-article-item">...</div>
         ...
-        <div class="article--grid__sponsors">
-          ...
-          Join 1916 Smashing Members
-          ...
-        </div>
+        <div class="f-article-item">...</div>
       </div>
     </section>
     ...
