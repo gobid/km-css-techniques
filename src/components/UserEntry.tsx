@@ -29,6 +29,7 @@ export default function UserEntry({
   const [websiteDiffCode, setWebsiteDiffCode] = useState({});
   const [currSite, setCurrSite] = useState(0);
   const [currStepDone, setCurrStepDone] = useState(false);
+  const [finished, setFinished] = useState(false);
   useEffect(() => {
     setCurrSite(0);
     localStorage.setItem("currSite", "0");
@@ -419,26 +420,74 @@ export default function UserEntry({
             </div>
           ))}
           </table>
-          </div> 
-          <button 
-          style={{border: "1px solid grey", boxShadow: "0 0 5px -1px black", margin: "10px 45%"}}
-          onClick={() =>{
-            setCurrStep(1)
-            // save stuff first
-            
-            localStorage.setItem("currSite", "0");
-            localStorage.setItem("layoutFeature","");
-            localStorage.setItem("siteList", "");
-            localStorage.setItem("websiteDiff", "");
-            localStorage.setItem("websiteLayoutCode","");
-            localStorage.setItem("websiteDiffCode", "");
-            setWebsiteDiffCode({})
-            setWebsiteLayoutCode({})
-            setWebsiteDiff({})
-            setLayoutFeature("")
-            setCurrSite(0)
-            setSiteList([])
-            }}>Start Another Cycle</button>
+          </div>
+          <div style={{display: "flex", width: "20%", margin: "auto", justifyContent: "center"}}>
+            <button 
+            style={{border: "1px solid grey", boxShadow: "0 0 5px -1px black", margin: "10px 5%"}}
+            onClick={() =>{
+              setCurrStep(1)
+              // save stuff first
+              
+              localStorage.setItem("currSite", "0");
+              localStorage.setItem("layoutFeature","");
+              localStorage.setItem("siteList", "");
+              localStorage.setItem("websiteDiff", "");
+              localStorage.setItem("websiteLayoutCode","");
+              localStorage.setItem("websiteDiffCode", "");
+              setWebsiteDiffCode({})
+              setWebsiteLayoutCode({})
+              setWebsiteDiff({})
+              setLayoutFeature("")
+              setCurrSite(0)
+              setSiteList([])
+              }}>
+              Start Another Cycle
+            </button>
+            <button 
+              onClick={() => {setFinished(true)}}
+              style={{border: "1px solid grey", boxShadow: "0 0 5px -1px black", margin: "10px 5%"}}
+            >
+              Finish
+            </button>
+          </div>
+          {finished && (
+            <form>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>
+                  <p>1. Can you find cases where you have the same visual feature in 2 examples that are implemented in 
+                    different CSS techniques/properties? Add your findings in the left input box below.</p>
+                  <textarea
+                    className="user-input reflection"
+                    id="reflection1Input"
+                    name="reflection1Input"
+                    placeholder={""}
+                    rows={4}
+                  />
+                </div>
+                <div>
+                  <p>2. Can you find cases where different visual features across 2 examples leverage the same css 
+                    properties/technique? Add your findings in the right input  below.</p>
+                  <textarea
+                    className="user-input reflection"
+                    id="reflection2Input"
+                    name="reflection2Input"
+                    placeholder={""}
+                    rows={4}
+                  />
+                </div>
+                <span
+                  className = "enter-btn"
+                  id="save"
+                  onClick={() => {
+                      localStorage.setItem("reflection_question_1", (document.getElementById("reflection1Input") as HTMLInputElement).value);
+                      localStorage.setItem("reflection_question_2", (document.getElementById("reflection2Input") as HTMLInputElement).value);;   
+                  }}
+                >
+                  Enter
+                </span>
+              </div>
+            </form>
+          )}
         </div>
       )}
       <div>

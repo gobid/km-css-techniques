@@ -11,7 +11,7 @@ export default function NewApp(): JSX.Element {
   // var i = 0
   const [firstSelectedIdx, setFirstSelectedIdx] = useState(0);
   const [secondSelectedIdx, setSecondSelectedIdx] = useState(1);
-  const [selectedStep, setSelectedStep] = useState(1);
+  const [selectedStep, setSelectedStep] = useState(5);
  
 
   return (
