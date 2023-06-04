@@ -40,7 +40,8 @@ h1 {
   height: 65vh
 }
 .css-editor-container {
-  flex: 1
+  flex: 1;
+  height: 65vh
 }
 
 .iframe {
@@ -74,12 +75,16 @@ h1 {
   font-size: 13px;
 }
 
+.iframe-container {
+  /* height: 800px; */
+}
+
 .iframe.left {
   transform-origin: top left;
   margin-right: -1500px;
 }
 .iframe.right {
-  transform-origin: top right;
+  transform-origin: top left;
 }
 
 .process-management {
@@ -212,12 +217,15 @@ h1 {
 }
 .css-editor {
   font-family: Courier, monospace ;
+  
 }
 
 .css-editor input {
   font-family: Courier, monospace ;
+
 }
 
 .view-edit {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

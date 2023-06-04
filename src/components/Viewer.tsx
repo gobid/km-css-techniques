@@ -25,14 +25,17 @@ export default function Viewer({ example, size, view, selectedStep }: ViewerProp
   }, [example.declarations, example.media, example.scoped_declarations, example.defaultParentClassname]);
 
   return (
-    <iframe
-      title="example-1"
-      src={example.iframeUrl}
-      width={`${size}%`}
-      height={1000}
-      frameBorder="0"
-      className={`iframe ${view} border border-gray-200 rounded`}
-      ref={viewerRef}
-    ></iframe>
+    <div className = "iframe-container">
+
+      <iframe
+        title="example-1"
+        src={example.iframeUrl}
+        width={`${size*2}%`}
+        height={1000}
+        frameBorder="0"
+        className={`iframe ${view} border border-gray-200 rounded`}
+        ref={viewerRef}
+      ></iframe>
+    </div>
   );
 }
