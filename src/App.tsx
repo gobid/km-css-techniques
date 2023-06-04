@@ -11,7 +11,7 @@ export default function NewApp(): JSX.Element {
   // var i = 0
   const [firstSelectedIdx, setFirstSelectedIdx] = useState(0);
   const [secondSelectedIdx, setSecondSelectedIdx] = useState(1);
-  const [selectedStep, setSelectedStep] = useState(5);
+  const [selectedStep, setSelectedStep] = useState(1);
  
 
   return (
@@ -19,7 +19,7 @@ export default function NewApp(): JSX.Element {
       <div className = "steps">
         <Instructions curr_step={selectedStep}/> 
       </div>
-      
+      <UserEntry curr_step={selectedStep} setCurrStep={setSelectedStep} ></UserEntry>
       <div className="flex items-center justify-evenly relative mb-1 mt-2">
         <div>
           <h1 className="text-center">Compare Websites: </h1>
@@ -54,7 +54,6 @@ export default function NewApp(): JSX.Element {
           </div>
         </div>
       </div>
-      <UserEntry curr_step={selectedStep} setCurrStep={setSelectedStep} ></UserEntry>
       <Explore
         firstExample={examples[firstSelectedIdx]}
         secondExample={examples[secondSelectedIdx]}
