@@ -217,6 +217,7 @@ export default function UserEntry({
                   }}
                   onClick={() => {
                     setCurrSite(i);
+                    localStorage.setItem("currSite", i.toString());
                     var codeEntry = JSON.parse(localStorage.getItem("websiteLayoutCode"));
                     if (codeEntry) {
                       var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
@@ -226,6 +227,8 @@ export default function UserEntry({
                       (document.getElementById("codeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
                     }} 
                     else {
+                      console.log("code uygbihug curr ", codeForCurr);
+
                       (document.getElementById("codeInput") as HTMLInputElement).value = "";
                       (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";
                     }
@@ -317,6 +320,7 @@ export default function UserEntry({
                   }}
                   onClick={() => {
                     setCurrSite(i);
+                    localStorage.setItem("currSite", i.toString());
                     var codeEntry = JSON.parse(localStorage.getItem("websiteDiffCode"));
                     var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
                     if (codeEntry && codeForCurr) {
