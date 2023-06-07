@@ -3,12 +3,12 @@ import CSSEditor from "./CSSEditor";
 import { Example } from "../lib/types";
 import Viewer from "./Viewer";
 import {mergeDeclarations} from "../lib/examples";
+// parent component for Viewer and CSSEditor, holds slider
 interface ExploreProps {
   firstExample: Example;
   secondExample: Example;
   selectedStep: number;
 }
-
 export default function Explore({
   firstExample,
   secondExample,
@@ -36,8 +36,6 @@ export default function Explore({
   const [viewerSize, setViewerSize] = useState(70);
   const [firstHidden, setFirstHidden] = useState(false);
   const [secondHidden, setSecondHidden] = useState(false);
-  const [firstCodeHidden, setFirstCodeHidden] = useState(false);
-  const [secondCodeHidden, setSecondCodeHidden] = useState(false);
   const [windowSizerUsed, setWindowSizerUsed] = useState(false);
   useEffect(() => {
     setFirstSetOfDeclarations(firstExample.declarations);
@@ -86,6 +84,7 @@ export default function Explore({
         </div>
       </div>
       {(selectedStep==3 || selectedStep==4) && (
+        // adding code instructions for step 3 and 4 only
           <div style={{backgroundColor:"lightGray", display: "flex", flexFlow: "column wrap", padding: "0px 10px"}} >
             <h1 style={{fontSize: 16,  textAlign: "center", fontWeight: "bold"}}>Instructions</h1>
             <p><b>Toggle</b> the checkboxes to identify the visual effects of CSS code. Click on the ? mark next to the properties to read their definitions. <b>Edit</b> the property/values to identify the visual effects of CSS code. Play with the slider bar to see how it affects the layout.</p>
@@ -95,7 +94,6 @@ export default function Explore({
         )}
       {/* Viewers are below*/}
       <div className = "view-edit">
-      {/* <div className="viewer-container flex flex-wrap w-full justify-between gap-y-4 mb-1" style={{ height: "65vh"}}> */}
           {!firstHidden && (
             <Viewer
               example={{ ...firstExample, declarations: firstSetOfDeclarations, media: firstSetOfMediaDeclarations, scoped_declarations: firstSetOfScopedDeclarations }}
@@ -114,7 +112,6 @@ export default function Explore({
               selectedStep = {selectedStep}
             />
           )}
-        {/* </div> */}
         
         
         {(selectedStep==3 || selectedStep==4) && !firstHidden &&(

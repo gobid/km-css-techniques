@@ -3,7 +3,7 @@ import { examples } from "../lib/examples";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight} from '@fortawesome/free-solid-svg-icons'
 
-
+// component for gray box with user entry
 interface UserEntryProps {
   curr_step: number;
   setCurrStep: Dispatch<SetStateAction<Number>>;
@@ -31,6 +31,7 @@ export default function UserEntry({
   const [currStepDone, setCurrStepDone] = useState(false);
   const [finished, setFinished] = useState(false);
   useEffect(() => {
+    // when users go to a new step, change current site index to go back to 0 & show any saved info for that step
     setCurrSite(0);
     localStorage.setItem("currSite", "0");
     showSaved();
@@ -41,13 +42,10 @@ export default function UserEntry({
   }, [websitesWithFeature]);
 
   function showSaved() {
+    // checks localstorage to see if there are any saved user input if so it displays that in the user input
     var layoutFeatureInput = localStorage.getItem("layoutFeature");
     if (curr_step == 1 && layoutFeatureInput) {
       (document.getElementById("layoutFeature") as HTMLInputElement).value = layoutFeatureInput;
-      console.log(
-        "site list stored ",
-        JSON.parse(localStorage.getItem("siteList"))
-      );
       JSON.parse(localStorage.getItem("siteList")).map((site) => {
         (
           document.getElementById(site + "checkbox") as HTMLInputElement
@@ -57,7 +55,6 @@ export default function UserEntry({
     var websiteDiffInput = localStorage.getItem("websiteDiff");
     if (curr_step == 2 && websiteDiffInput) {
       var res = JSON.parse(websiteDiffInput)[siteList[currSite]];
-      console.log("diff parsed", res);
       if (res !== undefined) {
         (document.getElementById("layoutDifference") as HTMLInputElement).value = res;
       }
@@ -102,7 +99,7 @@ export default function UserEntry({
                 className="enter-btn"
                 id="save"
                 onClick={() => {
-
+                  // when users save their layout feature, updates hook & local storage
                   setLayoutFeature((document.getElementById("layoutFeature") as HTMLInputElement).value);
                   localStorage.setItem("layoutFeature",(document.getElementById("layoutFeature") as HTMLInputElement).value);
                   const checkboxes = document.getElementsByClassName("siteCheckboxes");
@@ -146,6 +143,7 @@ export default function UserEntry({
                   className = "enter-btn"
                   id="save"
                   onClick={() => {
+                    // saving users differences, triggers step done if users go through all websites
                     var currSelected = siteList[currSite];
                     var siteDiffs = {};
                     siteDiffs[currSelected] = (
@@ -179,6 +177,7 @@ export default function UserEntry({
                       backgroundColor: websiteDiff[website] ? '#90EE90' : 'initial'
                       }}
                     onClick={() => {
+                      // each website is a button so updates curr site to be the click on website and updates users input with previous entry for the website
                       setCurrSite(i);
                       localStorage.setItem("currSite", i.toString());
                       var diff = JSON.parse(localStorage.getItem("websiteDiff"));
@@ -222,13 +221,10 @@ export default function UserEntry({
                     if (codeEntry) {
                       var codeForCurr = codeEntry[JSON.parse(localStorage.getItem("siteList"))[localStorage.getItem("currSite")]];
                       if (codeForCurr) {
-                      console.log("code for curr ", codeForCurr);
                       (document.getElementById("codeInput") as HTMLInputElement).value = codeForCurr.code;
                       (document.getElementById("codeExplanationInput") as HTMLInputElement).value = codeForCurr.explanation;
                     }} 
                     else {
-                      console.log("code uygbihug curr ", codeForCurr);
-
                       (document.getElementById("codeInput") as HTMLInputElement).value = "";
                       (document.getElementById("codeExplanationInput") as HTMLInputElement).value = "";
                     }
@@ -249,7 +245,7 @@ export default function UserEntry({
               style={{ fontFamily: "monospace", textAlign: "left"}}
             />
             <textarea
-              className="user-input code-explaintion-input"
+              className="user-input code-explanation-input"
               id="codeExplanationInput"
               name="codeExplanationInput"
               placeholder="Enter Explanation for code"
@@ -284,9 +280,7 @@ export default function UserEntry({
 
                 }else{
                   setCurrStepDone(true)
-                }
-                console.log(websiteLayoutCode);
-                         
+                }                         
               }}
             >
               Enter
@@ -346,7 +340,7 @@ export default function UserEntry({
               style={{ fontFamily: "monospace", textAlign: "left"}}
             />
             <textarea
-              className="user-input code-explaination-input"
+              className="user-input code-explanation-input"
               id="diffCodeExplanationInput"
               name="diffCodeExplanationInput"
               placeholder="Enter Why code Is Responsible For the Layout Difference"
@@ -382,7 +376,6 @@ export default function UserEntry({
                 }else{
                   setCurrStepDone(true)
                 }
-                console.log(websiteDiffCode);   
               }}
             >
               Enter
@@ -429,15 +422,15 @@ export default function UserEntry({
             <button 
             style={{border: "1px solid grey", boxShadow: "0 0 5px -1px black", margin: "10px 5%"}}
             onClick={() =>{
+               // clear local storage & hooks for new cycle
               setCurrStep(1)
-              // save stuff first
-              
               localStorage.setItem("currSite", "0");
               localStorage.setItem("layoutFeature","");
               localStorage.setItem("siteList", "");
               localStorage.setItem("websiteDiff", "");
               localStorage.setItem("websiteLayoutCode","");
               localStorage.setItem("websiteDiffCode", "");
+
               setWebsiteDiffCode({})
               setWebsiteLayoutCode({})
               setWebsiteDiff({})
@@ -455,6 +448,7 @@ export default function UserEntry({
             </button>
           </div>
           {finished && (
+            // once users are done doing cycle ask reflection questions
             <form>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
@@ -505,11 +499,13 @@ export default function UserEntry({
             <FontAwesomeIcon icon={faAngleLeft} style = {{lineHeight: "50px"}}/>
           </button>
         )}
+        {/* shows next button until last step and only when users are done with current step */}
         {curr_step != 5 && currStepDone && (
           <button className = "next-btn"
             onClick={() => {
               setCurrStep(curr_step + 1);
               if (curr_step == 4){
+                // after users finish step 4, save user entry into one iteration and add that to localstorage
                 var iteration = {
                   layoutFeature: localStorage.getItem('layoutFeature'),
                   sitesWithFeature: JSON.parse(localStorage.getItem('siteList')),
@@ -518,20 +514,12 @@ export default function UserEntry({
                   diffCode: JSON.parse(localStorage.getItem('websiteDiffCode'))
                 }
                 var oldIterations = JSON.parse(localStorage.getItem('iterations'))
-                console.log('old iterations ', oldIterations)
-                console.log('curr iter', iteration)
                 if (oldIterations != null){
-                  console.log('adding to existing')
                   oldIterations.push(iteration);
-                  localStorage.setItem("iterations", JSON.stringify(oldIterations))
-                  console.log('result itr', JSON.parse(localStorage.getItem('iterations')))
-    
+                  localStorage.setItem("iterations", JSON.stringify(oldIterations))   
                 }else{
-                  console.log('first iter')
                   localStorage.setItem("iterations", JSON.stringify([iteration]))
-                  console.log('result itr', JSON.parse(localStorage.getItem('iterations')))
                 }
-
               }
             }}
           >

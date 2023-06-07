@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
+// shows different instructions depending on what step users are on
+
 interface InstructionsProps {
     curr_step: number;
 }

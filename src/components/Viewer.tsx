@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { declarationsToCSSString } from "../lib/examples";
 import { Example } from "../lib/types";
-
+// displays websites
 interface ViewerProps {
   example: Example;
   size: number;
@@ -9,7 +9,7 @@ interface ViewerProps {
   selectedStep: number;
 }
 
-export default function Viewer({ example, size, view, selectedStep }: ViewerProps): JSX.Element {
+export default function Viewer({ example, size, view }: ViewerProps): JSX.Element {
   const viewerRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {

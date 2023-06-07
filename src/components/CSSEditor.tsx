@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Formik, Form, FieldArray, Field, useFormikContext } from "formik";
 import { getInfo } from "../lib/info";
 import { Declaration, Media, ScopedDeclaration } from "../lib/types";
-
+//component showing website code
 enum DeclarationDiffType {
   SamePropertyAndValue = "SamePropertyAndValue",
   SameProperty = "SameProperty",
@@ -15,6 +15,7 @@ type DeclarationWithDiff = Declaration & {
 };
 
 function diffDeclarations(
+  // figuring out highlighting for declarations
   declaration: Declaration[],
   compareAgainst: Declaration[]
 ): DeclarationWithDiff[] {
@@ -37,6 +38,7 @@ function diffDeclarations(
   });
 }
 function diffMedia(media: Media, compareAgainst: Declaration[]): Media {
+    // figuring out highlighting for media
   const declarationMap = Object.fromEntries(
     compareAgainst.map((d) => [d.name, d.value])
   );
@@ -74,6 +76,7 @@ function diffScopedDeclarations(
   scoped_declaration: ScopedDeclaration,
   compareAgainst: Declaration[]
 ): ScopedDeclaration {
+    // figuring out highlighting for scoped declarations declarations
   const declarationMap = Object.fromEntries(
     compareAgainst.map((d) => [d.name, d.value])
   );
@@ -130,6 +133,7 @@ interface CSSEditorProps {
 }
 
 function toggler(declaration, index, declaration_type, info?) {
+  // function that takes in declaration info and return toggle-able  components
   return (
     <div
       className={`editor flex gap-2 items-center transition-opacity px-2 py-2 mb-1 rounded ${
@@ -190,6 +194,7 @@ function toggler(declaration, index, declaration_type, info?) {
       :<>No Info Available for Technique</>
         }
         <button className="tooltip" id="copyBtn" onClick={(e) => {
+          // copying functionality
           navigator.clipboard.writeText(declaration.name+": "+declaration.value +";")
           var el = e.target as HTMLElement
           el.style.color = "gray"
@@ -223,8 +228,7 @@ export default function CSSEditor({
 
   return (
     <div className="css-editor grid grid-cols-2 w-full px-4 py-4">
-      
-      {/* <hr/> */}
+      {/* giant form containing all css techniques for a website */}
       <Formik
         initialValues={initialValues}
         enableReinitialize
@@ -393,6 +397,7 @@ export default function CSSEditor({
         )}
       </Formik>
       <div className="p-4" key="1">
+        {/* displays HTML for a website */}
             {htmlOutput && (
               <div className = "text">
                 <h1>HTML Structure:</h1>

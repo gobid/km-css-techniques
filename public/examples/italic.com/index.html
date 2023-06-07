@@ -130,12 +130,10 @@
             (event) => {
               const cssContainer = document.querySelector("#change-css-container");
               if (!event.data.type || event.data.type !== "NEW_CSS_VALUE" ){
-                console.log('didnt replace css')
                 return;
               }
 
               cssContainer.innerHTML = event.data.data;
-              console.log("after edting ", event.data.data)
             },
             false
           );
