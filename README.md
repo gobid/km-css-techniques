@@ -1,4 +1,4 @@
-# km-client
+# km
 Knowledge Maps Client and Server
 
 ## Setup instructions
