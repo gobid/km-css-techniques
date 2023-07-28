@@ -177,8 +177,15 @@ const italic: Example = {
     ...
     <div class="department-section ae cm">
       ...
+      <div class="collections-grid ae cx">
+        <a href="/products/1...>
+        <a href="/products/2...>
+        <a href="/products/3...>
+        ...
+        <div class="ae">Shop All Apparel ...</div>
+        ...
+      </div>
     </div>
-  </div>
   ...
 </html>`
 };
@@ -378,7 +385,14 @@ const smashingMagazineGuide: Example = {
     ]
   ])
   ],
-  scoped_declarations: [getScopedDeclarationFromArray([".vertical--white",getDeclarationFromString(`
+  scoped_declarations: [getScopedDeclarationFromArray([".article--grid__sponsors",getDeclarationFromString(`
+     width: 100%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 0;
+  `)]),
+    getScopedDeclarationFromArray([".vertical--white",getDeclarationFromString(`
     transform-origin: left center;
     transform: rotateZ(90deg) translateX(-5em) translateY(1em);
   `)])],
@@ -490,6 +504,9 @@ const CSSTricks: Example = {
     `)]),
     getScopedDeclarationFromArray([".mini-card",getDeclarationFromString(`
       padding: 1.5rem;
+      border-radius: 16px;
+      background: linear-gradient(85deg, #434343, #262626);
+      color: #fff;
       display: flex;
       flex-direction: column;
       transition: 0.2s;
