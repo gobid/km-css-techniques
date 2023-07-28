@@ -107,7 +107,7 @@ const suggestedValues = {
     "right",
   ],
   "flex-wrap": ["nowrap", "wrap", "wrap-reverse"],
-  display: ["flex", "grid", "block", "inline-block"],
+  display: ["flex", "grid", "block", "inline-block", "none"],
   "align-content": [
     "start",
     "end",

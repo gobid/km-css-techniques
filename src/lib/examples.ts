@@ -126,39 +126,56 @@ const italic: Example = {
     padding-bottom: 4rem;
   `),
   media: [getMediaFromArray([
-    '@media (max-width: 767px)', 
-    getDeclarationFromString(`
-      padding-bottom: 1.9rem;
-      grid-template-columns: 1fr 1fr;`),
-    []
-  ]),
-  getMediaFromArray([
-    '@media (min-width: 768px)',
-    [],
-    [
-      getScopedDeclarationFromArray([".cr", getDeclarationFromString(`display: block;`)]),
-    ]
-  ])
-],
-scoped_declarations: [],
-htmlOutput: `
-<html>
-  <div class="... cr">
+      '@media (max-width: 767px)', 
+      getDeclarationFromString(`
+        padding-bottom: 1.9rem;
+        grid-template-columns: 1fr 1fr;`),
+      []
+    ]),
+    getMediaFromArray([
+      '@media (max-width: 767px)',
+      [],
+      [
+        getScopedDeclarationFromArray([".pcp-featured-swiper", getDeclarationFromString(`display: block;`)]),
+        getScopedDeclarationFromArray([".pcp-featured-grid", getDeclarationFromString(`display: none;`)]),
+      ]
+    ]),
+    getMediaFromArray([
+      '@media (min-width: 768px)',
+      [],
+      [
+        getScopedDeclarationFromArray([".cr", getDeclarationFromString(`display: block;`)]),
+      ]
+    ])
+  ],
+  scoped_declarations: [getScopedDeclarationFromArray(["",getDeclarationFromString(``)])],
+  htmlOutput: `
+  <html>
     ...
-    <div> ... Apparel ...</div>
-    <div> ... Bags ...</div>
-    <div> ... Shoes ...</div>
-    <div> ... Accessories ...</div>
-  </div>
-  ...
-  <div class="department-section ae cm">
+    <div class="pcp-featured-grid">
+      <a href="/featured/all-time-member-favorites" ...> ... All-Time Member Favorites ... </a>
+      <a ...> ... Better Sweater Weather ... </a>
+      <a ...> ... The Leather Edit ... </a>
+      <a ...> ... The Best Bags ... </a>
+    </div>
+    <div class="pcp-featured-swiper ae" ...>
+      <div class="swiper-wrapper" ...>
+        <a href="/featured/all-time-member-favorites" ...> ... All-Time Member Favorites ... </a>
+        <a ...> ... Better Sweater Weather ... </a>
+        <a ...> ... The Leather Edit ... </a>
+        <a ...> ... The Best Bags ... </a>
+      </div>
+    </div>
     ...
-    <div class="collections-grid ae cx">
-      <a href="/products/1...>
-      <a href="/products/2...>
-      <a href="/products/3...>
+    <div class="... cr">
       ...
-      <div class="ae">Shop All Apparel ...</div>
+      <div> ... Apparel ...</div>
+      <div> ... Bags ...</div>
+      <div> ... Shoes ...</div>
+      <div> ... Accessories ...</div>
+    </div>
+    ...
+    <div class="department-section ae cm">
       ...
     </div>
   </div>
@@ -457,7 +474,15 @@ const CSSTricks: Example = {
       padding-left: 5px;
       overflow-x: visible;`)
     ])
-  ]])],
+  ]]),
+    getMediaFromArray([
+      '@media (max-width: 800px)',
+      [],
+      [
+        getScopedDeclarationFromArray([".popular-header", getDeclarationFromString(`flex: 0 0 175px;`)]),
+      ]
+    ])
+  ],
   scoped_declarations: [getScopedDeclarationFromArray(["body.home .mini-card",getDeclarationFromString(`
       min-width: 300px;
       min-height: 350px;
