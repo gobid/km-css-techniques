@@ -40,7 +40,23 @@ function getMediaFromArray(css_list): Media {
 function getScopedDeclarationFromArray(css_list): ScopedDeclaration {
   return {parent: css_list[0], declarations: css_list[1]};
 }
-
+export function mergeDeclarations(mainDeclaration: Declaration[], mediaDeclaration?: Media[], scoped_declarations?: ScopedDeclaration[]): Declaration[]{
+  var allDeclarations = mainDeclaration
+  mediaDeclaration.forEach(m => {
+    if (m.declarations){
+      allDeclarations = allDeclarations.concat(m.declarations)
+    }
+    if (m.scoped_declarations){
+      m.scoped_declarations.forEach(sd => {
+        allDeclarations = allDeclarations.concat(sd.declarations)
+      })  
+    }  
+  });
+ scoped_declarations.forEach(sd =>{
+  allDeclarations = allDeclarations.concat(sd.declarations)
+ })
+  return  allDeclarations
+}
 export function declarationsToCSSString(
   declarations: Declaration[],
   media: Media[],
@@ -161,148 +177,141 @@ const italic: Example = {
     ...
     <div class="department-section ae cm">
       ...
-      <div class="collections-grid ae cx">
-        <a href="/products/1...>
-        <a href="/products/2...>
-        <a href="/products/3...>
-        ...
-        <div class="ae">Shop All Apparel ...</div>
-        ...
-      </div>
     </div>
-    ...
-  </html>`
+  </div>
+  ...
+</html>`
 };
 
-const gridMasterclass: Example = {  
-  name: "Masterclass",
-  iframeUrl: "/examples/grid-masterclass",
-  declarations: getDeclarationFromString(`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 25%;
-    grid-template-rows: 1fr 1fr 1fr 0.5fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;`),
-  defaultParentClassname: "grid",
-  media: [
-    getMediaFromArray([
-      '@media screen and (max-width: 991px)',
-      [],
-      [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
-        grid-column-start: 1;
-        grid-column-end: 5;
-        grid-row-start: 2;
-        grid-row-end: 3;`)
-      ])]
-    ])
-  ],
-  scoped_declarations: [getScopedDeclarationFromArray(["#w-node-e9cc2819490c", getDeclarationFromString(`
-      grid-column-start: 1;
-      grid-column-end: 3;
-      grid-row-start: 1;
-      grid-row-end: 2;`)
-    ])
-  ],
-  htmlOutput: `
-  <html>
-    ...
-    <div class="w-layout-grid grid">
-      <div id="w-node-..." class="div-block-7">
-      <div id="w-node-..." class="div-block-4"></div>
-      <div id="w-node-..." class="div-block-3"></div>
-      <div id="w-node-..." class="div-block-5"></div>
-      <div id="w-node-..." class="div-block-6"></div>
-      <div id="w-node-..." class="div-block"></div>
-      <div id="w-node-..." class="div-block-8"></div>
-      <div id="w-node-..." class="div-block-4"></div>
-      <div id="w-node-..." class="div-block-10"></div>
-      <div id="w-node-..." class="div-block-2"></div>
-    </div>
-    ...
-  </html>
-  `,
-  children: [
-    `
-    // values vary on window size
-    .div-block-7 {
-      grid-column-start: 3;
-      grid-column-end: 5;
-      grid-row-start: 4;
-      grid-row-end: 5;
-    }
-    `,
-    `
-    .div-block-4 {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 4;
-      grid-row-end: 5;
-    }
-    `,
-    `
-    .div-block-3 {
-      grid-column-start: 4;
-      grid-column-end: 5;
-      grid-row-start: 2;
-      grid-row-end: 4;
-    }
-    `,
-    `
-    .div-block-5 {
-      grid-column-start: 2;
-      grid-column-end: 4;
-      grid-row-start: 3;
-      grid-row-end: 4;
-    }
-    `,
-    `
-    .div-block-6 {
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 4;
-      grid-row-end: 5;
-    }
-    `,
-    `
-    .div-block {
-      grid-column-start: 3;
-      grid-column-end: 5;
-      grid-row-start: 1;
-      grid-row-end: 2;
-    }
-    `,
-    `
-    .div-block-8 {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      grid-row-start: 1;
-      grid-row-end: 2;
-    }
-    `,
-    `
-    .div-block-4 {
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 3;
-      grid-row-end: 4;
-    }
-    `,
-    `
-    .div-block-10 {
-      grid-column-start: 2;
-      grid-column-end: 4;
-      grid-row-start: 2;
-      grid-row-end: 3;
-    }
-    .div-block-2 {
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 2;
-      grid-row-end: 3;
-    }
-    `,
-  ],
-};
+// const gridMasterclass: Example = {  
+//   name: "Masterclass",
+//   iframeUrl: "/examples/grid-masterclass",
+//   declarations: getDeclarationFromString(`
+//     display: grid;
+//     grid-template-columns: 1fr 1fr 1fr 25%;
+//     grid-template-rows: 1fr 1fr 1fr 0.5fr;
+//     grid-column-gap: 0px;
+//     grid-row-gap: 0px;`),
+//   defaultParentClassname: "grid",
+//   media: [
+//     getMediaFromArray([
+//       '@media screen and (max-width: 991px)',
+//       [],
+//       [getScopedDeclarationFromArray([".div-block-8", getDeclarationFromString(`
+//         grid-column-start: 1;
+//         grid-column-end: 5;
+//         grid-row-start: 2;
+//         grid-row-end: 3;`)
+//       ])]
+//     ])
+//   ],
+//   scoped_declarations: [getScopedDeclarationFromArray([".div-block-8", getDeclarationFromString(`
+//       grid-column-start: 1;
+//       grid-column-end: 3;
+//       grid-row-start: 1;
+//       grid-row-end: 2;`)
+//     ])
+//   ],
+//   htmlOutput: `
+//   <html>
+//     ...
+//     <div class="w-layout-grid grid">
+//       <div class="div-block-7"></div>
+//       <div class="div-block-4"></div>
+//       <div class="div-block-3"></div>
+//       <div class="div-block-5"></div>
+//       <div class="div-block-6"></div>
+//       <div class="div-block"></div>
+//       <div class="div-block-8"></div>
+//       <div class="div-block-4"></div>
+//       <div class="div-block-10"></div>
+//       <div class="div-block-2"></div>
+//     </div>
+//     ...
+//   </html>
+//   `,
+//   children: [
+//     `
+//     // values vary on window size
+//     .div-block-7 {
+//       grid-column-start: 3;
+//       grid-column-end: 5;
+//       grid-row-start: 4;
+//       grid-row-end: 5;
+//     }
+//     `,
+//     `
+//     .div-block-4 {
+//       grid-column-start: 2;
+//       grid-column-end: 3;
+//       grid-row-start: 4;
+//       grid-row-end: 5;
+//     }
+//     `,
+//     `
+//     .div-block-3 {
+//       grid-column-start: 4;
+//       grid-column-end: 5;
+//       grid-row-start: 2;
+//       grid-row-end: 4;
+//     }
+//     `,
+//     `
+//     .div-block-5 {
+//       grid-column-start: 2;
+//       grid-column-end: 4;
+//       grid-row-start: 3;
+//       grid-row-end: 4;
+//     }
+//     `,
+//     `
+//     .div-block-6 {
+//       grid-column-start: 1;
+//       grid-column-end: 2;
+//       grid-row-start: 4;
+//       grid-row-end: 5;
+//     }
+//     `,
+//     `
+//     .div-block {
+//       grid-column-start: 3;
+//       grid-column-end: 5;
+//       grid-row-start: 1;
+//       grid-row-end: 2;
+//     }
+//     `,
+//     `
+//     .div-block-8 {
+//       grid-column-start: 1;
+//       grid-column-end: 3;
+//       grid-row-start: 1;
+//       grid-row-end: 2;
+//     }
+//     `,
+//     `
+//     .div-block-4 {
+//       grid-column-start: 1;
+//       grid-column-end: 2;
+//       grid-row-start: 3;
+//       grid-row-end: 4;
+//     }
+//     `,
+//     `
+//     .div-block-10 {
+//       grid-column-start: 2;
+//       grid-column-end: 4;
+//       grid-row-start: 2;
+//       grid-row-end: 3;
+//     }
+//     .div-block-2 {
+//       grid-column-start: 1;
+//       grid-column-end: 2;
+//       grid-row-start: 2;
+//       grid-row-end: 3;
+//     }
+//     `,
+//   ],
+// };
 
 const flatIcons: Example = {
   name: "Flat Icons",
@@ -320,7 +329,9 @@ const flatIcons: Example = {
     ]
   ])
   ],
-  scoped_declarations: [getScopedDeclarationFromArray(["li",getDeclarationFromString(`margin: 0px;`)])],
+  scoped_declarations: [getScopedDeclarationFromArray([".icons .icon--item",getDeclarationFromString(`
+    min-width: 140px;
+    max-width: 100%`)])],
   htmlOutput:`
     <html>
       ...
@@ -367,14 +378,7 @@ const smashingMagazineGuide: Example = {
     ]
   ])
   ],
-  scoped_declarations: [getScopedDeclarationFromArray([".article--grid__sponsors",getDeclarationFromString(`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0;
-  `)]),
-  getScopedDeclarationFromArray([".vertical--white",getDeclarationFromString(`
+  scoped_declarations: [getScopedDeclarationFromArray([".vertical--white",getDeclarationFromString(`
     transform-origin: left center;
     transform: rotateZ(90deg) translateX(-5em) translateY(1em);
   `)])],
@@ -402,13 +406,8 @@ const smashingMagazineGuide: Example = {
       <div class="f-article-highlights col-12 ...">
         <div class="f-article-item">...A11y Myths...</div>
         <div class="f-article-item">...</div>
-        <div class="f-article-item">...</div>
         ...
-        <div class="article--grid__sponsors">
-          ...
-          Join 1916 Smashing Members
-          ...
-        </div>
+        <div class="f-article-item">...</div>
       </div>
     </section>
     ...
@@ -419,14 +418,15 @@ const smashingMagazineGuide: Example = {
 const heroIcons: Example = {
   name: "Hero Icons",
   iframeUrl: "/examples/hero-icons",
-  declarations: getDeclarationFromString(``),
+  declarations: getDeclarationFromString(`
+  display: grid;
+  `),
   defaultParentClassname: "grid",
-  media: [getMediaFromArray(["",getDeclarationFromString(``), []])],
+  media: [],
   scoped_declarations: [getScopedDeclarationFromArray([".icon-grid",getDeclarationFromString(`
     display: grid;
     gap: 4rem;
     text-align: center;
-    font-size: 0.8rem;
     grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
   `)])],
   htmlOutput:`
@@ -490,9 +490,6 @@ const CSSTricks: Example = {
     `)]),
     getScopedDeclarationFromArray([".mini-card",getDeclarationFromString(`
       padding: 1.5rem;
-      border-radius: 16px;
-      background: linear-gradient(85deg, #434343, #262626);
-      color: #fff;
       display: flex;
       flex-direction: column;
       transition: 0.2s;
@@ -528,7 +525,7 @@ const CSSTricks: Example = {
 };
 export const examples: Example[] = [
   italic,
-  gridMasterclass,
+  // gridMasterclass,
   flatIcons,
   smashingMagazineGuide,
   heroIcons,

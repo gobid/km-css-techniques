@@ -1289,7 +1289,7 @@ fieldset {
   outline: none;
 }
 html {
-  --maxWidth: 1600px;
+  /* --maxWidth: 1600px; */
   --gap: 3rem;
   scrollbar-color: #666 #201c29;
   color: #fff;
@@ -2439,9 +2439,9 @@ img.article-thumbnail {
 @media (max-width: 1200px) {
   .popular-articles {
     scrollbar-color: #666 #201c29;
-    padding-bottom: var(--gap);
+    /* padding-bottom: var(--gap);
     padding-left: 5px;
-    overflow-x: scroll;
+    overflow-x: scroll; */
     -webkit-overflow-scrolling: touch;
     -ms-scroll-snap-points-x: repeat(250px);
     scroll-snap-points-x: repeat(250px);
@@ -2540,10 +2540,10 @@ img.article-thumbnail {
 body.home .mini-card-grid {
   scrollbar-color: #666 #201c29;
   scrollbar-gutter: always;
-  padding: 3rem 0 3rem 2rem;
-  margin: 0;
+  /* padding: 3rem 0 3rem 2rem; */
+  /* margin: 0;
   display: flex;
-  overflow-x: scroll;
+  overflow-x: scroll; */
   -webkit-overflow-scrolling: touch;
 }
 body.home .mini-card-grid::-webkit-scrollbar {
@@ -2560,11 +2560,11 @@ body.home .mini-card-grid::-webkit-scrollbar-track {
   background: linear-gradient(90deg, #434343, #434343 1px, #262626 0, #262626);
 }
 @media (max-width: 1200px) {
-  body.home .mini-card-grid {
+  /* body.home .mini-card-grid {
     overflow-x: visible;
-  }
+  } */
 }
-.mini-card {
+/* .mini-card {
   padding: 1.5rem;
   border-radius: 16px;
   background: linear-gradient(85deg, #434343, #262626);
@@ -2573,7 +2573,7 @@ body.home .mini-card-grid::-webkit-scrollbar-track {
   flex-direction: column;
   transition: 0.2s;
   margin: 0;
-}
+} */
 .mini-card a {
   text-decoration: none;
 }
@@ -2597,11 +2597,11 @@ body.home .mini-card-grid::-webkit-scrollbar-track {
 .mini-card time strong {
   color: #d4d4d4;
 }
-body.home .mini-card {
+/* body.home .mini-card {
   min-width: 300px;
   min-height: 350px;
   box-shadow: -2rem 0 3rem -2rem #000;
-}
+} */
 body.home .mini-card:focus-within,
 body.home .mini-card:hover {
   transform: translateY(-1rem) rotate(3deg);
@@ -2615,16 +2615,16 @@ body.home .mini-card:first-child:hover {
   transform: translate(-0.5rem, -1rem) rotate(3deg);
 }
 body.home .mini-card:not(:first-child) {
-  margin-left: -130px;
+  /* margin-left: -130px; */
   box-shadow: -3rem 0 3rem -2rem #000;
 }
 @media (max-width: 1200px) {
-  body.home .mini-card {
+  /* body.home .mini-card {
     min-width: 220px;
-  }
-  body.home .mini-card:not(:first-child) {
+  } */
+  /* body.home .mini-card:not(:first-child) {
     margin-left: -30px;
-  }
+  } */
   body.home .mini-card:hover {
     transform: translateY(-1rem);
   }

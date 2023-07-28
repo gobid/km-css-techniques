@@ -6882,9 +6882,17 @@
       .icons{
         display: flex;
         flex-wrap: wrap;
-        
       }
-      
+      .icons .icon--item {
+          min-width: 140px;
+          max-width: 100%;
+        }
+      @media (max-width: 480px) {
+        .icons .icon--item {
+          min-width: 33.33%;
+        }
+      }
+
     </style>
 
     <script>
@@ -6893,12 +6901,10 @@
         (event) => {
           const cssContainer = document.querySelector("#change-css-container");
               if (!event.data.type || event.data.type !== "NEW_CSS_VALUE" ){
-                console.log('didnt replace css')
                 return;
               }
 
               cssContainer.innerHTML = event.data.data;
-              console.log("after edting ", event.data.data)
         },
         false
       );

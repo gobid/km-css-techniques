@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { Formik, Form, FieldArray, Field, useFormikContext } from "formik";
+import { getInfo } from "../lib/info";
 import { Declaration, Media, ScopedDeclaration } from "../lib/types";
-
+//component showing website code
 enum DeclarationDiffType {
   SamePropertyAndValue = "SamePropertyAndValue",
   SameProperty = "SameProperty",
@@ -14,6 +15,7 @@ type DeclarationWithDiff = Declaration & {
 };
 
 function diffDeclarations(
+  // figuring out highlighting for declarations
   declaration: Declaration[],
   compareAgainst: Declaration[]
 ): DeclarationWithDiff[] {
@@ -34,6 +36,64 @@ function diffDeclarations(
 
     return { ...d, diffType };
   });
+}
+function diffMedia(media: Media, compareAgainst: Declaration[]): Media {
+    // figuring out highlighting for media
+  const declarationMap = Object.fromEntries(
+    compareAgainst.map((d) => [d.name, d.value])
+  );
+  media.declarations = media.declarations.map((d) => {
+    let diffType: DeclarationDiffType = DeclarationDiffType.None;
+
+    if (d.name in declarationMap) {
+      if (declarationMap[d.name] === d.value) {
+        diffType = DeclarationDiffType.SamePropertyAndValue;
+      } else {
+        diffType = DeclarationDiffType.SameProperty;
+      }
+    }
+    return { ...d, diffType };
+  });
+  media.scoped_declarations = media.scoped_declarations.map((sd) => {
+    sd.declarations = sd.declarations.map((d) => {
+      let diffType: DeclarationDiffType = DeclarationDiffType.None;
+
+      if (d.name in declarationMap) {
+        if (declarationMap[d.name] === d.value) {
+          diffType = DeclarationDiffType.SamePropertyAndValue;
+        } else {
+          diffType = DeclarationDiffType.SameProperty;
+        }
+      }
+      return { ...d, diffType };
+    });
+    return sd;
+  });
+  return media;
+}
+
+function diffScopedDeclarations(
+  scoped_declaration: ScopedDeclaration,
+  compareAgainst: Declaration[]
+): ScopedDeclaration {
+    // figuring out highlighting for scoped declarations declarations
+  const declarationMap = Object.fromEntries(
+    compareAgainst.map((d) => [d.name, d.value])
+  );
+
+  scoped_declaration.declarations = scoped_declaration.declarations.map((d) => {
+    let diffType: DeclarationDiffType = DeclarationDiffType.None;
+    if (d.name in declarationMap) {
+      if (declarationMap[d.name] === d.value) {
+        diffType = DeclarationDiffType.SamePropertyAndValue;
+      } else {
+        diffType = DeclarationDiffType.SameProperty;
+      }
+    }
+
+    return { ...d, diffType };
+  });
+  return scoped_declaration;
 }
 
 const suggestedValues = {
@@ -67,161 +127,85 @@ interface CSSEditorProps {
   media: Media[];
   scoped_declarations: ScopedDeclaration[];
   diffAgainstDeclarations: Declaration[];
+  htmlOutput: string;
+  children: string[];
   onChange: (declarations: Declaration[], media: Media[], scoped_declarations: ScopedDeclaration[]) => void;
 }
 
-function propertyDefinition(property) {
-  if (property.includes("display")) {
-    return `Specifies display behavior of an element / container. 
-- Values can be grid (2D grid container of blocks), flex (1D container, that can wrap into 2D), block (new line, whole width), inline-block (inline, you can apply height width).
-- Note: With both flex and grid, individual components within the container scale in size as your resize the overall flex/grid container.
-- Src: W3Schools
-- Sites Using: ALL`;
-  }
-  else if (property.includes("grid-template-columns")) {
-    return `Specifies the number (and the widths) of columns in a grid layout. The values are a space separated list, where each value specifies the size of the respective column. 
-- Note: The minmax property defines a size range (for the columns) greater than or equal to min and less than or equal to max.
-- Values can specify pixels, percentages, fractions (i.e. 1fr), or auto-fill. With auto-fill by default you go down to 1 column at the smallest widths.
-- Src: W3 Schools, Mozilla, CSS Tricks
-- Sites Using: Italic, Masterclass, Hero Icons
-- Implicit Dependencies: must use display:grid`;
-  }
-  else if (property.includes("gap")) {
-    return `Defines the size of the gap between the rows and columns in a grid layout, and is a shorthand property for grid-row-gap and grid-column-gap. 
-- Values can specify pixels, em, rem.
-- Src: W3 Schools
-- Sites Using: Masterclass, Hero Icons
-- Implicit Dependencies: must use display:grid`;
-  }
-  else if (property.includes("padding")){
-    return `Generates space around an element's content, inside of any defined borders. padding-top, padding-right, padding-bottom, padding-left are variants.
-- Values can specify length in px, pt, cm, etc. or % of the width of the containing element, or inherit if padding should be inherited from the parent element.
-- Src: W3 Schools
-- Sites Using: Italic, CSS Tricks`;
-  }
-  else if (property.includes("start") || property.includes("end")){
-    return `Defines on which column-line the item will start/end, i.e. grid-column-start/end: auto|span n|column-line;
-- Values can specify:
-- - auto (placed following the flow of elements)
-- - span n (specifies # of cols the item will span)
-- - OR a column line (which column to start/end the display of the item). 
-- Examples: grid-column-start: auto; grid-column-start: span 3; grid-column-start: 2; grid-column-end: 2;
-- Src: W3 Schools
-- Sites Using: Masterclass
-- Implicit Dependencies: must use display:grid`
-  }
-  else if (property.includes("wrap")) {
-    return `Specifies whether the flexible items should wrap or not.
-- Values include nowrap, wrap, wrap-reverse (wrap but in reverse order), inherit (inherit parent's value)
-- Src: W3 Schools
-- Sites Using: Flat Icons, Smashing Magazine
-- Implicit Dependencies: must use display:flex`
-  }
-  else if (property.includes("-width")) {
-    return `min-width / max-width property defines the minimum / maximum width of an element. If the content is smaller than the minimum width or larger than the maximum width, the minimum / maximum width will be applied. If content is inside a larger container, % will refer to the % of the larger container.
-- Values can be in px, cm, em, etc. or % or initial or inherit
-- Src: W3 Schools
-- Sites Using: Flat Icons, Smashing Magazine, CSS Tricks`
-  }
-  else if (property.includes("basis")) {
-    return `Specifies the initial length of a flexible item.
-- Values: A length unit, or percentage, specifying the initial length of the flexible item(s), or inherit.
-- Src: W3 Schools
-- Sites Using: Smashing Magazine
-`
-  }
-  else if (property.includes("transform-origin")) {
-    return `transform-origin allows you to change the position of transformed elements, by changing its "origin" or rather the position of its X, Y, and even Z axes of rotation. 
-- Values: left, center, right (these refer to the left, center, right of the object being rotated), or a % into the object with the top left being 0% 0% 
-- Src: W3 Schools
-- Sites Using: Smashing Magazine, CSS Tricks
-- Implicit Dependencies: must use the transform property too`
-  }
-  else if (property.includes("transform")) {
-    return `Applies a 2D or 3D transformation to an element. This property allows you to rotate, scale, move, skew, etc., elements.
-- Values: translate(x,y) for a 2D transform (also supports 1D / 3D), scale, rotate (2D, 3D), skew, perspective
-- Src: W3 Schools
-- Sites Using: Smashing Magazine, CSS Tricks`
-  }
-  else if (property.includes("transition")) {
-    return `Allows you to change property values smoothly, over a given duration. Specify (1) the CSS property you want to add an effect to - if none is specified then it applies it to all properties of the CSS rule (2) the duration of the effect.
-- Note: you can change the value of the transition duration to see how the transition is working.
-- Src: W3 Schools
-- Sites Using: CSS Tricks
-- Implicit Dependencies: must used in conjunction with other properties whose values are being transitioned`
-  }
-  else if (property.includes("margin")) {
-    return `Create space around elements, outside of any defined borders.
-- Note: a margin is the space around an element's border, while padding is the space between an element's border and the element's content. margin-top, margin-right, margin-bottom, margin-left are variants.
-- Note: for sites with flex, margin is by default 0px.
-- Values can specify length in px, pt, cm, etc. or % of the width of the containing element, or inherit if padding should be inherited from the parent element.
-- Src: W3 Schools
-- Sites Using: Smashing Magazine, CSS Tricks`
-  }
-  else if (property.includes("overflow")) {
-    return `Specifies whether to clip the content or to add scrollbars when the content of an element is too big to fit in the specified area. overflow-x and overflow-y are variants.
-- Values: visible, hidden (overflow clipped), scroll (overflow clipped but scrollable), auto
-- Src: W3 Schools
-- Sites Using: CSS Tricks`
-  }
-  else {
-    return `Feel free to look up this property online.`
-  }
-  // add ~10 more important properties - rest leave the else case
-}
-
-function toggler(declaration, index, declaration_type) {
+function toggler(declaration, index, declaration_type, info?) {
+  // function that takes in declaration info and return toggle-able  components
   return (
-      <div
-        className={`flex gap-2 items-center transition-opacity px-2 py-2 mb-4 rounded ${
-          !declaration.enabled ? "opacity-60" : ""
-        } ${getColorForDiffType(declaration.diffType)} `}
-        key={index}
-      >
-        <div>
-          <Field
-            name={`${declaration_type}.[${index}].enabled`}
-            type="checkbox"
-            checked={declaration.enabled}
-          />
-        </div>
+    <div
+      className={`editor flex gap-2 items-center transition-opacity px-2 py-2 mb-1 rounded ${
+        !declaration.enabled ? "opacity-60" : ""
+      } ${getColorForDiffType(declaration.diffType)} `}
+      key={index}
+    >
+      <div className="editor flex">
+        <Field
+          name={`${declaration_type}.[${index}].enabled`}
+          type="checkbox"
+          checked={declaration.enabled}
+        />
+      </div>
 
-        <div className="flex-1">
+      <div className="editor flex-1">
+        <Field
+          name={`${declaration_type}.${index}.name`}
+          placeholder="background-color"
+          type="text"
+          className="input"
+        />
+      </div>
+
+      <div className="editor flex-1">
+        {suggestedValues[declaration.name] ? (
           <Field
-            title={propertyDefinition(declaration.name)}
-            name={`${declaration_type}.${index}.name`}
-            placeholder="background-color"
-            type="text"
+            name={`${declaration_type}.${index}.value`}
+            as="select"
             className="input"
-          />
-        </div>
-
-        <div className="flex-1">
-          {suggestedValues[declaration.name] ? (
-            <Field
-              name={`${declaration_type}.${index}.value`}
-              as="select"
-              className="input"
-            >
+          >
               {suggestedValues[declaration.name].map(
                 (value: string) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
+              <option key={value} value={value}>
+                {value}
+              </option>
                 )
               )}
-            </Field>
-          ) : (
-            <Field
-              name={`${declaration_type}.${index}.value`}
-              placeholder="blue"
-              type=""
-              className="input"
-            />
-          )}
-        </div>
+          </Field>
+        ) : (
+          <Field
+            name={`${declaration_type}.${index}.value`}
+            placeholder="blue"
+            type=""
+            className="input"
+          />
+        )}
       </div>
-      );
+        {info?
+          <div className="tooltip">?
+          <ul className="tooltiptext">
+            <li className="textspan">Definition: {info.definition}</li>
+              <li className="textspan">Values it takes: {info.values.join(', ')}</li>
+              <li className="textspan">Used By: {info.websites.join(', ')}</li>
+              <li className="textspan">Dependencies: {info.implicitDependencies}</li>
+          </ul>
+        </div>
+      :<>No Info Available for Technique</>
+        }
+        <button className="tooltip" id="copyBtn" onClick={(e) => {
+          // copying functionality
+          navigator.clipboard.writeText(declaration.name+": "+declaration.value +";")
+          var el = e.target as HTMLElement
+          el.style.color = "gray"
+          setTimeout(() => {
+            el.style.color = "black"
+          }, 3000)
+          
+          }}>Copy</button>
+        
+    </div>
+  );
 }
 
 export default function CSSEditor({
@@ -230,16 +214,21 @@ export default function CSSEditor({
   diffAgainstDeclarations,
   media,
   scoped_declarations,
+  htmlOutput,
+  children,
   onChange,
 }: CSSEditorProps): JSX.Element {
   const initialValues = {
     declarations: diffDeclarations(declarations, diffAgainstDeclarations),
-    media: media,
-    scoped_declarations: scoped_declarations,
+    media: media.map((m) => diffMedia(m, diffAgainstDeclarations)),
+    scoped_declarations: scoped_declarations.map((sd) =>
+      diffScopedDeclarations(sd, diffAgainstDeclarations)
+    ),
   };
 
   return (
-    <div className="w-full px-4 py-4">
+    <div className="css-editor grid grid-cols-2 w-full px-4 py-4">
+      {/* giant form containing all css techniques for a website */}
       <Formik
         initialValues={initialValues}
         enableReinitialize
@@ -251,76 +240,154 @@ export default function CSSEditor({
           <Form>
             <FieldArray name="declarations">
               {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
-                  <h1>
-                    .{defaultParent}
+                <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                  <div style={{display: "flex", justifyContent: "space-between"}}>
+                  <h1 style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                    .{defaultParent} {"{"}
                   </h1>
+                  
+                    <button className="tooltip" id="copyBtn" onClick={(e) => {
+                      navigator.clipboard.writeText("."+defaultParent+"{}")
+                      var el = e.target as HTMLElement
+                      el.style.color = "gray"
+                      setTimeout(() => {
+                        el.style.color = "black"
+                      }, 3000)
+                    }}>Copy</button>
+                  </div>
                   <div>
                     {values.declarations.map((declaration, index) => (
-                      toggler(declaration, index, "declarations")
+                      toggler(declaration, index, "declarations", getInfo(declaration))
                     ))}
                   </div>
-                  <button
-                    type="button"
-                    className="btn mt-8"
-                    onClick={() =>
-                    push({
-                      name: "",
-                      value: "",
-                      enabled: true,
-                      } as Declaration)
-                    }
-                  >
-                  Add Declaration
-                  </button>
+                  <h1 style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                  {"}"}
+                  </h1>
                 </div>
               )}
             </FieldArray>
-            <br/><p style={{backgroundColor:"#A7F3D0"}}>Green highlights mean the two sites share the same property / value pair. Only applies to CSS above, not below.</p>
-            <br/><p style={{backgroundColor:"#FDE68A"}}> Yellow highlights mean the two sites share the same property, but with different values. Only applies to CSS above, not below.</p>
-            _______________________________________________________________{"\n"}
+            <FieldArray name="scoped_declarations">
+              {({ insert, remove, push }) => (
+                <div>
+                  {values.scoped_declarations.length ? 
+                  <>
+                  {values.scoped_declarations.map((scoped_declaration, sd_index) => (
+                    <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                      <div style={{display: "flex", justifyContent: "space-between"}}>
+                      <p style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                        {scoped_declaration.parent} {"{"}
+                      </p>
+                      <button className="tooltip" id="copyBtn" onClick={(e) => {
+                        navigator.clipboard.writeText(scoped_declaration.parent+"{}")
+                        var el = e.target as HTMLElement
+                        el.style.color = "gray"
+                        setTimeout(() => {
+                          el.style.color = "black"
+                        }, 3000)
+                      }}>Copy</button>
+                      </div>
+                        {scoped_declaration.declarations.map((sd_declaration, d_index) => (
+                          toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
+                      ))}
+                      <p style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                       {"}"}
+                      </p>
+                    </div>
+                  ))} 
+                  </>
+                :
+                <>
+                </>
+                }  
+                </div>
+              )}
+            </FieldArray>
             <FieldArray name="media">
               {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                <div>
                   {values.media.map((media_query, m_index) => (
-                    <div>
-                      <h1>
-                        {media_query.rule}
-                      </h1>
+                    <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                      <div style={{display:"flex", justifyContent: "space-between"}} >
+                        <span style={{fontSize: 16, fontFamily: "monospace", fontWeight: "bold"}}>
+                          {media_query.rule} {"{"}
+                        </span>
+                        <div className="tooltip">?
+                            <ul className="tooltiptext">
+                              <li className="textspan">Media queries allow you to apply CSS styles depending on a device's general type (such as print vs. screen) or other characteristics such as screen resolution or browser viewport width.  </li>
+                                <li className="textspan">Values it takes: a media rule and CSS</li>
+                                <li className="textspan">Used By: Italics, Flat Icons, Smashing Magazine, Hero Icons, CSS Tricks</li>
+                                <li className="textspan">Dependencies: N/A</li>
+                            </ul>
+                        </div>
+                        <button className="tooltip" id="copyBtn" onClick={(e) => {
+                          navigator.clipboard.writeText(media_query.rule+"{}")
+                          var el = e.target as HTMLElement
+                          el.style.color = "gray"
+                          setTimeout(() => {
+                            el.style.color = "black"
+                          }, 3000)
+                      }}>Copy</button>
+                      </div>
 
                       {media_query.scoped_declarations.map((scoped_declaration, sd_index) => (
-                        <div>
-                          <h2>
-                            {scoped_declaration.parent}
-                          </h2>
+                          <div style={{border: "solid LightGrey", borderWidth: "1px", margin: "5px"}}>
+                            <div  style={{display:"flex", justifyContent: "space-between"}} >
+                              <h2>
+                                {scoped_declaration.parent}
+                              </h2>
+                              <button className="tooltip" id="copyBtn" onClick={(e) => {
+                                navigator.clipboard.writeText(scoped_declaration.parent+"{}")
+                                var el = e.target as HTMLElement
+                                el.style.color = "gray"
+                                setTimeout(() => {
+                                  el.style.color = "black"
+                                }, 3000)
+                              }}>Copy</button>
+                          </div>
                             {scoped_declaration.declarations.map((sd_declaration, d_index) => (
-                              toggler(sd_declaration, d_index, `media.${m_index}.scoped_declarations.${sd_index}.declarations`)
+                              toggler(sd_declaration, d_index, `media.${m_index}.scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
                           ))}
-                        </div>
+                          </div>
                       ))}
 
                       {media_query.declarations.map((med_declaration, d_index) => (
-                        toggler(med_declaration, d_index, `media.${m_index}.declarations`)
+                        toggler(med_declaration, d_index, `media.${m_index}.declarations`, getInfo(med_declaration))
                       ))}
+                      <span style={{fontSize: 16, fontFamily: "monospace", fontWeight: "bold"}}>
+                         {"}"}
+                        </span>
 
                     </div>
-                  ))} 
+                  ))}
                 </div>
               )}
             </FieldArray>
-            _______________________________________________________________{"\n"}
+            <hr/>
             <FieldArray name="scoped_declarations">
               {({ insert, remove, push }) => (
-                <div style={{fontSize: 18, fontFamily: "monospace"}}>
+                <div >
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                    <div>
-                      <h1>
-                        {scoped_declaration.parent}
-                      </h1>
+                      <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
+                      <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                          {scoped_declaration.parent} {"{"}
+                        </h1>
+                        <button className="tooltip" id="copyBtn" onClick={(e) => {
+                          navigator.clipboard.writeText(scoped_declaration.parent+"{}")
+                          var el = e.target as HTMLElement
+                          el.style.color = "gray"
+                          setTimeout(() => {
+                            el.style.color = "black"
+                          }, 3000)
+                      }}>Copy</button>
+                      </div>
                         {scoped_declaration.declarations.map((sd_declaration, d_index) => (
-                          toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`)
+                          toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
                       ))}
-                    </div>
+                       <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
+                        {"}"}
+                      </h1>
+                      </div>
                   ))} 
                 </div>
               )}
@@ -329,6 +396,29 @@ export default function CSSEditor({
           </Form>
         )}
       </Formik>
+      <div className="p-4" key="1">
+        {/* displays HTML for a website */}
+            {htmlOutput && (
+              <div className = "text">
+                <h1>HTML Structure:</h1>
+                <pre>
+                  <div >{htmlOutput}</div>
+                </pre>
+              </div>
+            )}
+            {children && (
+              <div className = "text">
+                <h1>Child CSS</h1>
+                {children.map((child, i) => (
+                  <div key={i}>
+                    <pre>
+                      <div >{child}</div>
+                    </pre>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
     </div>
   );
 }

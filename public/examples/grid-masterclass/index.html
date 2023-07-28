@@ -11,13 +11,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
     <style>
-      .w-layout-grid {
-        /* display: grid; */
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto;
-        grid-row-gap: 16px;
-        grid-column-gap: 16px;
-      }
+
     </style>
     <link
       href="css/grid-masterclass.webflow.d3a103888.css"
@@ -204,6 +198,20 @@
         grid-column-gap: 0px;
         grid-row-gap: 0px;
       }
+      .div-block-8 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+      }
+      @media screen and (max-width: 991px) {
+        .div-block-8 {
+          grid-column-start: 1;
+          grid-column-end: 5;
+          grid-row-start: 2;
+          grid-row-end: 3;
+        }
+      }
     </style>
 
     <script>
@@ -212,12 +220,10 @@
         (event) => {
           const cssContainer = document.querySelector("#change-css-container");
               if (!event.data.type || event.data.type !== "NEW_CSS_VALUE" ){
-                console.log('didnt replace css')
                 return;
               }
 
               cssContainer.innerHTML = event.data.data;
-              console.log("after edting ", event.data.data)
         },
         false
       );
