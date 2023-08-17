@@ -230,6 +230,7 @@ export default function CSSEditor({
   console.log("media: ", media);
   console.log("scoped_declarations: ", scoped_declarations);
   console.log("scoped_declarations: ", scoped_declarations.length);
+  console.log("=========");
 
   return (
     <div className="css-editor grid grid-cols-2 w-full px-4 py-4">
@@ -365,37 +366,6 @@ export default function CSSEditor({
 
                     </div>
                   ))}
-                </div>
-              )}
-            </FieldArray>
-            <hr/>
-            <FieldArray name="scoped_declarations">
-              {({ insert, remove, push }) => (
-                <div >
-                  {values.scoped_declarations.length && values.scoped_declarations.map((scoped_declaration, sd_index) => (
-                      scoped_declaration.declarations.length > 0 &&
-                      <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
-                      <div style={{display: "flex", justifyContent: "space-between"}}>
-                        <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
-                          {scoped_declaration.parent} {"{"}
-                        </h1>
-                        <button className="tooltip" id="copyBtn" onClick={(e) => {
-                          navigator.clipboard.writeText(scoped_declaration.parent+"{}")
-                          var el = e.target as HTMLElement
-                          el.style.color = "gray"
-                          setTimeout(() => {
-                            el.style.color = "black"
-                          }, 3000)
-                      }}>Copy</button>
-                      </div>
-                        {scoped_declaration.declarations.map((sd_declaration, d_index) => (
-                          toggler(sd_declaration, d_index, `scoped_declarations.${sd_index}.declarations`, getInfo(sd_declaration))
-                      ))}
-                       <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
-                        {"}"}
-                      </h1>
-                      </div>
-                  ))} 
                 </div>
               )}
             </FieldArray>
