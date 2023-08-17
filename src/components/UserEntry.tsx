@@ -34,7 +34,7 @@ export default function UserEntry({
     // when users go to a new step, change current site index to go back to 0 & show any saved info for that step
     setCurrSite(0);
     localStorage.setItem("currSite", "0");
-    showSaved();
+    showSaved(); 
     setCurrStepDone(false)
   }, [curr_step]);
   useEffect(() => {
@@ -177,7 +177,7 @@ export default function UserEntry({
                       backgroundColor: websiteDiff[website] ? '#90EE90' : 'initial'
                       }}
                     onClick={() => {
-                      // each website is a button so updates curr site to be the click on website and updates users input with previous entry for the website
+                      // each website is a button so updates curr site to be the clicked on website and updates users input with previous entry for the website
                       setCurrSite(i);
                       localStorage.setItem("currSite", i.toString());
                       var diff = JSON.parse(localStorage.getItem("websiteDiff"));

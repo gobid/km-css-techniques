@@ -225,6 +225,11 @@ export default function CSSEditor({
       diffScopedDeclarations(sd, diffAgainstDeclarations)
     ),
   };
+  console.log("declarations: ", declarations);
+  console.log("defaultParent: ", defaultParent);
+  console.log("media: ", media);
+  console.log("scoped_declarations: ", scoped_declarations);
+  console.log("scoped_declarations: ", scoped_declarations.length);
 
   return (
     <div className="css-editor grid grid-cols-2 w-full px-4 py-4">
@@ -272,6 +277,7 @@ export default function CSSEditor({
                   {values.scoped_declarations.length ? 
                   <>
                   {values.scoped_declarations.map((scoped_declaration, sd_index) => (
+                    scoped_declaration.declarations.length > 0 &&
                     <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
                       <div style={{display: "flex", justifyContent: "space-between"}}>
                       <p style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
@@ -366,7 +372,8 @@ export default function CSSEditor({
             <FieldArray name="scoped_declarations">
               {({ insert, remove, push }) => (
                 <div >
-                  {values.scoped_declarations.map((scoped_declaration, sd_index) => (
+                  {values.scoped_declarations.length && values.scoped_declarations.map((scoped_declaration, sd_index) => (
+                      scoped_declaration.declarations.length > 0 &&
                       <div style={{border: "solid grey", borderWidth: "1px", margin: "5px"}}>
                       <div style={{display: "flex", justifyContent: "space-between"}}>
                         <h1  style={{fontSize: 16, fontFamily: "monospace",  fontWeight: "bold"}}>
